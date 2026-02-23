@@ -9,6 +9,10 @@ export default function NewsletterPopup() {
   const [isClosing, setIsClosing] = useState(false);
 
   useEffect(() => {
+    // Check if user has dismissed the popup before
+    const hasDismissed = localStorage.getItem("newsletterPopupDismissed");
+    if (hasDismissed) return;
+
     // Show popup after 10 seconds
     const timer = setTimeout(() => {
       setIsVisible(true);
@@ -22,6 +26,8 @@ export default function NewsletterPopup() {
     setTimeout(() => {
       setIsVisible(false);
       setIsClosing(false);
+      // Remember that user dismissed the popup
+      localStorage.setItem("newsletterPopupDismissed", "true");
     }, 300);
   };
 
@@ -63,7 +69,9 @@ export default function NewsletterPopup() {
         }`}
       >
         <div
-          className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 relative"
+          className={`bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 relative ${
+            !isClosing ? "animate-popup-in" : ""
+          }`}
           onClick={(e) => e.stopPropagation()}
         >
           {/* Close button */}
