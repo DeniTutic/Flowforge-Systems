@@ -13,14 +13,18 @@ import FinalCTA from "@/components/FinalCTA";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
+import ScrollProgress from "@/components/ScrollProgress";
 import NewsletterPopup from "@/components/NewsletterPopup";
+import CookieConsent from "@/components/CookieConsent";
 
 export default function Home() {
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen bg-white dark:bg-gray-900 transition-colors">
+      <ScrollProgress />
       <Navbar />
       <ScrollToTop />
       <NewsletterPopup />
+      <CookieConsent />
       <Hero />
       <Problem />
       <Solution />

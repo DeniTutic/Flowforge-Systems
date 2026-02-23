@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import DarkModeToggle from "./DarkModeToggle";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -44,18 +45,18 @@ export default function Navbar() {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-white/80 backdrop-blur-md shadow-sm"
+          ? "bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-sm"
           : "bg-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <div className="flex-shrink-0">
-            <a href="#" className="text-2xl font-bold text-text hover:text-primary transition-colors">
+            <a href="#" className="text-2xl font-bold text-text dark:text-white hover:text-primary transition-colors">
               Flowbyte
             </a>
           </div>
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-6">
             {navLinks.map((link) => (
               <a
                 key={link.href}
@@ -63,7 +64,7 @@ export default function Navbar() {
                 className={`transition-colors relative ${
                   activeSection === link.href.slice(1)
                     ? "text-primary font-medium"
-                    : "text-text hover:text-primary"
+                    : "text-text dark:text-gray-300 hover:text-primary"
                 }`}
               >
                 {link.label}
@@ -72,6 +73,7 @@ export default function Navbar() {
                 )}
               </a>
             ))}
+            <DarkModeToggle />
             <a
               href="#contact"
               className="bg-primary text-white px-6 py-2.5 rounded-lg font-medium hover:bg-primary-dark transition-all hover:scale-105 shadow-md hover:shadow-lg"
