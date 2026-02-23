@@ -79,7 +79,7 @@ A premium, modern agency website built with Next.js, TypeScript, and Tailwind CS
 
 ## 🚀 Deployment
 
-### Vercel (Recommended)
+### Vercel 
 1. Push your code to GitHub
 2. Import your repository in Vercel
 3. Deploy automatically

@@ -13,12 +13,14 @@ import FinalCTA from "@/components/FinalCTA";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
+import NewsletterPopup from "@/components/NewsletterPopup";
 
 export default function Home() {
   return (
     <main className="min-h-screen">
       <Navbar />
       <ScrollToTop />
+      <NewsletterPopup />
       <Hero />
       <Problem />
       <Solution />
