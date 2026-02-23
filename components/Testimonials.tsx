@@ -31,7 +31,7 @@ export default function Testimonials() {
     },
     {
       quote:
-        "Flowbyte built a system that automates 80% of our manual work. We can finally focus on growing the business.",
+        "Apex built a system that automates 80% of our manual work. We can finally focus on growing the business.",
       author: "Michael Rodriguez",
       role: "CEO, GrowthLab",
       rating: 5,

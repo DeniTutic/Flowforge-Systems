@@ -4,7 +4,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto">
         <div className="grid md:grid-cols-4 gap-8 mb-12">
           <div>
-            <h3 className="text-2xl font-bold mb-4">Flowbyte</h3>
+            <h3 className="text-2xl font-bold mb-4">Apex</h3>
             <p className="text-gray-400">
               Digital products that drive growth.
             </p>
@@ -76,7 +76,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="border-t border-gray-700 pt-8 text-center text-gray-400">
-          <p>&copy; {new Date().getFullYear()} Flowbyte. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Apex. All rights reserved.</p>
         </div>
       </div>
     </footer>

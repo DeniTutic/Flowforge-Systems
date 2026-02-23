@@ -1,6 +1,6 @@
-# Flowbyte - Premium SaaS Agency Website
+# Apex - Premium SaaS Agency Website
 
-A premium, modern agency website built with Next.js, TypeScript, and Tailwind CSS. Designed to position Flowbyte as a high-end digital agency that builds systems, not just websites.
+A premium, modern agency website built with Next.js, TypeScript, and Tailwind CSS. Designed to position Apex as a high-end digital agency that builds systems, not just websites.
 
 ## 🚀 Features
 
@@ -94,4 +94,4 @@ This project is private and proprietary.
 - Portfolio projects use placeholder data - replace with real projects
 - Social links in footer are placeholders - update with your actual links
 
-Built with ❤️ for Flowbyte
+Built with ❤️ for Apex

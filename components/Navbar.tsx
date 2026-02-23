@@ -53,7 +53,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-20">
           <div className="flex-shrink-0">
             <a href="#" className="text-2xl font-bold text-text dark:text-white hover:text-primary transition-colors">
-              Flowbyte
+              Apex
             </a>
           </div>
           <div className="hidden md:flex items-center space-x-6">
