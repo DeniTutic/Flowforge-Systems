@@ -18,19 +18,6 @@ A premium, modern agency website built with Next.js, TypeScript, and Tailwind CS
 - **Styling**: Tailwind CSS
 - **Font**: Inter (Google Fonts)
 
-## 📦 Installation
-
-1. Install dependencies:
-```bash
-npm install
-```
-
-2. Run the development server:
-```bash
-npm run dev
-```
-
-3. Open [http://localhost:3000](http://localhost:3000) in your browser
 
 ## 🏗️ Project Structure
 
@@ -97,12 +84,6 @@ npm run dev
 2. Import your repository in Vercel
 3. Deploy automatically
 
-### Other Platforms
-```bash
-npm run build
-npm start
-```
-
 ## 📄 License
 
 This project is private and proprietary.
@@ -112,8 +93,5 @@ This project is private and proprietary.
 - The contact form currently logs to console - integrate with your backend/email service
 - Portfolio projects use placeholder data - replace with real projects
 - Social links in footer are placeholders - update with your actual links
-- All copy is optimized for conversion and premium positioning
-
----
 
 Built with ❤️ for Flowbyte
