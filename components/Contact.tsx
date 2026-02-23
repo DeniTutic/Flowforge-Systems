@@ -88,19 +88,19 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-24 px-4 sm:px-6 lg:px-8 bg-white">
+    <section id="contact" className="py-24 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-900">
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-4xl sm:text-5xl font-bold text-text mb-4">
+          <h2 className="text-4xl sm:text-5xl font-bold text-text dark:text-white mb-4">
             Let's talk
           </h2>
-          <p className="text-xl text-text-light">
+          <p className="text-xl text-text-light dark:text-gray-400">
             Tell us about your project and we'll get back to you within 24
             hours.
           </p>
         </div>
         {submitSuccess && (
-          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg text-green-800 flex items-center gap-2">
+          <div className="mb-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg text-green-800 dark:text-green-300 flex items-center gap-2">
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
             </svg>
@@ -112,7 +112,7 @@ export default function Contact() {
           <div>
             <label
               htmlFor="name"
-              className="block text-sm font-medium text-text mb-2"
+              className="block text-sm font-medium text-text dark:text-gray-300 mb-2"
             >
               Name
             </label>
@@ -124,10 +124,10 @@ export default function Contact() {
               value={formData.name}
               onChange={handleChange}
               onBlur={handleBlur}
-              className={`w-full px-4 py-3 rounded-lg border outline-none transition-all ${
+              className={`w-full px-4 py-3 rounded-lg border outline-none transition-all bg-white dark:bg-gray-800 text-text dark:text-white ${
                 errors.name
-                  ? "border-red-300 focus:border-red-500 focus:ring-2 focus:ring-red-200"
-                  : "border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20"
+                  ? "border-red-300 dark:border-red-600 focus:border-red-500 focus:ring-2 focus:ring-red-200 dark:focus:ring-red-900/30"
+                  : "border-gray-200 dark:border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary/20 dark:focus:ring-primary/30"
               }`}
               placeholder="Your name"
             />
@@ -140,7 +140,7 @@ export default function Contact() {
           <div>
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-text mb-2"
+              className="block text-sm font-medium text-text dark:text-gray-300 mb-2"
             >
               Email
             </label>
@@ -152,10 +152,10 @@ export default function Contact() {
               value={formData.email}
               onChange={handleChange}
               onBlur={handleBlur}
-              className={`w-full px-4 py-3 rounded-lg border outline-none transition-all ${
+              className={`w-full px-4 py-3 rounded-lg border outline-none transition-all bg-white dark:bg-gray-800 text-text dark:text-white ${
                 errors.email
-                  ? "border-red-300 focus:border-red-500 focus:ring-2 focus:ring-red-200"
-                  : "border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20"
+                  ? "border-red-300 dark:border-red-600 focus:border-red-500 focus:ring-2 focus:ring-red-200 dark:focus:ring-red-900/30"
+                  : "border-gray-200 dark:border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary/20 dark:focus:ring-primary/30"
               }`}
               placeholder="your@email.com"
             />
@@ -168,7 +168,7 @@ export default function Contact() {
           <div>
             <label
               htmlFor="message"
-              className="block text-sm font-medium text-text mb-2"
+              className="block text-sm font-medium text-text dark:text-gray-300 mb-2"
             >
               Message
             </label>
@@ -180,10 +180,10 @@ export default function Contact() {
               value={formData.message}
               onChange={handleChange}
               onBlur={handleBlur}
-              className={`w-full px-4 py-3 rounded-lg border outline-none transition-all resize-none ${
+              className={`w-full px-4 py-3 rounded-lg border outline-none transition-all resize-none bg-white dark:bg-gray-800 text-text dark:text-white ${
                 errors.message
-                  ? "border-red-300 focus:border-red-500 focus:ring-2 focus:ring-red-200"
-                  : "border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20"
+                  ? "border-red-300 dark:border-red-600 focus:border-red-500 focus:ring-2 focus:ring-red-200 dark:focus:ring-red-900/30"
+                  : "border-gray-200 dark:border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary/20 dark:focus:ring-primary/30"
               }`}
               placeholder="Tell us about your project..."
             />

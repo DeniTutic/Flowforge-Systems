@@ -113,7 +113,7 @@ export default function Navbar() {
             mobileMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
           }`}
         >
-          <div className="py-4 space-y-3 border-t border-gray-200 mt-2">
+          <div className="py-4 space-y-3 border-t border-gray-200 dark:border-gray-700 mt-2">
             {navLinks.map((link) => (
               <a
                 key={link.href}
@@ -121,8 +121,8 @@ export default function Navbar() {
                 onClick={handleLinkClick}
                 className={`block px-4 py-2 rounded-lg transition-colors ${
                   activeSection === link.href.slice(1)
-                    ? "text-primary bg-primary/10 font-medium"
-                    : "text-text hover:bg-gray-100"
+                    ? "text-primary bg-primary/10 dark:bg-primary/20 font-medium"
+                    : "text-text dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
                 }`}
               >
                 {link.label}

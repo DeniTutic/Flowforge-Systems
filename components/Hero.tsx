@@ -29,7 +29,7 @@ export default function Hero() {
     <section 
       id="hero"
       ref={heroRef}
-      className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white via-gray-50/50 to-gray-50 relative overflow-hidden"
+      className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white via-gray-50/50 to-gray-50 dark:from-gray-900 dark:via-gray-900/95 dark:to-gray-800 relative overflow-hidden"
     >
       {/* Animated gradient background */}
       <div className="absolute inset-0 opacity-30">
@@ -39,10 +39,10 @@ export default function Hero() {
       
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center max-w-4xl mx-auto">
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-text mb-6 leading-tight opacity-0">
+          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-text dark:text-white mb-6 leading-tight opacity-0">
             Digital products that grow your business
           </h1>
-          <p className="text-xl sm:text-2xl text-text-light mb-8 leading-relaxed max-w-3xl mx-auto opacity-0">
+          <p className="text-xl sm:text-2xl text-text-light dark:text-gray-400 mb-8 leading-relaxed max-w-3xl mx-auto opacity-0">
             We design and develop fast, scalable websites and web applications
             that bring you customers and automate your work.
           </p>
@@ -55,12 +55,12 @@ export default function Hero() {
             </a>
             <a
               href="#portfolio"
-              className="bg-white text-text border-2 border-gray-200 px-8 py-4 rounded-xl font-semibold text-lg hover:border-primary hover:text-primary transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              className="bg-white dark:bg-gray-800 text-text dark:text-white border-2 border-gray-200 dark:border-gray-600 px-8 py-4 rounded-xl font-semibold text-lg hover:border-primary hover:text-primary transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-gray-900"
             >
               View Our Work
             </a>
           </div>
-          <p className="text-sm text-text-light uppercase tracking-wider opacity-0">
+          <p className="text-sm text-text-light dark:text-gray-500 uppercase tracking-wider opacity-0">
             Trusted by growing businesses
           </p>
         </div>

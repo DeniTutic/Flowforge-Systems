@@ -69,7 +69,7 @@ export default function NewsletterPopup() {
         }`}
       >
         <div
-          className={`bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 relative ${
+          className={`bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full p-8 relative ${
             !isClosing ? "animate-popup-in" : ""
           }`}
           onClick={(e) => e.stopPropagation()}
@@ -77,7 +77,7 @@ export default function NewsletterPopup() {
           {/* Close button */}
           <button
             onClick={handleClose}
-            className="absolute top-4 right-4 text-text-light hover:text-text transition-colors"
+            className="absolute top-4 right-4 text-text-light dark:text-gray-400 hover:text-text dark:hover:text-white transition-colors"
             aria-label="Close"
           >
             <svg
@@ -100,10 +100,10 @@ export default function NewsletterPopup() {
             <>
               <div className="text-center mb-6">
                 <div className="text-5xl mb-4">📧</div>
-                <h3 className="text-2xl font-bold text-text mb-2">
+                <h3 className="text-2xl font-bold text-text dark:text-white mb-2">
                   Stay Updated
                 </h3>
-                <p className="text-text-light">
+                <p className="text-text-light dark:text-gray-400">
                   Subscribe to get exclusive discounts, growth tips, and early
                   access to new services.
                 </p>
@@ -117,7 +117,7 @@ export default function NewsletterPopup() {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter your email"
                     required
-                    className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-text dark:text-white focus:border-primary focus:ring-2 focus:ring-primary/20 dark:focus:ring-primary/30 outline-none transition-all"
                   />
                 </div>
                 <button
@@ -126,7 +126,7 @@ export default function NewsletterPopup() {
                 >
                   Subscribe Now
                 </button>
-                <p className="text-xs text-text-light text-center">
+                <p className="text-xs text-text-light dark:text-gray-500 text-center">
                   We respect your privacy. Unsubscribe at any time.
                 </p>
               </form>
@@ -134,10 +134,10 @@ export default function NewsletterPopup() {
           ) : (
             <div className="text-center py-4">
               <div className="text-6xl mb-4">✅</div>
-              <h3 className="text-2xl font-bold text-text mb-2">
+              <h3 className="text-2xl font-bold text-text dark:text-white mb-2">
                 Thank You!
               </h3>
-              <p className="text-text-light">
+              <p className="text-text-light dark:text-gray-400">
                 You've successfully subscribed. Check your inbox for exclusive
                 content and discounts.
               </p>

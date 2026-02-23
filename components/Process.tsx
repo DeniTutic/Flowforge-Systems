@@ -37,13 +37,13 @@ const steps = [
 
 export default function Process() {
   return (
-    <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white">
+    <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-900">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-bold text-text mb-4">
+          <h2 className="text-4xl sm:text-5xl font-bold text-text dark:text-white mb-4">
             How we work
           </h2>
-          <p className="text-xl text-text-light max-w-2xl mx-auto">
+          <p className="text-xl text-text-light dark:text-gray-400 max-w-2xl mx-auto">
             A simple, proven process that delivers results.
           </p>
         </div>
@@ -51,22 +51,22 @@ export default function Process() {
           {steps.map((step, index) => (
             <div key={index} className="relative group">
               <div
-                className={`p-8 rounded-2xl bg-gradient-to-br ${step.color} border border-gray-100 ${step.borderColor} transition-all duration-300 h-full hover:shadow-lg process-step`}
+                className={`p-8 rounded-2xl bg-gradient-to-br ${step.color} border border-gray-100 dark:border-gray-700 ${step.borderColor} transition-all duration-300 h-full hover:shadow-lg process-step`}
               >
                 <div
                   className={`text-5xl font-bold mb-4 opacity-80 ${step.accent} process-number`}
                 >
                   {step.number}
                 </div>
-                <h3 className="text-2xl font-bold text-text mb-3">
+                <h3 className="text-2xl font-bold text-text dark:text-white mb-3">
                   {step.title}
                 </h3>
-                <p className="text-text-light leading-relaxed">
+                <p className="text-text-light dark:text-gray-400 leading-relaxed">
                   {step.description}
                 </p>
               </div>
               {index < steps.length - 1 && (
-                <div className="hidden lg:block absolute top-1/2 -right-4 w-8 h-0.5 bg-gradient-to-r from-gray-200 to-transparent transform -translate-y-1/2" />
+                <div className="hidden lg:block absolute top-1/2 -right-4 w-8 h-0.5 bg-gradient-to-r from-gray-200 dark:from-gray-600 to-transparent transform -translate-y-1/2" />
               )}
             </div>
           ))}

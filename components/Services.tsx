@@ -39,13 +39,13 @@ export default function Services() {
   ];
 
   return (
-    <section id="services" className="py-24 px-4 sm:px-6 lg:px-8 bg-white">
+    <section id="services" className="py-24 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-900">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-bold text-text mb-4">
+          <h2 className="text-4xl sm:text-5xl font-bold text-text dark:text-white mb-4">
             What we build
           </h2>
-          <p className="text-xl text-text-light max-w-2xl mx-auto">
+          <p className="text-xl text-text-light dark:text-gray-400 max-w-2xl mx-auto">
             Every service is designed to drive growth and deliver results.
           </p>
         </div>
@@ -55,7 +55,7 @@ export default function Services() {
               key={index}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
-              className="p-8 rounded-2xl bg-gradient-to-br from-white to-gray-50 border border-gray-100 hover:border-primary/30 transition-all duration-300 hover:shadow-xl group cursor-pointer"
+              className="p-8 rounded-2xl bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-800/80 border border-gray-100 dark:border-gray-700 hover:border-primary/30 dark:hover:border-primary/40 transition-all duration-300 hover:shadow-xl group cursor-pointer"
               style={{
                 transform: hoveredIndex === index 
                   ? "perspective(1000px) rotateX(2deg) rotateY(-2deg) scale(1.02)" 
@@ -66,10 +66,10 @@ export default function Services() {
               <div className="text-4xl mb-4 transition-transform duration-300 group-hover:scale-110">
                 {service.icon}
               </div>
-              <h3 className="text-2xl font-bold text-text mb-3 group-hover:text-primary transition-colors">
+              <h3 className="text-2xl font-bold text-text dark:text-white mb-3 group-hover:text-primary transition-colors">
                 {service.title}
               </h3>
-              <p className="text-text-light leading-relaxed">
+              <p className="text-text-light dark:text-gray-400 leading-relaxed">
                 {service.description}
               </p>
             </div>

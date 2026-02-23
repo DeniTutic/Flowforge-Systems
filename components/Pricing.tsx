@@ -50,13 +50,13 @@ export default function Pricing() {
   ];
 
   return (
-    <section id="pricing" className="py-24 px-4 sm:px-6 lg:px-8 bg-white">
+    <section id="pricing" className="py-24 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-900">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-bold text-text mb-4">
+          <h2 className="text-4xl sm:text-5xl font-bold text-text dark:text-white mb-4">
             Pricing
           </h2>
-          <p className="text-xl text-text-light max-w-2xl mx-auto">
+          <p className="text-xl text-text-light dark:text-gray-400 max-w-2xl mx-auto">
             Productized packages designed for different growth stages.
           </p>
         </div>
@@ -66,8 +66,8 @@ export default function Pricing() {
               key={index}
               className={`p-8 rounded-2xl border-2 transition-all ${
                 plan.popular
-                  ? "border-primary bg-gradient-to-br from-primary/5 to-white shadow-xl scale-105"
-                  : "border-gray-100 bg-white hover:border-primary/30"
+                  ? "border-primary bg-gradient-to-br from-primary/5 to-white dark:from-primary/10 dark:to-gray-800 shadow-xl scale-105"
+                  : "border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-primary/30 dark:hover:border-primary/40"
               }`}
             >
               {plan.popular && (
@@ -75,19 +75,19 @@ export default function Pricing() {
                   Most Popular
                 </div>
               )}
-              <h3 className="text-2xl font-bold text-text mb-2">
+              <h3 className="text-2xl font-bold text-text dark:text-white mb-2">
                 {plan.name}
               </h3>
-              <p className="text-text-light mb-1">{plan.description}</p>
-              <p className="text-sm text-text-light mb-6">{plan.target}</p>
-              <div className="text-4xl font-bold text-text mb-6">
+              <p className="text-text-light dark:text-gray-400 mb-1">{plan.description}</p>
+              <p className="text-sm text-text-light dark:text-gray-500 mb-6">{plan.target}</p>
+              <div className="text-4xl font-bold text-text dark:text-white mb-6">
                 {plan.price}
               </div>
               <ul className="space-y-3 mb-8">
                 {plan.features.map((feature, featureIndex) => (
                   <li key={featureIndex} className="flex items-start">
                     <span className="text-primary mr-2">✓</span>
-                    <span className="text-text-light">{feature}</span>
+                    <span className="text-text-light dark:text-gray-400">{feature}</span>
                   </li>
                 ))}
               </ul>
@@ -96,7 +96,7 @@ export default function Pricing() {
                 className={`block w-full text-center py-3 px-6 rounded-lg font-semibold transition-all ${
                   plan.popular
                     ? "bg-primary text-white hover:bg-primary-dark"
-                    : "bg-gray-100 text-text hover:bg-gray-200"
+                    : "bg-gray-100 dark:bg-gray-700 text-text dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600"
                 }`}
               >
                 {plan.cta}
