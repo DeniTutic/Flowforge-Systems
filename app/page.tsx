@@ -1,3 +1,4 @@
+import dynamic from "next/dynamic";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Problem from "@/components/Problem";
@@ -14,8 +15,17 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
 import ScrollProgress from "@/components/ScrollProgress";
-import NewsletterPopup from "@/components/NewsletterPopup";
-import CookieConsent from "@/components/CookieConsent";
+
+// Lazy load heavy interactive components to reduce initial bundle
+const NewsletterPopup = dynamic(() => import("@/components/NewsletterPopup"), {
+  ssr: false,
+  loading: () => null,
+});
+
+const CookieConsent = dynamic(() => import("@/components/CookieConsent"), {
+  ssr: false,
+  loading: () => null,
+});
 
 export default function Home() {
   return (

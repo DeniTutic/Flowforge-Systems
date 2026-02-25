@@ -17,6 +17,42 @@ A premium, modern agency website built with Next.js, TypeScript, and Tailwind CS
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
 - **Font**: Inter (Google Fonts)
+- **Node.js**: v18+ recommended
+
+## 📦 Getting Started
+
+### Prerequisites
+- Node.js 18.17 or later
+- npm or yarn package manager
+
+### Installation
+
+```bash
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+
+# Open http://localhost:3000 in your browser
+```
+
+### Build for Production
+
+```bash
+# Build the project
+npm run build
+
+# Start production server
+npm run start
+```
+
+### Available Scripts
+
+- `npm run dev` - Start development server (hot reload enabled)
+- `npm run build` - Create optimized production build
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint to check code quality
 
 
 ## 🏗️ Project Structure

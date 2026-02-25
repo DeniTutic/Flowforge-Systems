@@ -35,6 +35,9 @@ export default function CookieConsent() {
 
   return (
     <div
+      role="region"
+      aria-label="Cookie consent notification"
+      aria-live="polite"
       className={`fixed bottom-0 left-0 right-0 z-[150] bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 shadow-lg transition-transform duration-300 ${
         isClosing ? "translate-y-full" : "translate-y-0"
       }`}
@@ -45,7 +48,7 @@ export default function CookieConsent() {
             <p className="text-sm text-text dark:text-gray-300">
               We use cookies to enhance your browsing experience and analyze site traffic. 
               By clicking "Accept", you consent to our use of cookies.{" "}
-              <a href="#" className="text-primary hover:underline">
+              <a href="/privacy" className="text-primary hover:underline">
                 Learn more
               </a>
             </p>
@@ -53,12 +56,14 @@ export default function CookieConsent() {
           <div className="flex gap-3">
             <button
               onClick={handleDecline}
+              aria-label="Decline cookie consent"
               className="px-4 py-2 text-sm font-medium text-text dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
             >
               Decline
             </button>
             <button
               onClick={handleAccept}
+              aria-label="Accept all cookies"
               className="px-4 py-2 text-sm font-medium bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors"
             >
               Accept
