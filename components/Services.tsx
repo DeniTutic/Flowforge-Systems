@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Services() {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const services = [
     {
@@ -32,6 +32,15 @@ export default function Services() {
     },
   ];
 
+  // Auto-slide services one by one
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % services.length);
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [services.length]);
+
   return (
     <section id="services" className="py-24 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-900">
       <div className="max-w-7xl mx-auto">
@@ -43,31 +52,45 @@ export default function Services() {
             Clear, outcome‑driven services focused on revenue, not vanity metrics.
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, index) => (
-            <div
-              key={index}
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}
-              className="p-8 rounded-2xl bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-800/80 border border-gray-100 dark:border-gray-700 hover:border-primary/30 dark:hover:border-primary/40 transition-all duration-300 hover:shadow-xl group cursor-pointer"
-              style={{
-                transform: hoveredIndex === index 
-                  ? "perspective(1000px) rotateX(2deg) rotateY(-2deg) scale(1.02)" 
-                  : "perspective(1000px) rotateX(0) rotateY(0) scale(1)",
-                transition: "transform 0.3s ease, box-shadow 0.3s ease",
-              }}
-            >
-              <div className="text-4xl mb-4 transition-transform duration-300 group-hover:scale-110">
-                {service.icon}
-              </div>
-              <h3 className="text-2xl font-bold text-text dark:text-white mb-3 group-hover:text-primary transition-colors">
-                {service.title}
-              </h3>
-              <p className="text-text-light dark:text-gray-400 leading-relaxed">
-                {service.description}
-              </p>
+        <div className="relative max-w-5xl mx-auto">
+          <div className="overflow-hidden rounded-3xl">
+            <div className="relative h-full">
+              {services.map((service, index) => (
+                <div
+                  key={service.title}
+                  className={`p-10 sm:p-12 rounded-3xl bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-800/80 border border-gray-100 dark:border-gray-700 shadow-2xl transition-all duration-700 ease-out ${
+                    index === activeIndex
+                      ? "opacity-100 translate-x-0"
+                      : "opacity-0 -translate-x-6 pointer-events-none absolute inset-0"
+                  }`}
+                >
+                  <div className="text-5xl mb-5 animate-pulse-slow">
+                    {service.icon}
+                  </div>
+                  <h3 className="text-2xl sm:text-3xl font-bold text-text dark:text-white mb-4">
+                    {service.title}
+                  </h3>
+                  <p className="text-base sm:text-lg text-text-light dark:text-gray-400 leading-relaxed max-w-3xl">
+                    {service.description}
+                  </p>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
+          <div className="flex justify-center gap-2 mt-6">
+            {services.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setActiveIndex(index)}
+                className={`h-2.5 rounded-full transition-all ${
+                  index === activeIndex
+                    ? "w-6 bg-primary"
+                    : "w-2.5 bg-gray-300 dark:bg-gray-700"
+                }`}
+                aria-label={`Go to service ${index + 1}`}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>
