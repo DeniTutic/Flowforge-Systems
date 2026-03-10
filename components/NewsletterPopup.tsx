@@ -9,16 +9,31 @@ export default function NewsletterPopup() {
   const [isClosing, setIsClosing] = useState(false);
 
   useEffect(() => {
-    // Check if user has dismissed the popup before
+    // Check if user has dismissed the popup before (skip in dev: clear localStorage key "newsletterPopupDismissed" to test again)
     const hasDismissed = localStorage.getItem("newsletterPopupDismissed");
     if (hasDismissed) return;
 
-    // Show popup after 10 seconds
-    const timer = setTimeout(() => {
+    let shown = false;
+    const show = () => {
+      if (shown) return;
+      shown = true;
       setIsVisible(true);
-    }, 10000);
+    };
 
-    return () => clearTimeout(timer);
+    // Show after 4 seconds
+    const timer = setTimeout(show, 4000);
+
+    // Or show when user scrolls ~35% down the page (whichever comes first)
+    const onScroll = () => {
+      const scrolled = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+      if (scrolled >= 0.35) show();
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   const handleClose = () => {
