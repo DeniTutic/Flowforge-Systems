@@ -1,8 +1,8 @@
 export default function SocialProof() {
   const stats = [
-    { number: "50+", label: "Projects Delivered" },
+    { number: "10+", label: "Shipped Projects" },
     { number: "100%", label: "Client Satisfaction" },
-    { number: "Fast", label: "Delivery" },
+    { number: "2–4", label: "Week Delivery" },
     { number: "Long-term", label: "Partnerships" },
   ];
 

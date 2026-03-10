@@ -32,7 +32,7 @@ export default function Navbar() {
 
   const navLinks = [
     { href: "#services", label: "Services" },
-    { href: "#portfolio", label: "Portfolio" },
+    { href: "#portfolio", label: "Work" },
     { href: "#pricing", label: "Pricing" },
     { href: "#contact", label: "Contact" },
   ];
@@ -78,7 +78,7 @@ export default function Navbar() {
               href="#contact"
               className="bg-primary text-white px-6 py-2.5 rounded-lg font-medium hover:bg-primary-dark transition-all hover:scale-105 shadow-md hover:shadow-lg"
             >
-              Book Consultation
+              Book Free Call
             </a>
           </div>
           <div className="md:hidden flex items-center gap-3">
@@ -133,7 +133,7 @@ export default function Navbar() {
               onClick={handleLinkClick}
               className="block bg-primary text-white px-4 py-2 rounded-lg font-medium text-center hover:bg-primary-dark transition-colors mt-4"
             >
-              Book Consultation
+              Book Free Call
             </a>
           </div>
         </div>

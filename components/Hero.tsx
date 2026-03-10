@@ -40,28 +40,28 @@ export default function Hero() {
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center max-w-4xl mx-auto">
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-text dark:text-white mb-6 leading-tight opacity-0">
-            Digital products that grow your business
+            AI-powered web experiences that turn visitors into customers
           </h1>
           <p className="text-xl sm:text-2xl text-text-light dark:text-gray-400 mb-8 leading-relaxed max-w-3xl mx-auto opacity-0">
-            We design and develop fast, scalable websites and web applications
-            that bring you customers and automate your work.
+            We design and build modern websites and AI systems that increase conversions,
+            automate workflows, and help your business scale faster.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12 opacity-0">
             <a
               href="#contact"
               className="bg-primary text-white px-8 py-4 rounded-xl font-semibold text-lg hover:bg-primary-dark transition-all transform hover:scale-105 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
             >
-              Book a Free Consultation
+              Book a Free Strategy Call
             </a>
             <a
               href="#portfolio"
               className="bg-white dark:bg-gray-800 text-text dark:text-white border-2 border-gray-200 dark:border-gray-600 px-8 py-4 rounded-xl font-semibold text-lg hover:border-primary hover:text-primary transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-gray-900"
             >
-              View Our Work
+              Get Free Website &amp; AI Audit
             </a>
           </div>
           <p className="text-sm text-text-light dark:text-gray-500 uppercase tracking-wider opacity-0">
-            Trusted by growing businesses
+            10+ shipped projects · 100% client satisfaction · 2–4 week delivery
           </p>
         </div>
       </div>

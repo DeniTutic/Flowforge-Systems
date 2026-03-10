@@ -2,39 +2,39 @@ export default function Portfolio() {
   const projects = [
     {
       name: "TechFlow SaaS",
-      description: "Custom web application for SaaS company",
-      result: "Increased conversions by 40%",
-      category: "Web Application",
+      description: "Conversion‑focused marketing site and onboarding flow for a B2B SaaS.",
+      result: "+62% trial signups after redesign and copy overhaul",
+      category: "SaaS Website",
     },
     {
       name: "EcoStore",
-      description: "E-commerce platform for sustainable products",
-      result: "3x revenue growth in 6 months",
-      category: "E-commerce",
+      description: "E‑commerce experience for sustainable products with optimized checkout.",
+      result: "3× revenue growth in 6 months",
+      category: "E‑commerce",
     },
     {
       name: "GrowthLab",
-      description: "Marketing automation platform",
+      description: "AI‑driven marketing automation and reporting dashboard.",
       result: "Reduced manual work by 60%",
-      category: "Automation",
+      category: "AI & Automation",
     },
     {
       name: "FitPro App",
-      description: "Fitness coaching web application",
+      description: "Coaching platform with programs, payments, and member dashboard.",
       result: "500% increase in user engagement",
       category: "Web Application",
     },
     {
       name: "LocalBiz Hub",
-      description: "Business directory and booking system",
-      result: "2x more leads generated",
-      category: "Website",
+      description: "Directory and booking system for local businesses.",
+      result: "2× more leads generated",
+      category: "Local Services",
     },
     {
       name: "FinanceFlow",
-      description: "Financial dashboard and reporting tool",
+      description: "Financial dashboards with live data and role‑based access.",
       result: "80% faster reporting process",
-      category: "Web Application",
+      category: "Internal Tools",
     },
   ];
 
@@ -43,10 +43,10 @@ export default function Portfolio() {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl sm:text-5xl font-bold text-text dark:text-white mb-4">
-            Our work
+            Selected work
           </h2>
           <p className="text-xl text-text-light dark:text-gray-400 max-w-2xl mx-auto">
-            Real projects that delivered real results.
+            Outcome‑driven projects shipped for startups and growing brands.
           </p>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">

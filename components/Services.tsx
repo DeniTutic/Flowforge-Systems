@@ -7,34 +7,28 @@ export default function Services() {
 
   const services = [
     {
-      title: "High-Converting Websites",
-      description: "Convert visitors into customers with strategic design and clear messaging.",
+      title: "Websites that convert visitors into clients",
+      description:
+        "High-performance sites with clear messaging, fast load times, and built-in analytics.",
       icon: "🚀",
     },
     {
-      title: "Custom Web Applications",
-      description: "Build scalable apps that automate work and streamline operations.",
-      icon: "⚡",
+      title: "AI systems that automate your work",
+      description:
+        "Custom chatbots, workflows, and internal tools that save your team hours every week.",
+      icon: "🤖",
     },
     {
-      title: "E-commerce Systems",
-      description: "Complete online stores that sell products and grow revenue.",
-      icon: "🛒",
-    },
-    {
-      title: "SEO & Performance Optimization",
-      description: "Rank higher, load faster, and convert better with technical excellence.",
-      icon: "📈",
-    },
-    {
-      title: "Automation & Integrations",
-      description: "Connect tools and automate workflows to save time and reduce errors.",
-      icon: "🔗",
-    },
-    {
-      title: "Landing Pages & Funnels",
-      description: "High-converting pages that capture leads and drive sign-ups.",
+      title: "Landing pages that print leads",
+      description:
+        "Launch-ready pages and funnels optimized for ads, campaigns, and email capture.",
       icon: "🎯",
+    },
+    {
+      title: "Ongoing optimization & support",
+      description:
+        "We keep testing, improving, and shipping changes so your conversion rate keeps climbing.",
+      icon: "📈",
     },
   ];
 
@@ -43,10 +37,10 @@ export default function Services() {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl sm:text-5xl font-bold text-text dark:text-white mb-4">
-            What we build
+            What we build for you
           </h2>
           <p className="text-xl text-text-light dark:text-gray-400 max-w-2xl mx-auto">
-            Every service is designed to drive growth and deliver results.
+            Clear, outcome‑driven services focused on revenue, not vanity metrics.
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
