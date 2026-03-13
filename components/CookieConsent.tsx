@@ -7,19 +7,15 @@ export default function CookieConsent() {
   const [isClosing, setIsClosing] = useState(false);
 
   useEffect(() => {
-    // Check if user has already accepted cookies
-    const hasAccepted = localStorage.getItem("cookieConsent");
-    if (!hasAccepted) {
-      // Show after a short delay
-      setTimeout(() => setIsVisible(true), 2000);
-    }
+    // Always show after a short delay on each visit
+    const timer = setTimeout(() => setIsVisible(true), 2000);
+    return () => clearTimeout(timer);
   }, []);
 
   const handleAccept = () => {
     setIsClosing(true);
     setTimeout(() => {
       setIsVisible(false);
-      localStorage.setItem("cookieConsent", "accepted");
     }, 300);
   };
 
@@ -27,7 +23,6 @@ export default function CookieConsent() {
     setIsClosing(true);
     setTimeout(() => {
       setIsVisible(false);
-      localStorage.setItem("cookieConsent", "declined");
     }, 300);
   };
 
