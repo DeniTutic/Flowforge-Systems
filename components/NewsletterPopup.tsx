@@ -9,10 +9,7 @@ export default function NewsletterPopup() {
   const [isClosing, setIsClosing] = useState(false);
 
   useEffect(() => {
-    // Check if user has dismissed the popup before (skip in dev: clear localStorage key "newsletterPopupDismissed" to test again)
-    const hasDismissed = localStorage.getItem("newsletterPopupDismissed");
-    if (hasDismissed) return;
-
+    // Always show for each visit after delay / scroll
     let shown = false;
     const show = () => {
       if (shown) return;
@@ -41,8 +38,6 @@ export default function NewsletterPopup() {
     setTimeout(() => {
       setIsVisible(false);
       setIsClosing(false);
-      // Remember that user dismissed the popup
-      localStorage.setItem("newsletterPopupDismissed", "true");
     }, 300);
   };
 
