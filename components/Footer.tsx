@@ -4,9 +4,9 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto">
         <div className="grid md:grid-cols-4 gap-8 mb-12">
           <div>
-            <h3 className="text-2xl font-bold mb-4">Apex</h3>
+            <h3 className="text-2xl font-bold mb-4">Flowforge Systems</h3>
             <p className="text-gray-400">
-              Digital products that drive growth.
+              Web &amp; AI systems that drive growth.
             </p>
           </div>
           <div>
@@ -58,17 +58,17 @@ export default function Footer() {
             <h4 className="font-semibold mb-4">Connect</h4>
             <ul className="space-y-2 text-gray-400">
               <li>
-                <a href="https://linkedin.com/company/apex" rel="noopener noreferrer" target="_blank" className="hover:text-white transition-colors">
+                <a href="https://linkedin.com/company/flowforge-systems" rel="noopener noreferrer" target="_blank" className="hover:text-white transition-colors">
                   LinkedIn
                 </a>
               </li>
               <li>
-                <a href="https://twitter.com/apex" rel="noopener noreferrer" target="_blank" className="hover:text-white transition-colors">
+                <a href="https://twitter.com/flowforge" rel="noopener noreferrer" target="_blank" className="hover:text-white transition-colors">
                   Twitter
                 </a>
               </li>
               <li>
-                <a href="mailto:hello@apex.com" className="hover:text-white transition-colors">
+                <a href="mailto:hello@flowforge.systems" className="hover:text-white transition-colors">
                   Email
                 </a>
               </li>
@@ -76,7 +76,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="border-t border-gray-700 pt-8 text-center text-gray-400">
-          <p>&copy; {new Date().getFullYear()} Apex. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Flowforge Systems. All rights reserved.</p>
         </div>
       </div>
     </footer>
