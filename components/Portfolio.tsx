@@ -1,40 +1,22 @@
 export default function Portfolio() {
   const projects = [
     {
-      name: "TechFlow SaaS",
-      description: "Conversion‑focused marketing site and onboarding flow for a B2B SaaS.",
-      result: "+62% trial signups after redesign and copy overhaul",
-      category: "SaaS Website",
+      name: "SaaS Startup",
+      description: "Website redesign + AI onboarding flow.",
+      result: "42% increase in conversions",
+      category: "SaaS",
     },
     {
-      name: "EcoStore",
-      description: "E‑commerce experience for sustainable products with optimized checkout.",
-      result: "3× revenue growth in 6 months",
-      category: "E‑commerce",
-    },
-    {
-      name: "GrowthLab",
-      description: "AI‑driven marketing automation and reporting dashboard.",
-      result: "Reduced manual work by 60%",
-      category: "AI & Automation",
-    },
-    {
-      name: "FitPro App",
-      description: "Coaching platform with programs, payments, and member dashboard.",
-      result: "500% increase in user engagement",
-      category: "Web Application",
-    },
-    {
-      name: "LocalBiz Hub",
-      description: "Directory and booking system for local businesses.",
-      result: "2× more leads generated",
+      name: "Local Service Business",
+      description: "New website + automated lead capture.",
+      result: "3× more inbound leads",
       category: "Local Services",
     },
     {
-      name: "FinanceFlow",
-      description: "Financial dashboards with live data and role‑based access.",
-      result: "80% faster reporting process",
-      category: "Internal Tools",
+      name: "AI Product",
+      description: "Landing page + product positioning.",
+      result: "60% increase in demo bookings",
+      category: "AI & B2B",
     },
   ];
 
@@ -43,17 +25,17 @@ export default function Portfolio() {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl sm:text-5xl font-bold text-text dark:text-white mb-4">
-            Selected work
+            Featured Work
           </h2>
           <p className="text-xl text-text-light dark:text-gray-400 max-w-2xl mx-auto">
-            Outcome‑driven projects shipped for startups and growing brands.
+            A sample of systems we’ve built to generate leads and automate growth.
           </p>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
             <div
               key={index}
-              className="p-8 rounded-2xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 hover:border-primary/30 dark:hover:border-primary/40 transition-all hover:shadow-xl group"
+              className="p-8 rounded-2xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 hover:border-primary/40 dark:hover:border-primary/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl group"
             >
               <div className="text-sm text-primary font-medium mb-3">
                 {project.category}

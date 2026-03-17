@@ -2,19 +2,19 @@ export default function Problem() {
   const problems = [
     {
       title: "Your website doesn't bring clients",
-      description: "It just sits there, looking nice but doing nothing.",
+      description: "It just sits there looking nice but doing nothing.",
     },
     {
       title: "Slow and outdated design",
-      description: "Visitors leave before they see what you offer.",
+      description: "Visitors leave before they understand what you offer.",
     },
     {
       title: "No clear system for growth",
-      description: "You're stuck doing everything manually.",
+      description: "Your business depends on inconsistent traffic.",
     },
     {
       title: "Wasting time on manual tasks",
-      description: "Your team could be focusing on what matters.",
+      description: "Your team could focus on higher-value work.",
     },
   ];
 
@@ -26,7 +26,7 @@ export default function Problem() {
             Most websites don't work. They just exist. 👀
           </h2>
           <p className="text-lg text-text-light dark:text-gray-400 max-w-2xl mx-auto">
-            If your site isn't bringing leads, it's just an expensive online brochure.
+            Most websites lose over 70% of visitors before they ever see the offer.
           </p>
         </div>
         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
