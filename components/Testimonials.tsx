@@ -31,7 +31,7 @@ export default function Testimonials() {
     },
     {
       quote:
-        "Apex built a system that automates 80% of our manual work. We can finally focus on growing the business.",
+        "Flowforge Systems built a system that automates 80% of our manual work. We can finally focus on growing the business.",
       author: "Michael Rodriguez",
       role: "CEO, GrowthLab",
       rating: 5,
