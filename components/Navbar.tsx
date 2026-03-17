@@ -13,7 +13,7 @@ export default function Navbar() {
       setScrolled(window.scrollY > 20);
       
       // Update active section based on scroll position
-      const sections = ["hero", "services", "portfolio", "pricing", "contact"];
+      const sections = ["hero", "services", "portfolio", "pricing", "about"];
       const scrollPosition = window.scrollY + 100;
       
       for (let i = sections.length - 1; i >= 0; i--) {
@@ -34,7 +34,7 @@ export default function Navbar() {
     { href: "#services", label: "Services" },
     { href: "#portfolio", label: "Work" },
     { href: "#pricing", label: "Pricing" },
-    { href: "#contact", label: "Contact" },
+    { href: "#about", label: "About" },
   ];
 
   const handleLinkClick = () => {
@@ -53,7 +53,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-20">
           <div className="flex-shrink-0">
             <a href="/" className="text-2xl font-bold text-text dark:text-white hover:text-primary transition-colors">
-              Apex
+              Flowforge Systems
             </a>
           </div>
           <div className="hidden md:flex items-center space-x-6">
