@@ -14,12 +14,21 @@ type ContactMessage = {
   createdAt?: Date;
 };
 
+type Payment = {
+  customerEmail?: string | null;
+  amountTotal?: number | null;
+  currency?: string | null;
+  paymentStatus?: string | null;
+  planName?: string | null;
+  createdAt?: Date;
+};
+
 export const dynamic = "force-dynamic";
 
 export default async function AdminPage() {
   const db = await getDb();
 
-  const [subscribers, messages] = await Promise.all([
+  const [subscribers, messages, payments] = await Promise.all([
     db
       .collection<Subscriber>(COLLECTIONS.newsletterSubscribers)
       .find({}, { projection: { _id: 0 } })
@@ -28,6 +37,12 @@ export default async function AdminPage() {
       .toArray(),
     db
       .collection<ContactMessage>(COLLECTIONS.contactMessages)
+      .find({}, { projection: { _id: 0 } })
+      .sort({ createdAt: -1 })
+      .limit(100)
+      .toArray(),
+    db
+      .collection<Payment>(COLLECTIONS.payments)
       .find({}, { projection: { _id: 0 } })
       .sort({ createdAt: -1 })
       .limit(100)
@@ -43,7 +58,7 @@ export default async function AdminPage() {
               Admin inbox
             </h1>
             <p className="mt-2 text-text-light dark:text-gray-400">
-              Latest 100 newsletter subscribers and contact messages.
+              Latest 100 subscribers, messages, and Stripe payments.
             </p>
           </div>
           <div className="text-sm text-text-light dark:text-gray-400">
@@ -53,7 +68,7 @@ export default async function AdminPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
           <section className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">
             <div className="p-6 border-b border-gray-200 dark:border-gray-700">
               <h2 className="text-xl font-semibold text-text dark:text-white">
@@ -131,6 +146,51 @@ export default async function AdminPage() {
                       <p className="mt-3 text-sm text-text dark:text-gray-200 whitespace-pre-wrap">
                         {m.message}
                       </p>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </section>
+
+          <section className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">
+            <div className="p-6 border-b border-gray-200 dark:border-gray-700">
+              <h2 className="text-xl font-semibold text-text dark:text-white">Payments</h2>
+              <p className="text-sm text-text-light dark:text-gray-400 mt-1">
+                Collection: <span className="font-mono">{COLLECTIONS.payments}</span>
+              </p>
+            </div>
+            <div className="p-6">
+              {payments.length === 0 ? (
+                <p className="text-text-light dark:text-gray-400">No payments yet.</p>
+              ) : (
+                <ul className="space-y-4">
+                  {payments.map((p, i) => (
+                    <li
+                      key={`${p.customerEmail || "unknown"}-${i}`}
+                      className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white/50 dark:bg-gray-900/30 px-4 py-3"
+                    >
+                      <div className="flex flex-wrap items-center justify-between gap-3">
+                        <div>
+                          <div className="font-semibold text-text dark:text-white">
+                            {p.planName || "Unknown plan"}
+                          </div>
+                          <div className="text-sm text-text-light dark:text-gray-400 break-all">
+                            {p.customerEmail || "No email"}
+                          </div>
+                        </div>
+                        <span className="px-2 py-1 rounded-full border border-gray-200 dark:border-gray-700 text-xs text-text-light dark:text-gray-400">
+                          {p.paymentStatus || "unknown"}
+                        </span>
+                      </div>
+                      <div className="mt-2 text-sm text-text dark:text-gray-200">
+                        {typeof p.amountTotal === "number" && p.currency
+                          ? `${(p.amountTotal / 100).toFixed(2)} ${p.currency.toUpperCase()}`
+                          : "Amount unavailable"}
+                      </div>
+                      <div className="mt-1 text-xs text-text-light dark:text-gray-400">
+                        {p.createdAt ? new Date(p.createdAt).toLocaleString() : ""}
+                      </div>
                     </li>
                   ))}
                 </ul>

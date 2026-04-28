@@ -1,10 +1,16 @@
+"use client";
+
+import { useState } from "react";
+
 export default function Pricing() {
+  const [isLoadingPlan, setIsLoadingPlan] = useState<string | null>(null);
   const plans = [
     {
       name: "Starter",
       description: "Simple website",
       target: "For small businesses",
       price: "From $2,999",
+      stripePlanId: "starter",
       features: [
         "Custom design",
         "Mobile responsive",
@@ -20,6 +26,7 @@ export default function Pricing() {
       description: "Custom design + SEO",
       target: "For scaling businesses",
       price: "From $7,999",
+      stripePlanId: "growth",
       features: [
         "Everything in Starter",
         "Advanced SEO optimization",
@@ -36,6 +43,7 @@ export default function Pricing() {
       description: "Web apps + automation",
       target: "For serious growth",
       price: "Custom",
+      stripePlanId: null,
       features: [
         "Everything in Growth",
         "Custom web application",
@@ -48,6 +56,31 @@ export default function Pricing() {
       popular: false,
     },
   ];
+
+  const startCheckout = async (planId: string | null) => {
+    if (!planId) {
+      window.location.href = "#contact";
+      return;
+    }
+    setIsLoadingPlan(planId);
+    try {
+      const res = await fetch("/api/stripe/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ planId }),
+      });
+      const data = (await res.json().catch(() => ({}))) as { url?: string; error?: string };
+      if (!res.ok || !data.url) {
+        throw new Error(data.error || "Could not start checkout.");
+      }
+      window.location.href = data.url;
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Could not start checkout.";
+      window.alert(message);
+    } finally {
+      setIsLoadingPlan(null);
+    }
+  };
 
   return (
     <section id="pricing" className="py-24 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-900">
@@ -91,16 +124,18 @@ export default function Pricing() {
                   </li>
                 ))}
               </ul>
-              <a
-                href="#contact"
+              <button
+                type="button"
+                onClick={() => startCheckout(plan.stripePlanId)}
+                disabled={isLoadingPlan === plan.stripePlanId}
                 className={`block w-full text-center py-3 px-6 rounded-lg font-semibold transition-all ${
                   plan.popular
                     ? "bg-primary text-white hover:bg-primary-dark"
                     : "bg-gray-100 dark:bg-gray-700 text-text dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600"
-                }`}
+                } disabled:opacity-60 disabled:cursor-not-allowed`}
               >
-                {plan.cta}
-              </a>
+                {isLoadingPlan === plan.stripePlanId ? "Redirecting..." : plan.cta}
+              </button>
             </div>
           ))}
         </div>
