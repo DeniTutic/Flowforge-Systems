@@ -7,6 +7,8 @@ export default function NewsletterPopup() {
   const [email, setEmail] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   useEffect(() => {
     // Always show for each visit after delay / scroll
@@ -41,22 +43,37 @@ export default function NewsletterPopup() {
     }, 300);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email && email.includes("@")) {
-      // Here you would typically send the email to your backend/newsletter service
-      console.log("Subscribed:", email);
+    if (!email.trim() || !email.includes("@")) return;
+
+    setSubmitError("");
+    setIsSubmitting(true);
+    try {
+      const res = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email.trim() }),
+      });
+      const data = (await res.json().catch(() => ({}))) as { error?: string };
+
+      if (!res.ok) {
+        setSubmitError(data.error || "Something went wrong. Try again.");
+        return;
+      }
+
       setIsSubmitted(true);
-      
-      // Close popup after showing thank you message for 3 seconds
       setTimeout(() => {
         handleClose();
-        // Reset after closing
         setTimeout(() => {
           setIsSubmitted(false);
           setEmail("");
         }, 300);
       }, 3000);
+    } catch {
+      setSubmitError("Network error. Check your connection and try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -127,14 +144,21 @@ export default function NewsletterPopup() {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter your email"
                     required
-                    className="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-text dark:text-white focus:border-primary focus:ring-2 focus:ring-primary/20 dark:focus:ring-primary/30 outline-none transition-all"
+                    disabled={isSubmitting}
+                    className="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-text dark:text-white focus:border-primary focus:ring-2 focus:ring-primary/20 dark:focus:ring-primary/30 outline-none transition-all disabled:opacity-60"
                   />
                 </div>
+                {submitError && (
+                  <p className="text-sm text-red-600 dark:text-red-400 text-center" role="alert">
+                    {submitError}
+                  </p>
+                )}
                 <button
                   type="submit"
-                  className="w-full bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-dark transition-colors shadow-lg hover:shadow-xl"
+                  disabled={isSubmitting}
+                  className="w-full bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-dark transition-colors shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Subscribe Now
+                  {isSubmitting ? "Subscribing…" : "Subscribe Now"}
                 </button>
                 <p className="text-xs text-text-light dark:text-gray-500 text-center">
                   We respect your privacy. Unsubscribe at any time.
