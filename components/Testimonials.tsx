@@ -24,23 +24,23 @@ export default function Testimonials() {
   const testimonials = [
     {
       quote:
-        "They didn't just build a site — they helped us get more clients. Our leads increased by 3x in the first month.",
-      author: "Sarah Chen",
-      role: "Founder, TechFlow",
+        "They didn't just build a site - they helped us get more clients. Our leads increased by 3x in the first month.",
+      author: "Esed Music",
+      role: "CEO of Vocar d.o.o",
       rating: 5,
     },
     {
       quote:
         "Flowforge Systems built a system that automates 80% of our manual work. We can finally focus on growing the business.",
-      author: "Michael Rodriguez",
-      role: "CEO, GrowthLab",
+      author: "Kemal Mustafic",
+      role: "CEO and Founder of Aurora Code Factory",
       rating: 5,
     },
     {
       quote:
         "Professional, fast, and results-driven. They understand business, not just code. Worth every dollar.",
-      author: "Emily Johnson",
-      role: "Director, EcoStore",
+      author: "Edi Tutic",
+      role: "Project and Product Manager",
       rating: 4.5,
     },
   ];
