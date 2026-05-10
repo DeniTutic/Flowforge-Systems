@@ -23,6 +23,15 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],
       },
+      keyframes: {
+        "underline-in": {
+          "0%": { transform: "scaleX(0.35)", opacity: "0.5" },
+          "100%": { transform: "scaleX(1)", opacity: "1" },
+        },
+      },
+      animation: {
+        "underline-in": "underline-in 0.22s ease-out forwards",
+      },
     },
   },
   plugins: [],

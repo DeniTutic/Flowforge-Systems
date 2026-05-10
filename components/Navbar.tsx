@@ -9,16 +9,19 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState("");
 
   useEffect(() => {
+    const getSectionDocTop = (el: HTMLElement) =>
+      el.getBoundingClientRect().top + window.scrollY;
+
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
-      
-      // Update active section based on scroll position
-      const sections = ["hero", "services", "portfolio", "pricing", "about"];
-      const scrollPosition = window.scrollY + 100;
-      
+
+      // Order must match document order (top → bottom) for reverse scan below
+      const sections = ["hero", "about", "services", "portfolio", "pricing"];
+      const scrollPosition = window.scrollY + 120;
+
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = document.getElementById(sections[i]);
-        if (section && section.offsetTop <= scrollPosition) {
+        if (section && getSectionDocTop(section) <= scrollPosition) {
           setActiveSection(sections[i]);
           break;
         }
@@ -61,7 +64,7 @@ export default function Navbar() {
               <a
                 key={link.href}
                 href={link.href}
-                className={`transition-colors relative ${
+                className={`inline-block pb-1 transition-colors relative ${
                   activeSection === link.href.slice(1)
                     ? "text-primary font-medium"
                     : "text-text dark:text-gray-300 hover:text-primary"
@@ -69,7 +72,10 @@ export default function Navbar() {
               >
                 {link.label}
                 {activeSection === link.href.slice(1) && (
-                  <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary rounded-full" />
+                  <span
+                    className="absolute bottom-0 left-0 right-0 h-0.5 origin-left bg-primary rounded-full motion-safe:animate-underline-in"
+                    aria-hidden
+                  />
                 )}
               </a>
             ))}
