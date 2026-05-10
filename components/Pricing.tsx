@@ -33,7 +33,7 @@ export default function Pricing() {
       name: "Scale",
       description: "Web apps + automation",
       target: "For serious growth",
-      price: "Custom",
+      price: "Quoted per project",
       features: [
         "Everything in Growth",
         "Custom web application",
