@@ -8,7 +8,6 @@ import type { Group } from "three";
 function FloatingNetwork() {
   const nodesRef = useRef<Group>(null);
 
-  // Spin orbiting nodes quickly around the sphere
   useFrame((_, delta) => {
     if (nodesRef.current) {
       nodesRef.current.rotation.y += delta * 4.5;
@@ -17,13 +16,11 @@ function FloatingNetwork() {
 
   return (
     <group>
-      {/* Wireframe sphere */}
       <mesh>
         <sphereGeometry args={[1.4, 32, 32]} />
         <meshBasicMaterial wireframe color="#4ade80" opacity={0.16} transparent />
       </mesh>
 
-      {/* Inner glowing core */}
       <mesh position={[0, 0, 0]}>
         <sphereGeometry args={[0.6, 32, 32]} />
         <meshStandardMaterial
@@ -35,7 +32,6 @@ function FloatingNetwork() {
         />
       </mesh>
 
-      {/* Orbiting nodes */}
       <group ref={nodesRef}>
         {Array.from({ length: 8 }).map((_, i) => {
           const angle = (i / 8) * Math.PI * 2;
@@ -49,7 +45,6 @@ function FloatingNetwork() {
         })}
       </group>
 
-      {/* Lights */}
       <ambientLight intensity={0.35} />
       <directionalLight position={[3, 4, 5]} intensity={0.8} />
       <directionalLight position={[-4, -2, -3]} intensity={0.3} color="#22c55e" />
@@ -77,5 +72,3 @@ export default function ThreeHeroCanvas() {
     </div>
   );
 }
-
-
