@@ -34,5 +34,4 @@ export async function getDb(): Promise<Db> {
 export const COLLECTIONS = {
   newsletterSubscribers: "newsletter_subscribers",
   contactMessages: "contact_messages",
-  payments: "payments",
 } as const;

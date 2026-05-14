@@ -1,32 +1,56 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { STORAGE, type CookieConsentRecord } from "@/lib/siteStorage";
+
+function readStoredConsent(): CookieConsentRecord | null {
+  try {
+    const raw = localStorage.getItem(STORAGE.cookieConsent);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as CookieConsentRecord;
+    if (parsed.choice !== "accepted" && parsed.choice !== "declined") return null;
+    if (typeof parsed.at !== "number") return null;
+    return parsed;
+  } catch {
+    return null;
+  }
+}
 
 export default function CookieConsent() {
+  const [hydrated, setHydrated] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
 
   useEffect(() => {
-    // Always show after a short delay on each visit
+    const existing = readStoredConsent();
+    setHydrated(true);
+    if (existing) return;
     const timer = setTimeout(() => setIsVisible(true), 2000);
     return () => clearTimeout(timer);
   }, []);
 
+  const persist = useCallback((choice: CookieConsentRecord["choice"]) => {
+    try {
+      const record: CookieConsentRecord = { choice, at: Date.now() };
+      localStorage.setItem(STORAGE.cookieConsent, JSON.stringify(record));
+    } catch {
+      /* ignore quota / private mode */
+    }
+  }, []);
+
   const handleAccept = () => {
+    persist("accepted");
     setIsClosing(true);
-    setTimeout(() => {
-      setIsVisible(false);
-    }, 300);
+    setTimeout(() => setIsVisible(false), 300);
   };
 
   const handleDecline = () => {
+    persist("declined");
     setIsClosing(true);
-    setTimeout(() => {
-      setIsVisible(false);
-    }, 300);
+    setTimeout(() => setIsVisible(false), 300);
   };
 
-  if (!isVisible) return null;
+  if (!hydrated || !isVisible) return null;
 
   return (
     <div
@@ -41,24 +65,31 @@ export default function CookieConsent() {
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex-1">
             <p className="text-sm text-text dark:text-gray-300">
-              We use cookies to enhance your browsing experience and analyze site traffic. 
-              By clicking "Accept", you consent to our use of cookies.{" "}
+              We use essential cookies to run this site and optional analytics to understand traffic. By
+              clicking Accept, you agree to our use of cookies as described in our{" "}
               <a href="/privacy" className="text-primary hover:underline">
-                Learn more
+                Privacy Policy
               </a>
+              . See also our{" "}
+              <a href="/terms" className="text-primary hover:underline">
+                Terms of Service
+              </a>
+              .
             </p>
           </div>
-          <div className="flex gap-3">
+          <div className="flex gap-3 shrink-0">
             <button
+              type="button"
               onClick={handleDecline}
-              aria-label="Decline cookie consent"
+              aria-label="Decline optional cookies"
               className="px-4 py-2 text-sm font-medium text-text dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
             >
               Decline
             </button>
             <button
+              type="button"
               onClick={handleAccept}
-              aria-label="Accept all cookies"
+              aria-label="Accept cookies"
               className="px-4 py-2 text-sm font-medium bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors"
             >
               Accept

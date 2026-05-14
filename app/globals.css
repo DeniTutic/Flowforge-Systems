@@ -117,3 +117,21 @@ body {
 .process-number {
   transition: transform 0.3s ease;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-fade-in-up,
+  .animate-popup-in {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .benefit-float {
+    animation: none !important;
+  }
+}
