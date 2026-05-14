@@ -10,6 +10,8 @@ import Portfolio from "@/components/Portfolio";
 import SocialProof from "@/components/SocialProof";
 import Testimonials from "@/components/Testimonials";
 import Pricing from "@/components/Pricing";
+import ProjectEstimator from "@/components/ProjectEstimator";
+import VideoSpotlight from "@/components/VideoSpotlight";
 import FinalCTA from "@/components/FinalCTA";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
@@ -45,6 +47,8 @@ export default function Home() {
       <SocialProof />
       <Testimonials />
       <Pricing />
+      <ProjectEstimator />
+      <VideoSpotlight />
       <FinalCTA />
       <Contact />
       <Footer />

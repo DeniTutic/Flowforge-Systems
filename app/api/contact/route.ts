@@ -1,13 +1,28 @@
 import { NextResponse } from "next/server";
 import { COLLECTIONS, getDb } from "@/lib/mongodb";
 import { getMongoUserMessage } from "@/lib/mongoErrors";
+import { getClientIp } from "@/lib/clientIp";
+import { rateLimit } from "@/lib/rateLimit";
+import { isHoneypotClean, validateFormTiming } from "@/lib/formAbuse";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MAX_NAME = 200;
 const MAX_EMAIL = 320;
 const MAX_MESSAGE = 10000;
 
+const WINDOW_MS = 15 * 60 * 1000;
+const MAX_PER_WINDOW = 8;
+
 export async function POST(request: Request) {
+  const ip = getClientIp(request);
+  const limited = rateLimit(`contact:${ip}`, MAX_PER_WINDOW, WINDOW_MS);
+  if (!limited.ok) {
+    return NextResponse.json(
+      { error: `Too many requests. Try again in ${limited.retryAfterSec} seconds.` },
+      { status: 429 }
+    );
+  }
+
   try {
     let body: unknown;
     try {
@@ -20,7 +35,18 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Invalid body" }, { status: 400 });
     }
 
-    const { name, email, message } = body as Record<string, unknown>;
+    const rec = body as Record<string, unknown>;
+
+    if (!isHoneypotClean(rec.website)) {
+      return NextResponse.json({ error: "Invalid submission." }, { status: 400 });
+    }
+
+    const timing = validateFormTiming(rec.formStartedAt);
+    if (!timing.ok) {
+      return NextResponse.json({ error: timing.message }, { status: 400 });
+    }
+
+    const { name, email, message } = rec;
     const nameStr = typeof name === "string" ? name.trim() : "";
     const emailStr = typeof email === "string" ? email.trim().toLowerCase() : "";
     const messageStr = typeof message === "string" ? message.trim() : "";

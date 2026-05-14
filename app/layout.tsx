@@ -28,7 +28,6 @@ export const metadata: Metadata = {
     title: "Flowforge Systems - Websites & AI systems that drive growth",
     description: "We design and build modern websites and AI automations that turn traffic into clients and help businesses scale faster.",
     images: [`${baseUrl}/og-image.png`],
-    creator: "@flowforge",
   },
   alternates: {
     canonical: baseUrl,
@@ -57,10 +56,6 @@ export default function RootLayout({
     name: "Flowforge Systems",
     description: "Web & AI agency that designs and builds modern websites and automations that drive growth",
     url: baseUrl,
-    sameAs: [
-      "https://twitter.com/flowforge",
-      "https://linkedin.com/company/flowforge-systems",
-    ],
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "Sales",
