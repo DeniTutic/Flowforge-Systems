@@ -50,7 +50,7 @@ export default function Benefits() {
           {benefits.map((benefit, index) => (
             <div
               key={index}
-              className={`benefit-float ${hoveredIndex !== null && hoveredIndex !== index ? "benefit-paused" : ""} ${hoveredIndex === index ? "benefit-hovered" : ""}`}
+              className={`benefit-float motion-reduce:!animate-none ${hoveredIndex !== null && hoveredIndex !== index ? "benefit-paused" : ""} ${hoveredIndex === index ? "benefit-hovered" : ""}`}
               style={{ animationDelay: `${index * 0.4}s` }}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}

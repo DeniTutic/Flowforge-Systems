@@ -48,6 +48,11 @@ export default function Footer() {
                 </a>
               </li>
               <li>
+                <a href="#estimator" className="hover:text-white transition-colors">
+                  Estimator
+                </a>
+              </li>
+              <li>
                 <a href="#contact" className="hover:text-white transition-colors">
                   Contact
                 </a>
@@ -55,16 +60,16 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <h4 className="font-semibold mb-4">Connect</h4>
+            <h4 className="font-semibold mb-4">Legal</h4>
             <ul className="space-y-2 text-gray-400">
               <li>
-                <a href="https://linkedin.com/company/flowforge-systems" rel="noopener noreferrer" target="_blank" className="hover:text-white transition-colors">
-                  LinkedIn
+                <a href="/privacy" className="hover:text-white transition-colors">
+                  Privacy Policy
                 </a>
               </li>
               <li>
-                <a href="https://twitter.com/flowforge" rel="noopener noreferrer" target="_blank" className="hover:text-white transition-colors">
-                  Twitter
+                <a href="/terms" className="hover:text-white transition-colors">
+                  Terms of Service
                 </a>
               </li>
               <li>
@@ -75,8 +80,19 @@ export default function Footer() {
             </ul>
           </div>
         </div>
-        <div className="border-t border-gray-700 pt-8 text-center text-gray-400">
+        <div className="border-t border-gray-700 pt-8 text-center text-gray-400 text-sm space-y-2">
           <p>&copy; {new Date().getFullYear()} Flowforge Systems. All rights reserved.</p>
+          <p>
+            <a href="/privacy" className="hover:text-white transition-colors">
+              Privacy
+            </a>
+            <span className="mx-2 opacity-50" aria-hidden>
+              ·
+            </span>
+            <a href="/terms" className="hover:text-white transition-colors">
+              Terms
+            </a>
+          </p>
         </div>
       </div>
     </footer>
