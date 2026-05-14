@@ -16,7 +16,7 @@ export default function Navbar() {
       setScrolled(window.scrollY > 20);
 
       // Order must match document order (top → bottom) for reverse scan below
-      const sections = ["hero", "about", "services", "portfolio", "pricing"];
+      const sections = ["hero", "about", "services", "portfolio", "pricing", "estimator"];
       const scrollPosition = window.scrollY + 120;
 
       for (let i = sections.length - 1; i >= 0; i--) {
@@ -37,6 +37,7 @@ export default function Navbar() {
     { href: "#services", label: "Services" },
     { href: "#portfolio", label: "Work" },
     { href: "#pricing", label: "Pricing" },
+    { href: "#estimator", label: "Estimator" },
     { href: "#about", label: "About" },
   ];
 
