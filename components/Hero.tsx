@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 
 const ThreeHeroCanvas = dynamic(() => import("./ThreeHeroCanvas"), {
@@ -10,8 +10,24 @@ const ThreeHeroCanvas = dynamic(() => import("./ThreeHeroCanvas"), {
 
 export default function Hero() {
   const heroRef = useRef<HTMLElement>(null);
+  const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const apply = () => setReducedMotion(mq.matches);
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
+
+  useEffect(() => {
+    if (reducedMotion && heroRef.current) {
+      heroRef.current.querySelectorAll(".opacity-0").forEach((el) => {
+        el.classList.remove("opacity-0");
+      });
+      return;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -29,7 +45,7 @@ export default function Hero() {
     }
 
     return () => observer.disconnect();
-  }, []);
+  }, [reducedMotion]);
 
   return (
     <section 
@@ -40,7 +56,7 @@ export default function Hero() {
       {/* Three.js background */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 opacity-35">
-          <ThreeHeroCanvas />
+          {!reducedMotion ? <ThreeHeroCanvas /> : null}
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/85 to-white/96 dark:from-gray-900/95 dark:via-gray-900/90 dark:to-gray-900/96" />
       </div>
@@ -57,7 +73,7 @@ export default function Hero() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12 opacity-0">
             <a
               href="#contact"
-              className="bg-primary text-white px-8 py-4 rounded-xl font-semibold text-lg hover:bg-primary-dark transition-all transform hover:scale-105 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              className="bg-primary text-white px-8 py-4 rounded-xl font-semibold text-lg hover:bg-primary-dark transition-all motion-safe:transform motion-safe:hover:scale-105 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
             >
               Book a Free Strategy Call
             </a>
