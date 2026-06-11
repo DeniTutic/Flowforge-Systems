@@ -24,9 +24,10 @@ export default function VideoSpotlightPlayer({ src }: Props) {
     const tryPlay = () => {
       const v = videoRef.current;
       if (!v) return;
-      v.muted = true;
+      v.muted = false;
+      v.volume = 1;
       void v.play().catch(() => {
-        /* autoplay blocked — user can use controls */
+        /* Some browsers block unmuted autoplay until user interaction */
       });
     };
 
@@ -51,7 +52,6 @@ export default function VideoSpotlightPlayer({ src }: Props) {
         }
       },
       {
-        /* start when ~20% of the player is visible; pause when mostly off-screen */
         threshold: [0, 0.1, 0.2, 0.35, 0.5, 0.75, 1],
         rootMargin: "0px 0px -8% 0px",
       }
@@ -79,16 +79,16 @@ export default function VideoSpotlightPlayer({ src }: Props) {
   return (
     <div
       ref={containerRef}
-      className="relative rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700 shadow-xl aspect-video bg-black"
+      className="relative rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700 shadow-xl aspect-video bg-black [&_video::-webkit-media-controls]:hidden"
     >
       <video
         ref={videoRef}
-        className="absolute inset-0 w-full h-full object-contain"
-        controls
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
         playsInline
         loop
-        muted
-        preload="metadata"
+        preload="auto"
+        disablePictureInPicture
+        disableRemotePlayback
         title="Flowforge — how we work (video)"
         onError={() => {
           setError(
@@ -97,11 +97,6 @@ export default function VideoSpotlightPlayer({ src }: Props) {
         }}
       >
         <source src={src} type="video/mp4" />
-        Your browser does not support embedded video.{" "}
-        <a href="#contact" className="text-primary underline">
-          Contact us
-        </a>
-        .
       </video>
     </div>
   );
