@@ -99,8 +99,8 @@ export default function ProjectEstimator() {
             Smart project estimate
           </h2>
           <p className="text-lg text-text-light dark:text-gray-400 max-w-xl mx-auto">
-            Tell us about your project—we analyze size, complexity, integrations, AI scope, and
-            timeline to suggest an indicative range. Not a final quote.
+            Built for US businesses and founders—adjust the inputs for a conservative ballpark in USD.
+            We confirm scope on a discovery call before any final quote.
           </p>
         </div>
 
@@ -114,7 +114,7 @@ export default function ProjectEstimator() {
               <span className="text-primary font-semibold tabular-nums">{sizeDepth} / 10</span>
             </label>
             <p className="text-xs text-text-light dark:text-gray-500 mb-3">
-              1 = small landing page · 10 = large product or multi-app build
+              1 = simple landing page · 10 = large product or multi-app build (typical US SMB scope)
             </p>
             <input
               id="size-depth"
@@ -241,12 +241,17 @@ export default function ProjectEstimator() {
                 />
               )}
               <p className="text-sm font-medium text-text-light dark:text-gray-400 uppercase tracking-wide text-center">
-                {isAnalyzing ? "Analyzing your project…" : "Indicative range"}
+                {isAnalyzing ? "Analyzing your project…" : "Indicative range (USD)"}
               </p>
             </div>
             <p className="text-3xl sm:text-4xl font-bold text-text dark:text-white text-center tabular-nums">
               {formatUsd(display.low, display.high)}
             </p>
+            {display.aiPowered && (
+              <p className="text-center text-xs text-primary mt-2 font-medium">
+                AI-assisted explanation · prices set by our US rate model
+              </p>
+            )}
 
             <div
               className="mt-5 p-4 rounded-lg bg-white/60 dark:bg-gray-900/40 border border-primary/10 text-sm text-text-light dark:text-gray-300 leading-relaxed"

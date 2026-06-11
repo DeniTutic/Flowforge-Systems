@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { generateAiEstimateNarrative } from "@/lib/aiEstimate";
 import {
   computeProjectEstimate,
   type AiScope,
@@ -47,15 +48,25 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Invalid aiScope" }, { status: 400 });
     }
 
-    const result = computeProjectEstimate({
-      sizeDepth,
-      integrations,
-      complexity,
-      timeline,
-      aiScope,
+    const input = { sizeDepth, integrations, complexity, timeline, aiScope };
+    const base = computeProjectEstimate(input);
+
+    const aiNarrative = await generateAiEstimateNarrative(input, {
+      low: base.low,
+      high: base.high,
     });
 
-    return NextResponse.json(result);
+    if (aiNarrative) {
+      return NextResponse.json({
+        low: base.low,
+        high: base.high,
+        summary: aiNarrative.summary,
+        factors: aiNarrative.factors,
+        aiPowered: true,
+      });
+    }
+
+    return NextResponse.json(base);
   } catch (e) {
     console.error("[api/estimate]", e);
     return NextResponse.json({ error: "Could not compute estimate." }, { status: 500 });
