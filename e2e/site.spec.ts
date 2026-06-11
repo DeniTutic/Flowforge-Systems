@@ -18,8 +18,8 @@ test.describe("marketing site", () => {
     await expect(page.getByRole("heading", { name: "Terms of Service" })).toBeVisible();
   });
 
-  test("project estimator section", async ({ page }) => {
+  test("smart project estimate section", async ({ page }) => {
     await page.goto("/");
-    await expect(page.getByRole("heading", { name: /Project estimator/i })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /Smart project estimate/i })).toBeVisible();
   });
 });
