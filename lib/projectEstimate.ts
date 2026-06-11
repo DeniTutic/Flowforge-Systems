@@ -15,26 +15,47 @@ export type EstimateResult = {
   high: number;
   summary: string;
   factors: string[];
+  aiPowered?: boolean;
 };
 
+/** Realistic US indie/small-agency ballparks (USD), aligned with Flowforge pricing tiers. */
 const complexityMultiplier: Record<Complexity, number> = {
-  focused: 0.9,
+  focused: 0.88,
   standard: 1,
-  large: 1.4,
+  large: 1.22,
 };
 
 const timelineMultiplier: Record<Timeline, number> = {
-  flexible: 0.95,
+  flexible: 0.92,
   normal: 1,
-  rush: 1.2,
+  rush: 1.1,
 };
 
 const aiAddon: Record<AiScope, { low: number; high: number; label: string }> = {
   none: { low: 0, high: 0, label: "No AI features" },
-  light: { low: 1200, high: 2800, label: "Light AI (chat widget, embeds)" },
-  moderate: { low: 3500, high: 7500, label: "Moderate AI (workflows, automations)" },
-  advanced: { low: 8000, high: 18000, label: "Advanced AI (custom models, multi-agent)" },
+  light: { low: 750, high: 1800, label: "Light AI (chat widget, embeds)" },
+  moderate: { low: 2200, high: 4800, label: "Moderate AI (workflows, automations)" },
+  advanced: { low: 5500, high: 12000, label: "Advanced AI (custom AI systems)" },
 };
+
+export const INPUT_LABELS = {
+  complexity: {
+    focused: "Focused scope (marketing site, few templates)",
+    standard: "Standard build (custom design + CMS)",
+    large: "Large / multi-system (portals, apps, many flows)",
+  },
+  timeline: {
+    flexible: "Flexible timeline",
+    normal: "Normal timeline",
+    rush: "Rush / tight timeline",
+  },
+  aiScope: {
+    none: "No AI",
+    light: "Light AI",
+    moderate: "Moderate AI",
+    advanced: "Advanced AI",
+  },
+} as const;
 
 function clampSizeDepth(n: number): number {
   return Math.min(10, Math.max(1, Math.round(n)));
@@ -44,16 +65,16 @@ export function computeProjectEstimate(raw: EstimateInput): EstimateResult {
   const sizeDepth = clampSizeDepth(raw.sizeDepth);
   const integrations = Math.min(10, Math.max(0, Math.round(raw.integrations)));
 
-  const sizeFactor = 0.55 + sizeDepth * 0.12;
-  let baseLow = 2400 * sizeFactor;
-  let baseHigh = 4800 * sizeFactor;
+  /* Size 1 ≈ $1.8k–$3.2k base; each step adds modest US-market increment */
+  let baseLow = 1600 + sizeDepth * 320;
+  let baseHigh = 2800 + sizeDepth * 580;
 
   const cMul = complexityMultiplier[raw.complexity];
   baseLow *= cMul;
   baseHigh *= cMul;
 
-  baseLow += integrations * 420;
-  baseHigh += integrations * 880;
+  baseLow += integrations * 320;
+  baseHigh += integrations * 620;
 
   const ai = aiAddon[raw.aiScope];
   baseLow += ai.low;
@@ -65,7 +86,11 @@ export function computeProjectEstimate(raw: EstimateInput): EstimateResult {
 
   baseLow = Math.round(baseLow / 100) * 100;
   baseHigh = Math.round(baseHigh / 100) * 100;
-  if (baseHigh <= baseLow) baseHigh = baseLow + 900;
+  if (baseHigh <= baseLow) baseHigh = baseLow + 700;
+
+  /* Soft ceiling guard so sliders never produce absurd enterprise numbers */
+  baseHigh = Math.min(baseHigh, 45000);
+  baseLow = Math.min(baseLow, Math.max(1500, baseHigh - 12000));
 
   const complexityLabel =
     raw.complexity === "focused"
@@ -82,22 +107,33 @@ export function computeProjectEstimate(raw: EstimateInput): EstimateResult {
         : "accelerated delivery";
 
   const factors = [
-    `Size & depth ${sizeDepth}/10 scales core design and build effort.`,
-    `${complexityLabel.charAt(0).toUpperCase() + complexityLabel.slice(1)} adjusts architecture and QA.`,
+    `Size & depth ${sizeDepth}/10 — typical for US small businesses and startups at this scale.`,
+    `${complexityLabel.charAt(0).toUpperCase() + complexityLabel.slice(1)} — common for agencies serving SMB clients.`,
     integrations > 0
-      ? `${integrations} integration${integrations === 1 ? "" : "s"} add API, auth, and testing work.`
-      : "No third-party integrations keeps the stack simpler.",
-    ai.label + (raw.aiScope === "none" ? "." : " included."),
-    `${timelineLabel.charAt(0).toUpperCase() + timelineLabel.slice(1)} affects resourcing and priority.`,
+      ? `${integrations} integration${integrations === 1 ? "" : "s"} — CRM, payments, or APIs add setup and QA time.`
+      : "No third-party integrations — keeps build and maintenance lean.",
+    ai.label + (raw.aiScope === "none" ? "." : " — priced conservatively for US project budgets."),
+    `${timelineLabel.charAt(0).toUpperCase() + timelineLabel.slice(1)} — rush work may require focused resourcing.`,
   ];
 
-  const summary = `Based on your inputs, we estimate a **${formatUsd(baseLow, baseHigh)}** project. A size score of **${sizeDepth}/10** with **${complexityLabel}**, **${integrations}** integration${integrations === 1 ? "" : "s"}, and **${ai.label.toLowerCase()}** on a **${timelineLabel}** suggests this range. Final pricing depends on discovery, content readiness, and technical constraints—we confirm everything in a formal quote.`;
+  const summary = `For a US-based project like yours, we estimate **${formatUsd(baseLow, baseHigh)}**. At **${sizeDepth}/10** size with **${complexityLabel}**, **${integrations}** integration${integrations === 1 ? "" : "s"}, **${ai.label.toLowerCase()}**, and a **${timelineLabel}**, this is a realistic ballpark for a boutique studio—not an enterprise quote. We confirm scope and final pricing after a discovery call.`;
 
-  return { low: baseLow, high: baseHigh, summary, factors };
+  return { low: baseLow, high: baseHigh, summary, factors, aiPowered: false };
 }
 
 export function formatUsd(low: number, high: number): string {
   const fmt = (n: number) =>
     n.toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
   return `${fmt(low)} – ${fmt(high)}`;
+}
+
+export function describeInput(input: EstimateInput) {
+  const sizeDepth = clampSizeDepth(input.sizeDepth);
+  return {
+    sizeDepth,
+    integrations: Math.min(10, Math.max(0, Math.round(input.integrations))),
+    complexity: INPUT_LABELS.complexity[input.complexity],
+    timeline: INPUT_LABELS.timeline[input.timeline],
+    aiScope: INPUT_LABELS.aiScope[input.aiScope],
+  };
 }
