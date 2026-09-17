@@ -48,10 +48,10 @@ export default function Hero() {
   }, [reducedMotion]);
 
   return (
-    <section 
+    <section
       id="hero"
       ref={heroRef}
-      className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white via-gray-50/50 to-gray-50 dark:from-gray-900 dark:via-gray-900/95 dark:to-gray-800 relative overflow-hidden"
+      className="min-h-dvh flex items-center pt-24 pb-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white via-gray-50/50 to-gray-50 dark:from-gray-900 dark:via-gray-900/95 dark:to-gray-800 relative overflow-hidden"
     >
       {/* Three.js background */}
       <div className="absolute inset-0">
@@ -61,7 +61,7 @@ export default function Hero() {
         <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/85 to-white/96 dark:from-gray-900/95 dark:via-gray-900/90 dark:to-gray-900/96" />
       </div>
       
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="max-w-7xl mx-auto relative z-10 w-full">
         <div className="text-center max-w-4xl mx-auto">
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-text dark:text-white mb-6 leading-tight opacity-0">
             Websites and AI systems that generate leads for your business.
