@@ -60,7 +60,7 @@ export default function Testimonials() {
           {testimonials.map((testimonial, index) => (
             <div
               key={index}
-              className="p-8 rounded-2xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md hover:border-primary/20 dark:hover:border-primary/40 transition-all"
+              className="p-8 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md hover:border-primary/20 dark:hover:border-primary/40 transition-all"
             >
               <StarRating rating={testimonial.rating} />
               <p className="text-text-light dark:text-gray-400 mb-6 leading-relaxed text-lg">

@@ -67,7 +67,7 @@ export default function Pricing() {
               className={`p-8 rounded-2xl border-2 transition-all ${
                 plan.popular
                   ? "border-primary bg-gradient-to-br from-primary/5 to-white dark:from-primary/10 dark:to-gray-800 shadow-xl scale-105"
-                  : "border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-primary/30 dark:hover:border-primary/40"
+                  : "border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-primary/30 dark:hover:border-primary/40"
               }`}
             >
               {plan.popular && (

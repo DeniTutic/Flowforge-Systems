@@ -60,7 +60,7 @@ export default function Services() {
               {services.map((service, index) => (
                 <div
                   key={service.title}
-                  className={`p-10 sm:p-12 rounded-3xl bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-800/80 border border-gray-100 dark:border-gray-700 shadow-2xl transition-all duration-700 ease-out ${
+                  className={`p-10 sm:p-12 rounded-3xl bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-800/80 border border-gray-200 dark:border-gray-700 shadow-2xl transition-all duration-700 ease-out ${
                     index === activeIndex
                       ? "opacity-100 translate-x-0"
                       : "opacity-0 -translate-x-6 pointer-events-none absolute inset-0"

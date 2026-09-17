@@ -40,7 +40,7 @@ export default function Problem() {
           {problems.map((problem, index) => (
             <div
               key={index}
-              className="group relative p-8 rounded-2xl bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 border-l-[3px] border-l-rose-400/70 dark:border-l-rose-500/60 hover:border-primary/20 dark:hover:border-primary/40 hover:border-l-rose-400 dark:hover:border-l-rose-400 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 overflow-hidden"
+              className="group relative p-8 rounded-2xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 border-l-[3px] border-l-rose-400/70 dark:border-l-rose-500/60 hover:border-primary/20 dark:hover:border-primary/40 hover:border-l-rose-400 dark:hover:border-l-rose-400 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 overflow-hidden"
             >
               <div className="absolute inset-0 opacity-0 group-hover:opacity-10 pointer-events-none transition-opacity duration-300 bg-gradient-to-br from-primary/60 via-transparent to-emerald-400/60" />
               <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-rose-500/10 dark:bg-rose-500/15 text-2xl mb-4">

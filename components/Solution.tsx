@@ -19,15 +19,15 @@ export default function Solution() {
               automate workflows, and support long-term business growth.
             </p>
             <div className="grid sm:grid-cols-3 gap-4">
-              <div className="p-5 rounded-xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 shadow-sm">
+              <div className="p-5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm">
                 <div className="text-2xl font-bold text-primary mb-1">10+</div>
                 <div className="text-sm text-text-light dark:text-gray-400">Projects Shipped</div>
               </div>
-              <div className="p-5 rounded-xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 shadow-sm">
+              <div className="p-5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm">
                 <div className="text-2xl font-bold text-primary mb-1">100%</div>
                 <div className="text-sm text-text-light dark:text-gray-400">Client Satisfaction</div>
               </div>
-              <div className="p-5 rounded-xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 shadow-sm">
+              <div className="p-5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm">
                 <div className="text-2xl font-bold text-primary mb-1">2–4 weeks</div>
                 <div className="text-sm text-text-light dark:text-gray-400">Typical Delivery</div>
               </div>

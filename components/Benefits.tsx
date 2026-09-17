@@ -64,7 +64,7 @@ export default function Benefits() {
               onMouseLeave={() => setHoveredIndex(null)}
             >
               <div
-                className={`p-6 rounded-xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 transition-all duration-300 ${
+                className={`p-6 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 transition-all duration-300 ${
                   hoveredIndex === index
                     ? "shadow-lg border-primary/30 dark:border-primary/40 ring-2 ring-primary/10"
                     : "hover:shadow-md"

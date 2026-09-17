@@ -44,7 +44,7 @@ export default function Portfolio() {
           {projects.map((project, index) => (
             <div
               key={index}
-              className="rounded-2xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 hover:border-primary/40 dark:hover:border-primary/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl group overflow-hidden"
+              className="rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:border-primary/40 dark:hover:border-primary/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl group overflow-hidden"
             >
               {/* Stylized project visual (illustrative mockup, not an actual client screenshot) */}
               <div className={`relative h-36 bg-gradient-to-br ${project.gradient} overflow-hidden`}>
@@ -72,7 +72,7 @@ export default function Portfolio() {
                   {project.name}
                 </h3>
                 <p className="text-text-light dark:text-gray-400 mb-4">{project.description}</p>
-                <div className="pt-4 border-t border-gray-100 dark:border-gray-700">
+                <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
                   <div className="text-lg font-semibold text-primary">
                     {project.result}
                   </div>
