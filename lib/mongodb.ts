@@ -27,7 +27,7 @@ function getClientPromise(): Promise<MongoClient> {
 
 export async function getDb(): Promise<Db> {
   const client = await getClientPromise();
-  const dbName = process.env.MONGODB_DB || "apex";
+  const dbName = process.env.MONGODB_DB || "flowforge";
   return client.db(dbName);
 }
 
