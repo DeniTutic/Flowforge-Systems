@@ -25,7 +25,7 @@ export default function Problem() {
   ];
 
   return (
-    <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-900">
+    <section id="problem" className="py-24 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-900">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <SectionEyebrow icon="👀">The problem</SectionEyebrow>

@@ -110,6 +110,17 @@ export default function Hero() {
           </div>
         </div>
       </div>
+
+      <a
+        href="#problem"
+        aria-label="Scroll to learn more"
+        className="hidden sm:flex absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex-col items-center gap-2 text-text-light dark:text-gray-500 hover:text-primary dark:hover:text-primary transition-colors motion-safe:animate-bounce"
+      >
+        <span className="text-[0.65rem] font-medium uppercase tracking-[0.2em]">Scroll</span>
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+        </svg>
+      </a>
     </section>
   );
 }

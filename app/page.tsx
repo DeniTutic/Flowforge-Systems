@@ -10,6 +10,7 @@ import SocialProof from "@/components/SocialProof";
 import Testimonials from "@/components/Testimonials";
 import Pricing from "@/components/Pricing";
 import ProjectEstimator from "@/components/ProjectEstimator";
+import FAQ from "@/components/FAQ";
 import VideoSpotlight from "@/components/VideoSpotlight";
 import FinalCTA from "@/components/FinalCTA";
 import Contact from "@/components/Contact";
@@ -46,6 +47,7 @@ export default function Home() {
       <Testimonials />
       <Pricing />
       <ProjectEstimator />
+      <FAQ />
       <VideoSpotlight />
       <FinalCTA />
       <Contact />
