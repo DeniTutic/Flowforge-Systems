@@ -5,18 +5,22 @@ export default function Problem() {
     {
       title: "Your website doesn't bring clients",
       description: "It just sits there looking nice but doing nothing.",
+      icon: "💤",
     },
     {
       title: "Slow and outdated design",
       description: "Visitors leave before they understand what you offer.",
+      icon: "🐢",
     },
     {
       title: "No clear system for growth",
       description: "Your business depends on inconsistent traffic.",
+      icon: "📉",
     },
     {
       title: "Wasting time on manual tasks",
       description: "Your team could focus on higher-value work.",
+      icon: "⏳",
     },
   ];
 
@@ -36,16 +40,13 @@ export default function Problem() {
           {problems.map((problem, index) => (
             <div
               key={index}
-              className="group relative p-8 rounded-2xl bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 hover:border-primary/20 dark:hover:border-primary/40 transition-all hover:shadow-lg overflow-hidden"
+              className="group relative p-8 rounded-2xl bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 border-l-[3px] border-l-rose-400/70 dark:border-l-rose-500/60 hover:border-primary/20 dark:hover:border-primary/40 hover:border-l-rose-400 dark:hover:border-l-rose-400 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 overflow-hidden"
             >
               <div className="absolute inset-0 opacity-0 group-hover:opacity-10 pointer-events-none transition-opacity duration-300 bg-gradient-to-br from-primary/60 via-transparent to-emerald-400/60" />
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-rose-500/10 dark:bg-rose-500/15 text-2xl mb-4">
+                {problem.icon}
+              </div>
               <h3 className="text-xl font-semibold text-text dark:text-white mb-3">
-                <span className="mr-2">
-                  {index === 0 && "💤"}
-                  {index === 1 && "🐢"}
-                  {index === 2 && "📉"}
-                  {index === 3 && "⏳"}
-                </span>
                 {problem.title}
               </h3>
               <p className="text-text-light dark:text-gray-400 leading-relaxed">

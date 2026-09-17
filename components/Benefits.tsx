@@ -8,31 +8,37 @@ const benefits = [
     title: "Fast performance",
     description: "Lightning-fast load times that keep visitors engaged.",
     emoji: "⚡",
+    color: "bg-amber-500/10 dark:bg-amber-500/15",
   },
   {
     title: "Mobile-first",
     description: "Perfect experience on every device, every time.",
     emoji: "📱",
+    color: "bg-sky-500/10 dark:bg-sky-500/15",
   },
   {
     title: "SEO-ready",
     description: "Built to rank and attract organic traffic.",
     emoji: "🔍",
+    color: "bg-emerald-500/10 dark:bg-emerald-500/15",
   },
   {
     title: "Secure & scalable",
     description: "Enterprise-grade security that grows with you.",
     emoji: "🔒",
+    color: "bg-violet-500/10 dark:bg-violet-500/15",
   },
   {
     title: "Easy to manage",
     description: "Simple content management you'll actually use.",
     emoji: "✨",
+    color: "bg-primary/10 dark:bg-primary/15",
   },
   {
     title: "Built for growth",
     description: "Designed to scale as your business expands.",
     emoji: "📈",
+    color: "bg-rose-500/10 dark:bg-rose-500/15",
   },
 ];
 
@@ -64,7 +70,11 @@ export default function Benefits() {
                     : "hover:shadow-md"
                 }`}
               >
-                <div className="text-3xl mb-3">{benefit.emoji}</div>
+                <div
+                  className={`inline-flex items-center justify-center w-12 h-12 rounded-xl ${benefit.color} text-2xl mb-3`}
+                >
+                  {benefit.emoji}
+                </div>
                 <h3 className="text-lg font-semibold text-text dark:text-white mb-2">
                   {benefit.title}
                 </h3>
