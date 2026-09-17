@@ -1,3 +1,5 @@
+import SectionEyebrow from "./SectionEyebrow";
+
 export default function Problem() {
   const problems = [
     {
@@ -22,8 +24,9 @@ export default function Problem() {
     <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-900">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
+          <SectionEyebrow icon="👀">The problem</SectionEyebrow>
           <h2 className="text-4xl sm:text-5xl font-bold text-text dark:text-white mb-4">
-            Most websites don't work. They just exist. 👀
+            Most websites don't work. They just exist.
           </h2>
           <p className="text-lg text-text-light dark:text-gray-400 max-w-2xl mx-auto">
             Most websites lose over 70% of visitors before they ever see the offer.
@@ -33,7 +36,7 @@ export default function Problem() {
           {problems.map((problem, index) => (
             <div
               key={index}
-              className="relative p-8 rounded-2xl bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 hover:border-primary/20 dark:hover:border-primary/40 transition-all hover:shadow-lg overflow-hidden"
+              className="group relative p-8 rounded-2xl bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 hover:border-primary/20 dark:hover:border-primary/40 transition-all hover:shadow-lg overflow-hidden"
             >
               <div className="absolute inset-0 opacity-0 group-hover:opacity-10 pointer-events-none transition-opacity duration-300 bg-gradient-to-br from-primary/60 via-transparent to-emerald-400/60" />
               <h3 className="text-xl font-semibold text-text dark:text-white mb-3">

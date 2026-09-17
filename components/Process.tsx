@@ -1,5 +1,7 @@
 "use client";
 
+import SectionEyebrow from "./SectionEyebrow";
+
 const steps = [
   {
     number: "01",
@@ -40,6 +42,7 @@ export default function Process() {
     <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-900">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
+          <SectionEyebrow icon="🧭">Our process</SectionEyebrow>
           <h2 className="text-4xl sm:text-5xl font-bold text-text dark:text-white mb-4">
             How we work
           </h2>

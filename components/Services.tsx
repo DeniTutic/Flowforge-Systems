@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import SectionEyebrow from "./SectionEyebrow";
 
 export default function Services() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -45,6 +46,7 @@ export default function Services() {
     <section id="services" className="py-24 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-900">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
+          <SectionEyebrow icon="🛠️">What we do</SectionEyebrow>
           <h2 className="text-4xl sm:text-5xl font-bold text-text dark:text-white mb-4">
             What we build for you
           </h2>

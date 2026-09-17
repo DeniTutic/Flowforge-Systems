@@ -1,3 +1,5 @@
+import SectionEyebrow from "./SectionEyebrow";
+
 function StarRating({ rating }: { rating: number }) {
   return (
     <div className="flex items-center gap-0.5 mb-4" aria-label={`${rating} out of 5 stars`}>
@@ -49,6 +51,7 @@ export default function Testimonials() {
     <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
+          <SectionEyebrow icon="💬">Testimonials</SectionEyebrow>
           <h2 className="text-4xl sm:text-5xl font-bold text-text dark:text-white mb-4">
             What clients say
           </h2>
