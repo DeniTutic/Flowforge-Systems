@@ -8,7 +8,8 @@ type Props = {
 
 export default function VideoSpotlightPlayer({ src }: Props) {
   const [error, setError] = useState<string | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const [muted, setMuted] = useState(true);
+  const containerRef = useRef<HTMLButtonElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -24,10 +25,8 @@ export default function VideoSpotlightPlayer({ src }: Props) {
     const tryPlay = () => {
       const v = videoRef.current;
       if (!v) return;
-      v.muted = false;
-      v.volume = 1;
       void v.play().catch(() => {
-        /* Some browsers block unmuted autoplay until user interaction */
+        /* Some browsers block autoplay until user interaction */
       });
     };
 
@@ -77,15 +76,19 @@ export default function VideoSpotlightPlayer({ src }: Props) {
   }
 
   return (
-    <div
+    <button
+      type="button"
       ref={containerRef}
-      className="relative rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700 shadow-xl aspect-video bg-black [&_video::-webkit-media-controls]:hidden"
+      onClick={() => setMuted((m) => !m)}
+      aria-label={muted ? "Unmute video" : "Mute video"}
+      className="group relative block w-full p-0 appearance-none text-left rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700 shadow-xl aspect-video bg-black cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900 [&_video::-webkit-media-controls]:hidden"
     >
       <video
         ref={videoRef}
-        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+        className="absolute inset-0 w-full h-full object-cover"
         playsInline
         loop
+        muted={muted}
         preload="auto"
         disablePictureInPicture
         disableRemotePlayback
@@ -98,6 +101,35 @@ export default function VideoSpotlightPlayer({ src }: Props) {
       >
         <source src={src} type="video/mp4" />
       </video>
-    </div>
+
+      <span className="absolute bottom-4 right-4 flex items-center justify-center w-10 h-10 rounded-full bg-black/60 text-white backdrop-blur-sm transition-transform group-hover:scale-110">
+        {muted ? (
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
+            />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 9l4 6m0-6l-4 6" />
+          </svg>
+        ) : (
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
+            />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M15.536 8.464a5 5 0 010 7.072M18.364 5.636a9 9 0 010 12.728"
+            />
+          </svg>
+        )}
+      </span>
+    </button>
   );
 }
