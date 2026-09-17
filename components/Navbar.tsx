@@ -34,10 +34,10 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
+    { href: "#about", label: "About" },
     { href: "#services", label: "Services" },
     { href: "#portfolio", label: "Work" },
     { href: "#pricing", label: "Pricing" },
-    { href: "#about", label: "About" },
   ];
 
   const handleLinkClick = () => {

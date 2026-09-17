@@ -94,7 +94,7 @@ export default function ProjectEstimator() {
   return (
     <section
       id="estimator"
-      className="py-24 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-800/50 border-y border-gray-100 dark:border-gray-700/80"
+      className="py-24 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-800/50 border-y border-gray-200 dark:border-gray-700/80"
     >
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
@@ -103,8 +103,8 @@ export default function ProjectEstimator() {
             Smart project estimate
           </h2>
           <p className="text-lg text-text-light dark:text-gray-400 max-w-xl mx-auto">
-            Built for US businesses and founders—adjust the inputs for a conservative ballpark in USD.
-            We confirm scope on a discovery call before any final quote.
+            Answer a few quick questions for an instant, conservative ballpark in USD—built for US
+            businesses and founders. We confirm scope on a discovery call before any final quote.
           </p>
         </div>
 
@@ -283,7 +283,7 @@ export default function ProjectEstimator() {
                 )}
 
                 <div
-                  className="mt-5 p-4 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-100 dark:border-gray-700/80 text-sm text-text-light dark:text-gray-300 leading-relaxed"
+                  className="mt-5 p-4 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700/80 text-sm text-text-light dark:text-gray-300 leading-relaxed"
                   aria-live="polite"
                 >
                   <p className="text-xs font-semibold uppercase tracking-wide text-primary mb-2">

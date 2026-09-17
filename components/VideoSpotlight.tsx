@@ -15,13 +15,7 @@ export default function VideoSpotlight() {
             How we work
           </h2>
           <p className="text-lg text-text-light dark:text-gray-400 max-w-2xl mx-auto">
-            A short video walkthrough of our process. Use a file from the{" "}
-            <code className="text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">public/</code>{" "}
-            folder, or a Loom embed—see{" "}
-            <code className="text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded break-all">
-              .env.example
-            </code>
-            .
+            A quick look at how we take your project from first call to launch.
           </p>
         </div>
 
