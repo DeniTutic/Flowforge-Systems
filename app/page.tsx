@@ -5,7 +5,6 @@ import Problem from "@/components/Problem";
 import Solution from "@/components/Solution";
 import Services from "@/components/Services";
 import Benefits from "@/components/Benefits";
-import Process from "@/components/Process";
 import Portfolio from "@/components/Portfolio";
 import SocialProof from "@/components/SocialProof";
 import Testimonials from "@/components/Testimonials";
@@ -42,7 +41,6 @@ export default function Home() {
       <Solution />
       <Services />
       <Benefits />
-      <Process />
       <Portfolio />
       <SocialProof />
       <Testimonials />

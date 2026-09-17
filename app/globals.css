@@ -109,15 +109,6 @@ body {
   transform: scale(1.02);
 }
 
-/* Process step hover */
-.process-step:hover .process-number {
-  transform: scale(1.05);
-  transition: transform 0.3s ease;
-}
-.process-number {
-  transition: transform 0.3s ease;
-}
-
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

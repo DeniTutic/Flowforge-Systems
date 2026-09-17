@@ -69,7 +69,6 @@ npm run start
 │   ├── Solution.tsx        # Solution section
 │   ├── Services.tsx        # Services grid
 │   ├── Benefits.tsx        # Benefits grid
-│   ├── Process.tsx         # Process steps
 │   ├── Portfolio.tsx       # Portfolio projects
 │   ├── SocialProof.tsx     # Social proof stats
 │   ├── Testimonials.tsx    # Client testimonials
