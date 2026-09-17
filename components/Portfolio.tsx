@@ -20,6 +20,15 @@ export default function Portfolio() {
       gradient: "from-violet-600 to-purple-700",
       url: "https://vela-situationship-ai-tranlator.vercel.app",
     },
+    {
+      name: "CVlens",
+      description: "AI CV analysis with a prioritized, actionable rewrite plan.",
+      result: "Results in under a minute",
+      category: "AI Tools",
+      icon: "🔍",
+      gradient: "from-amber-600 to-orange-700",
+      url: "https://ai-cv-cc.vercel.app",
+    },
   ];
 
   return (
@@ -34,7 +43,7 @@ export default function Portfolio() {
             Real projects we’ve shipped — click through to see them live.
           </p>
         </div>
-        <div className="grid sm:grid-cols-2 gap-8 max-w-3xl mx-auto">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
             <a
               key={index}
