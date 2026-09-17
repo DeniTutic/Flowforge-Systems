@@ -69,6 +69,20 @@ body {
   animation: fadeInUp 0.6s ease-out forwards;
 }
 
+/* Hero dashboard mockup chart line draw-in */
+@keyframes drawLine {
+  from {
+    stroke-dashoffset: 100;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-draw-line {
+  animation: drawLine 1.6s ease-out forwards;
+}
+
 /* Newsletter popup entrance */
 @keyframes popupSlideIn {
   from {
