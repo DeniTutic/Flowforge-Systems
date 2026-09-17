@@ -104,7 +104,7 @@ export default function Hero() {
             </div>
           </div>
 
-          <div className="opacity-0 max-w-md mx-auto lg:max-w-none w-full">
+          <div className="opacity-0 max-w-lg mx-auto lg:max-w-none w-full">
             <HeroDashboardMockup />
           </div>
         </div>
