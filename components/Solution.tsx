@@ -1,9 +1,5 @@
-import dynamic from "next/dynamic";
-
-const ThreeMiniCanvas = dynamic(() => import("./ThreeMiniCanvas"), {
-  ssr: false,
-  loading: () => null,
-});
+import HowWeWorkFlow from "./HowWeWorkFlow";
+import SectionEyebrow from "./SectionEyebrow";
 
 export default function Solution() {
   return (
@@ -14,6 +10,7 @@ export default function Solution() {
       <div className="max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
+            <SectionEyebrow icon="🧭">Why Flowforge</SectionEyebrow>
             <h2 className="text-4xl sm:text-5xl font-bold text-text dark:text-white mb-6">
               We build systems, not just websites.
             </h2>
@@ -39,7 +36,7 @@ export default function Solution() {
           <div className="relative">
             <div className="absolute -inset-4 bg-gradient-to-tr from-primary/10 via-emerald-400/5 to-sky-500/10 blur-3xl opacity-70" />
             <div className="relative">
-              <ThreeMiniCanvas />
+              <HowWeWorkFlow />
             </div>
           </div>
         </div>

@@ -10,7 +10,7 @@ function FloatingNetwork() {
 
   useFrame((_, delta) => {
     if (nodesRef.current) {
-      nodesRef.current.rotation.y += delta * 4.5;
+      nodesRef.current.rotation.y += delta * 0.35;
     }
   });
 
@@ -65,7 +65,7 @@ export default function ThreeHeroCanvas() {
             enablePan={false}
             enableRotate={false}
             autoRotate
-            autoRotateSpeed={4}
+            autoRotateSpeed={0.6}
           />
         </Suspense>
       </Canvas>
