@@ -3,28 +3,22 @@ import SectionEyebrow from "./SectionEyebrow";
 export default function Portfolio() {
   const projects = [
     {
-      name: "SaaS Startup",
-      description: "Website redesign + AI onboarding flow.",
-      result: "42% increase in conversions",
-      category: "SaaS",
-      icon: "📊",
-      gradient: "from-blue-500 to-indigo-600",
+      name: "Voćar",
+      description: "Full website redesign + SEO overhaul for a 35-year snack brand.",
+      result: "1,000+ customers reached",
+      category: "Food & Retail",
+      icon: "🍎",
+      gradient: "from-red-500 to-rose-600",
+      url: "https://vocar-website.vercel.app",
     },
     {
-      name: "Local Service Business",
-      description: "New website + automated lead capture.",
-      result: "3× more inbound leads",
-      category: "Local Services",
-      icon: "🏪",
-      gradient: "from-emerald-500 to-teal-600",
-    },
-    {
-      name: "AI Product",
-      description: "Landing page + product positioning.",
-      result: "60% increase in demo bookings",
-      category: "AI & B2B",
-      icon: "🤖",
-      gradient: "from-violet-500 to-fuchsia-600",
+      name: "Vela",
+      description: "AI-powered landing page + product design.",
+      result: "Thousands of users onboarded",
+      category: "AI SaaS",
+      icon: "✨",
+      gradient: "from-violet-600 to-purple-700",
+      url: "https://vela-situationship-ai-tranlator.vercel.app",
     },
   ];
 
@@ -37,16 +31,19 @@ export default function Portfolio() {
             Featured Work
           </h2>
           <p className="text-xl text-text-light dark:text-gray-400 max-w-2xl mx-auto">
-            A sample of systems we’ve built to generate leads and automate growth.
+            Real projects we’ve shipped — click through to see them live.
           </p>
         </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid sm:grid-cols-2 gap-8 max-w-3xl mx-auto">
           {projects.map((project, index) => (
-            <div
+            <a
               key={index}
-              className="rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:border-primary/40 dark:hover:border-primary/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl group overflow-hidden"
+              href={project.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:border-primary/40 dark:hover:border-primary/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl group overflow-hidden"
             >
-              {/* Stylized project visual (illustrative mockup, not an actual client screenshot) */}
+              {/* Stylized visual header (not a screenshot) — the project details and results below are real */}
               <div className={`relative h-36 bg-gradient-to-br ${project.gradient} overflow-hidden`}>
                 <div className="absolute -right-6 -bottom-8 w-32 h-32 rounded-full bg-white/10 blur-md" />
                 <div className="absolute -left-4 -top-6 w-20 h-20 rounded-full bg-white/10 blur-md" />
@@ -73,12 +70,23 @@ export default function Portfolio() {
                 </h3>
                 <p className="text-text-light dark:text-gray-400 mb-4">{project.description}</p>
                 <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
-                  <div className="text-lg font-semibold text-primary">
+                  <div className="text-lg font-semibold text-primary mb-2">
                     {project.result}
                   </div>
+                  <span className="inline-flex items-center gap-1 text-sm font-medium text-text-light dark:text-gray-400 group-hover:text-primary transition-colors">
+                    Visit live site
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                      />
+                    </svg>
+                  </span>
                 </div>
               </div>
-            </div>
+            </a>
           ))}
         </div>
       </div>
