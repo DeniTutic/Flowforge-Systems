@@ -3,12 +3,14 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   computeProjectEstimate,
+  estimateTier,
   formatUsd,
   type AiScope,
   type Complexity,
   type EstimateResult,
   type Timeline,
 } from "@/lib/projectEstimate";
+import SectionEyebrow from "./SectionEyebrow";
 
 const complexityOptions: { value: Complexity; label: string; hint: string }[] = [
   { value: "focused", label: "Focused scope", hint: "Marketing site, few templates" },
@@ -87,14 +89,16 @@ export default function ProjectEstimator() {
   }, [runEstimate]);
 
   const display = result ?? computeProjectEstimate(input);
+  const tier = estimateTier(display.high);
 
   return (
     <section
       id="estimator"
       className="py-24 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-800/50 border-y border-gray-100 dark:border-gray-700/80"
     >
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
+          <SectionEyebrow icon="✨">AI-powered estimate</SectionEyebrow>
           <h2 className="text-4xl sm:text-5xl font-bold text-text dark:text-white mb-4">
             Smart project estimate
           </h2>
@@ -104,183 +108,212 @@ export default function ProjectEstimator() {
           </p>
         </div>
 
-        <div className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-6 sm:p-8 shadow-sm space-y-8">
-          <div>
-            <label
-              htmlFor="size-depth"
-              className="flex justify-between text-sm font-medium text-text dark:text-gray-200 mb-2"
-            >
-              <span>Size &amp; depth</span>
-              <span className="text-primary font-semibold tabular-nums">{sizeDepth} / 10</span>
-            </label>
-            <p className="text-xs text-text-light dark:text-gray-500 mb-3">
-              1 = simple landing page · 10 = large product or multi-app build (typical US SMB scope)
-            </p>
-            <input
-              id="size-depth"
-              type="number"
-              min={1}
-              max={10}
-              step={1}
-              value={sizeDepth}
-              onChange={(e) => {
-                const v = Number(e.target.value);
-                if (Number.isFinite(v)) setSizeDepth(Math.min(10, Math.max(1, v)));
-              }}
-              className="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-text dark:text-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none"
-            />
-          </div>
-
-          <div>
-            <p className="text-sm font-medium text-text dark:text-gray-200 mb-3">Complexity</p>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-              {complexityOptions.map((opt) => (
-                <button
-                  key={opt.value}
-                  type="button"
-                  onClick={() => setComplexity(opt.value)}
-                  className={`rounded-xl border px-3 py-3 text-left transition-all ${
-                    complexity === opt.value
-                      ? "border-primary bg-primary/10 dark:bg-primary/20"
-                      : "border-gray-200 dark:border-gray-600 hover:border-primary/40"
-                  }`}
-                >
-                  <span
-                    className={`block text-sm font-medium ${
-                      complexity === opt.value ? "text-primary" : "text-text dark:text-gray-200"
-                    }`}
-                  >
-                    {opt.label}
-                  </span>
-                  <span className="block text-xs text-text-light dark:text-gray-500 mt-0.5">
-                    {opt.hint}
-                  </span>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <div className="flex justify-between text-sm font-medium text-text dark:text-gray-200 mb-2">
-              <span>Integrations</span>
-              <span className="text-text-light dark:text-gray-400 tabular-nums">{integrations}</span>
-            </div>
-            <p className="text-xs text-text-light dark:text-gray-500 mb-3">
-              CRM, payments, analytics, custom APIs, etc.
-            </p>
-            <input
-              type="range"
-              min={0}
-              max={10}
-              step={1}
-              value={integrations}
-              onChange={(e) => setIntegrations(Number(e.target.value))}
-              className="w-full h-2 rounded-lg appearance-none bg-gray-200 dark:bg-gray-700 accent-primary cursor-pointer"
-              aria-valuemin={0}
-              aria-valuemax={10}
-              aria-valuenow={integrations}
-              aria-label="Number of integrations"
-            />
-          </div>
-
-          <div>
-            <p className="text-sm font-medium text-text dark:text-gray-200 mb-3">AI scope</p>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-              {aiOptions.map((opt) => (
-                <button
-                  key={opt.value}
-                  type="button"
-                  onClick={() => setAiScope(opt.value)}
-                  className={`rounded-xl border px-3 py-3 text-left transition-all ${
-                    aiScope === opt.value
-                      ? "border-primary bg-primary/10 dark:bg-primary/20"
-                      : "border-gray-200 dark:border-gray-600 hover:border-primary/40"
-                  }`}
-                >
-                  <span
-                    className={`block text-sm font-medium ${
-                      aiScope === opt.value ? "text-primary" : "text-text dark:text-gray-200"
-                    }`}
-                  >
-                    {opt.label}
-                  </span>
-                  <span className="block text-xs text-text-light dark:text-gray-500 mt-0.5">
-                    {opt.hint}
-                  </span>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <p className="text-sm font-medium text-text dark:text-gray-200 mb-3">Timeline</p>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-              {timelineOptions.map((opt) => (
-                <button
-                  key={opt.value}
-                  type="button"
-                  onClick={() => setTimeline(opt.value)}
-                  className={`rounded-xl border px-3 py-3 text-sm font-medium transition-all ${
-                    timeline === opt.value
-                      ? "border-primary bg-primary/10 text-primary dark:bg-primary/20"
-                      : "border-gray-200 dark:border-gray-600 text-text-light dark:text-gray-400 hover:border-primary/40"
-                  }`}
-                >
-                  {opt.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="rounded-xl bg-primary/5 dark:bg-primary/10 border border-primary/20 px-5 py-6">
-            <div className="flex items-center justify-center gap-2 mb-1">
-              {isAnalyzing && (
-                <span
-                  className="inline-block w-2 h-2 rounded-full bg-primary animate-pulse motion-reduce:animate-none"
-                  aria-hidden
-                />
-              )}
-              <p className="text-sm font-medium text-text-light dark:text-gray-400 uppercase tracking-wide text-center">
-                {isAnalyzing ? "Analyzing your project…" : "Indicative range (USD)"}
-              </p>
-            </div>
-            <p className="text-3xl sm:text-4xl font-bold text-text dark:text-white text-center tabular-nums">
-              {formatUsd(display.low, display.high)}
-            </p>
-            {display.aiPowered && (
-              <p className="text-center text-xs text-primary mt-2 font-medium">
-                AI-assisted explanation · prices set by our US rate model
-              </p>
-            )}
-
-            <div
-              className="mt-5 p-4 rounded-lg bg-white/60 dark:bg-gray-900/40 border border-primary/10 text-sm text-text-light dark:text-gray-300 leading-relaxed"
-              aria-live="polite"
-            >
-              <p className="text-xs font-semibold uppercase tracking-wide text-primary mb-2">
-                How we calculated this
-              </p>
-              <p>{renderSummary(display.summary)}</p>
-              <ul className="mt-3 space-y-1.5 text-xs text-text-light dark:text-gray-400">
-                {display.factors.map((f) => (
-                  <li key={f} className="flex gap-2">
-                    <span className="text-primary shrink-0">•</span>
-                    <span>{f}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <p className="mt-4 text-sm text-text-light dark:text-gray-400 text-center max-w-md mx-auto">
-              Final pricing depends on project scope, features, timeline, and integrations.
-            </p>
-            <div className="mt-6 text-center">
-              <a
-                href="#contact"
-                className="inline-flex items-center justify-center bg-primary text-white px-8 py-3 rounded-xl font-semibold hover:bg-primary-dark transition-colors shadow-md"
+        <div className="grid lg:grid-cols-5 gap-6 lg:gap-8 items-start">
+          {/* Inputs */}
+          <div className="lg:col-span-3 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-6 sm:p-8 shadow-sm space-y-8">
+            <div>
+              <label
+                htmlFor="size-depth"
+                className="flex justify-between items-baseline text-sm font-medium text-text dark:text-gray-200 mb-2"
               >
-                Request a quote
-              </a>
+                <span className="flex items-center gap-1.5">
+                  <span aria-hidden>📐</span> Size &amp; depth
+                </span>
+                <span className="text-primary font-bold text-lg tabular-nums">{sizeDepth}/10</span>
+              </label>
+              <p className="text-xs text-text-light dark:text-gray-500 mb-3">
+                1 = simple landing page · 10 = large product or multi-app build (typical US SMB scope)
+              </p>
+              <input
+                id="size-depth"
+                type="range"
+                min={1}
+                max={10}
+                step={1}
+                value={sizeDepth}
+                onChange={(e) => setSizeDepth(Number(e.target.value))}
+                className="w-full h-2 rounded-lg appearance-none bg-gray-200 dark:bg-gray-700 accent-primary cursor-pointer"
+                aria-valuemin={1}
+                aria-valuemax={10}
+                aria-valuenow={sizeDepth}
+                aria-label="Size and depth"
+              />
+              <div className="flex justify-between text-[0.65rem] text-text-light dark:text-gray-500 mt-1.5 px-0.5">
+                <span>Landing page</span>
+                <span>Multi-app build</span>
+              </div>
+            </div>
+
+            <div>
+              <p className="text-sm font-medium text-text dark:text-gray-200 mb-3 flex items-center gap-1.5">
+                <span aria-hidden>🧩</span> Complexity
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                {complexityOptions.map((opt) => (
+                  <button
+                    key={opt.value}
+                    type="button"
+                    onClick={() => setComplexity(opt.value)}
+                    className={`rounded-xl border px-3 py-3 text-left transition-all ${
+                      complexity === opt.value
+                        ? "border-primary bg-primary/10 dark:bg-primary/20 ring-1 ring-primary/30"
+                        : "border-gray-200 dark:border-gray-600 hover:border-primary/40"
+                    }`}
+                  >
+                    <span
+                      className={`block text-sm font-medium ${
+                        complexity === opt.value ? "text-primary" : "text-text dark:text-gray-200"
+                      }`}
+                    >
+                      {opt.label}
+                    </span>
+                    <span className="block text-xs text-text-light dark:text-gray-500 mt-0.5">
+                      {opt.hint}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <div className="flex justify-between items-baseline text-sm font-medium text-text dark:text-gray-200 mb-2">
+                <span className="flex items-center gap-1.5">
+                  <span aria-hidden>🔌</span> Integrations
+                </span>
+                <span className="text-primary font-bold text-lg tabular-nums">{integrations}</span>
+              </div>
+              <p className="text-xs text-text-light dark:text-gray-500 mb-3">
+                CRM, payments, analytics, custom APIs, etc.
+              </p>
+              <input
+                type="range"
+                min={0}
+                max={10}
+                step={1}
+                value={integrations}
+                onChange={(e) => setIntegrations(Number(e.target.value))}
+                className="w-full h-2 rounded-lg appearance-none bg-gray-200 dark:bg-gray-700 accent-primary cursor-pointer"
+                aria-valuemin={0}
+                aria-valuemax={10}
+                aria-valuenow={integrations}
+                aria-label="Number of integrations"
+              />
+            </div>
+
+            <div>
+              <p className="text-sm font-medium text-text dark:text-gray-200 mb-3 flex items-center gap-1.5">
+                <span aria-hidden>🤖</span> AI scope
+              </p>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                {aiOptions.map((opt) => (
+                  <button
+                    key={opt.value}
+                    type="button"
+                    onClick={() => setAiScope(opt.value)}
+                    className={`rounded-xl border px-3 py-3 text-left transition-all ${
+                      aiScope === opt.value
+                        ? "border-primary bg-primary/10 dark:bg-primary/20 ring-1 ring-primary/30"
+                        : "border-gray-200 dark:border-gray-600 hover:border-primary/40"
+                    }`}
+                  >
+                    <span
+                      className={`block text-sm font-medium ${
+                        aiScope === opt.value ? "text-primary" : "text-text dark:text-gray-200"
+                      }`}
+                    >
+                      {opt.label}
+                    </span>
+                    <span className="block text-xs text-text-light dark:text-gray-500 mt-0.5">
+                      {opt.hint}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <p className="text-sm font-medium text-text dark:text-gray-200 mb-3 flex items-center gap-1.5">
+                <span aria-hidden>⏱️</span> Timeline
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                {timelineOptions.map((opt) => (
+                  <button
+                    key={opt.value}
+                    type="button"
+                    onClick={() => setTimeline(opt.value)}
+                    className={`rounded-xl border px-3 py-3 text-sm font-medium transition-all ${
+                      timeline === opt.value
+                        ? "border-primary bg-primary/10 text-primary dark:bg-primary/20 ring-1 ring-primary/30"
+                        : "border-gray-200 dark:border-gray-600 text-text-light dark:text-gray-400 hover:border-primary/40"
+                    }`}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Result */}
+          <div className="lg:col-span-2 lg:sticky lg:top-24">
+            <div className="relative rounded-2xl border border-primary/20 bg-gradient-to-b from-primary/[0.06] to-transparent dark:from-primary/10 dark:to-transparent p-1 shadow-lg overflow-hidden">
+              <div
+                className={`pointer-events-none absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent transition-opacity duration-300 ${
+                  isAnalyzing ? "opacity-100 animate-pulse" : "opacity-0"
+                }`}
+                aria-hidden
+              />
+              <div className="rounded-xl bg-white dark:bg-gray-900 px-6 py-7 sm:px-7 sm:py-8">
+                <div className="flex items-center justify-center gap-2 mb-3">
+                  <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-primary/10 dark:bg-primary/15 text-primary text-[0.68rem] font-semibold uppercase tracking-wide">
+                    ≈ {tier} package
+                  </span>
+                </div>
+
+                <p className="text-xs font-medium text-text-light dark:text-gray-500 uppercase tracking-wide text-center mb-1">
+                  {isAnalyzing ? "Analyzing your project…" : "Indicative range (USD)"}
+                </p>
+                <p className="text-4xl sm:text-5xl font-extrabold text-center tabular-nums bg-gradient-to-br from-text via-primary to-primary-dark dark:from-white dark:via-primary dark:to-primary bg-clip-text text-transparent leading-tight">
+                  {formatUsd(display.low, display.high)}
+                </p>
+                {display.aiPowered && (
+                  <p className="text-center text-xs text-primary mt-2 font-medium flex items-center justify-center gap-1">
+                    <span aria-hidden>✨</span> AI-assisted explanation · prices set by our US rate model
+                  </p>
+                )}
+
+                <div
+                  className="mt-5 p-4 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-100 dark:border-gray-700/80 text-sm text-text-light dark:text-gray-300 leading-relaxed"
+                  aria-live="polite"
+                >
+                  <p className="text-xs font-semibold uppercase tracking-wide text-primary mb-2">
+                    How we calculated this
+                  </p>
+                  <p>{renderSummary(display.summary)}</p>
+                  <ul className="mt-3 space-y-1.5 text-xs text-text-light dark:text-gray-400">
+                    {display.factors.map((f) => (
+                      <li key={f} className="flex gap-2">
+                        <span className="text-primary shrink-0" aria-hidden>
+                          ✓
+                        </span>
+                        <span>{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <p className="mt-4 text-xs text-text-light dark:text-gray-500 text-center">
+                  Final pricing depends on project scope, features, timeline, and integrations.
+                </p>
+                <div className="mt-6 text-center">
+                  <a
+                    href="#contact"
+                    className="inline-flex w-full items-center justify-center bg-primary text-white px-8 py-3.5 rounded-xl font-semibold hover:bg-primary-dark transition-all hover:scale-[1.02] shadow-md hover:shadow-lg"
+                  >
+                    Request a quote
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>

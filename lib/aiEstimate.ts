@@ -1,5 +1,5 @@
 import type { EstimateInput } from "@/lib/projectEstimate";
-import { describeInput, formatUsd } from "@/lib/projectEstimate";
+import { describeInput, estimateTier, formatUsd } from "@/lib/projectEstimate";
 
 type AiNarrative = { summary: string; factors: string[] };
 
@@ -14,17 +14,19 @@ export async function generateAiEstimateNarrative(
 
   const described = describeInput(input);
   const range = formatUsd(numbers.low, numbers.high);
+  const tier = estimateTier(numbers.high);
 
-  const system = `You write brief project estimate explanations for Flowforge Systems, a US web & AI studio serving American small businesses, startups, and growing companies.
+  const system = `You write project estimate explanations for Flowforge Systems, a boutique US web & AI studio serving American small businesses, startups, and growing companies. Flowforge sells three packages: Starter (simple websites), Growth (custom design + SEO), and Scale (web apps + automation).
 
 Rules:
-- The price range is FIXED at ${range}. Never suggest different dollar amounts.
+- The price range is FIXED at ${range}. Never suggest different dollar amounts, and never invent a number that isn't ${range}.
+- This scope roughly maps to the "${tier}" package — you may reference that package by name once, naturally, but don't hard-sell it.
 - Be realistic and conservative for the US market. Do not inflate or use enterprise/agency hype.
-- Tone: professional, plain English, trustworthy consulting—not salesy.
-- Audience: US business owners evaluating a website or automation project.
+- Tone: confident senior consultant giving a straight answer, not a sales page. Plain English, specific to THESE inputs — avoid generic filler that could apply to any project.
+- Audience: a US business owner sizing up a website or automation project.
 - Output valid JSON only: {"summary":"...","factors":["...","...","...","..."]}
-- summary: 2-3 sentences, plain text (no markdown). Mention the fixed range once as "${range}".
-- factors: exactly 4 short bullets explaining what drove the estimate (size, complexity, integrations, AI, timeline).`;
+- summary: 2-3 sentences, plain text (no markdown). Open with a direct read on the project, then mention the range once as "${range}".
+- factors: exactly 4 short bullets (max ~12 words each), each naming the SPECIFIC input value driving cost (not a generic category label) — e.g. reference the actual complexity tier, the exact integration count, the specific AI scope, and the exact timeline chosen.`;
 
   const user = `Project inputs:
 - Size & depth: ${described.sizeDepth}/10
@@ -44,7 +46,7 @@ Write the JSON explanation for this US client.`;
       },
       body: JSON.stringify({
         model: MODEL,
-        temperature: 0.4,
+        temperature: 0.55,
         response_format: { type: "json_object" },
         messages: [
           { role: "system", content: system },

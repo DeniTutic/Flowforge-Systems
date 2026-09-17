@@ -18,6 +18,15 @@ export type EstimateResult = {
   aiPowered?: boolean;
 };
 
+export type PricingTier = "Starter" | "Growth" | "Scale";
+
+/** Rough package mapping used to badge the estimate — keep in sync with Pricing.tsx tiers. */
+export function estimateTier(high: number): PricingTier {
+  if (high <= 4500) return "Starter";
+  if (high <= 10000) return "Growth";
+  return "Scale";
+}
+
 /** Realistic US indie/small-agency ballparks (USD), aligned with Flowforge pricing tiers. */
 const complexityMultiplier: Record<Complexity, number> = {
   focused: 0.88,
