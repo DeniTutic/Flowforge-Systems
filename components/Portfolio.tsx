@@ -7,8 +7,9 @@ export default function Portfolio() {
       description: "Full website redesign + SEO overhaul for a 35-year snack brand.",
       result: "1,000+ customers reached",
       category: "Food & Retail",
-      icon: "🍎",
+      monogram: "Vo",
       gradient: "from-red-500 to-rose-600",
+      accentText: "text-red-600",
       url: "https://vocar-website.vercel.app",
     },
     {
@@ -16,8 +17,9 @@ export default function Portfolio() {
       description: "AI-powered landing page + product design.",
       result: "Thousands of users onboarded",
       category: "AI SaaS",
-      icon: "✨",
+      monogram: "Ve",
       gradient: "from-violet-600 to-purple-700",
+      accentText: "text-violet-600",
       url: "https://vela-situationship-ai-tranlator.vercel.app",
     },
     {
@@ -25,8 +27,9 @@ export default function Portfolio() {
       description: "AI CV analysis with a prioritized, actionable rewrite plan.",
       result: "Results in under a minute",
       category: "AI Tools",
-      icon: "🔍",
+      monogram: "CV",
       gradient: "from-amber-600 to-orange-700",
+      accentText: "text-orange-600",
       url: "https://ai-cv-cc.vercel.app",
     },
   ];
@@ -61,8 +64,12 @@ export default function Portfolio() {
                   <span className="w-2 h-2 rounded-full bg-white/40" />
                   <span className="w-2 h-2 rounded-full bg-white/40" />
                 </div>
-                <div className="absolute inset-0 flex items-center justify-center text-5xl drop-shadow-lg transition-transform duration-300 group-hover:scale-110">
-                  {project.icon}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-16 h-16 rounded-2xl bg-white shadow-lg flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+                    <span className={`text-xl font-bold tracking-tight ${project.accentText}`}>
+                      {project.monogram}
+                    </span>
+                  </div>
                 </div>
                 <div className="absolute bottom-4 left-4 right-4 space-y-1.5 opacity-70">
                   <div className="h-1.5 w-2/3 rounded-full bg-white/50" />
