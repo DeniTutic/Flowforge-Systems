@@ -1,5 +1,6 @@
 import HowWeWorkFlow from "./HowWeWorkFlow";
 import SectionEyebrow from "./SectionEyebrow";
+import { IconCompass } from "./icons";
 
 export default function Solution() {
   return (
@@ -10,7 +11,7 @@ export default function Solution() {
       <div className="max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
-            <SectionEyebrow icon="🧭">Why Flowforge</SectionEyebrow>
+            <SectionEyebrow icon={<IconCompass />}>Why Flowforge</SectionEyebrow>
             <h2 className="text-4xl sm:text-5xl font-bold text-text dark:text-white mb-6">
               We build systems, not just websites.
             </h2>

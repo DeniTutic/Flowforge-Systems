@@ -11,6 +11,7 @@ import {
   type Timeline,
 } from "@/lib/projectEstimate";
 import SectionEyebrow from "./SectionEyebrow";
+import { IconSparkles, IconSliders, IconLayers, IconLink, IconCpu, IconClock } from "./icons";
 
 const complexityOptions: { value: Complexity; label: string; hint: string }[] = [
   { value: "focused", label: "Focused scope", hint: "Marketing site, few templates" },
@@ -98,7 +99,7 @@ export default function ProjectEstimator() {
     >
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
-          <SectionEyebrow icon="✨">AI-powered estimate</SectionEyebrow>
+          <SectionEyebrow icon={<IconSparkles />}>AI-powered estimate</SectionEyebrow>
           <h2 className="text-4xl sm:text-5xl font-bold text-text dark:text-white mb-4">
             Smart project estimate
           </h2>
@@ -117,7 +118,7 @@ export default function ProjectEstimator() {
                 className="flex justify-between items-baseline text-sm font-medium text-text dark:text-gray-200 mb-2"
               >
                 <span className="flex items-center gap-1.5">
-                  <span aria-hidden>📐</span> Size &amp; depth
+                  <IconSliders className="w-4 h-4" /> Size &amp; depth
                 </span>
                 <span className="text-primary font-bold text-lg tabular-nums">{sizeDepth}/10</span>
               </label>
@@ -146,7 +147,7 @@ export default function ProjectEstimator() {
 
             <div>
               <p className="text-sm font-medium text-text dark:text-gray-200 mb-3 flex items-center gap-1.5">
-                <span aria-hidden>🧩</span> Complexity
+                <IconLayers className="w-4 h-4" /> Complexity
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                 {complexityOptions.map((opt) => (
@@ -178,7 +179,7 @@ export default function ProjectEstimator() {
             <div>
               <div className="flex justify-between items-baseline text-sm font-medium text-text dark:text-gray-200 mb-2">
                 <span className="flex items-center gap-1.5">
-                  <span aria-hidden>🔌</span> Integrations
+                  <IconLink className="w-4 h-4" /> Integrations
                 </span>
                 <span className="text-primary font-bold text-lg tabular-nums">{integrations}</span>
               </div>
@@ -202,7 +203,7 @@ export default function ProjectEstimator() {
 
             <div>
               <p className="text-sm font-medium text-text dark:text-gray-200 mb-3 flex items-center gap-1.5">
-                <span aria-hidden>🤖</span> AI scope
+                <IconCpu className="w-4 h-4" /> AI scope
               </p>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 {aiOptions.map((opt) => (
@@ -233,7 +234,7 @@ export default function ProjectEstimator() {
 
             <div>
               <p className="text-sm font-medium text-text dark:text-gray-200 mb-3 flex items-center gap-1.5">
-                <span aria-hidden>⏱️</span> Timeline
+                <IconClock className="w-4 h-4" /> Timeline
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                 {timelineOptions.map((opt) => (
@@ -278,7 +279,7 @@ export default function ProjectEstimator() {
                 </p>
                 {display.aiPowered && (
                   <p className="text-center text-xs text-primary mt-2 font-medium flex items-center justify-center gap-1">
-                    <span aria-hidden>✨</span> AI-assisted explanation · prices set by our US rate model
+                    <IconSparkles className="w-3.5 h-3.5" /> AI-assisted explanation · prices set by our US rate model
                   </p>
                 )}
 

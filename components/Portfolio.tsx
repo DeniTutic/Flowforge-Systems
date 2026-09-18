@@ -1,4 +1,5 @@
 import SectionEyebrow from "./SectionEyebrow";
+import { IconFolder } from "./icons";
 
 export default function Portfolio() {
   const projects = [
@@ -38,7 +39,7 @@ export default function Portfolio() {
     <section id="portfolio" className="py-24 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-800/50">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <SectionEyebrow icon="📁">Case studies</SectionEyebrow>
+          <SectionEyebrow icon={<IconFolder />}>Case studies</SectionEyebrow>
           <h2 className="text-4xl sm:text-5xl font-bold text-text dark:text-white mb-4">
             Featured Work
           </h2>

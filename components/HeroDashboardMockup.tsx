@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { IconBriefcase, IconStore, IconCart, IconCpu } from "./icons";
 
 const leads = [
-  { icon: "💼", label: "SaaS Startup", detail: "Requested a demo", aiReply: "AI replied in 8s", time: "Just now" },
-  { icon: "🏪", label: "Local Business", detail: "Booked a strategy call", aiReply: "AI replied in 14s", time: "2m ago" },
-  { icon: "🛒", label: "E-commerce Store", detail: "Downloaded pricing", aiReply: "AI replied in 6s", time: "5m ago" },
-  { icon: "🤖", label: "AI Startup", detail: "Submitted contact form", aiReply: "AI replied in 11s", time: "9m ago" },
+  { icon: IconBriefcase, label: "SaaS Startup", detail: "Requested a demo", aiReply: "AI replied in 8s", time: "Just now" },
+  { icon: IconStore, label: "Local Business", detail: "Booked a strategy call", aiReply: "AI replied in 14s", time: "2m ago" },
+  { icon: IconCart, label: "E-commerce Store", detail: "Downloaded pricing", aiReply: "AI replied in 6s", time: "5m ago" },
+  { icon: IconCpu, label: "AI Startup", detail: "Submitted contact form", aiReply: "AI replied in 11s", time: "9m ago" },
 ];
 
 const channels = [
@@ -206,8 +207,8 @@ export default function HeroDashboardMockup() {
               style={{ opacity: i === 0 ? undefined : 0.6 }}
             >
               <div className="flex items-center gap-3">
-                <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary/10 text-base shrink-0">
-                  {lead.icon}
+                <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary/10 text-primary shrink-0">
+                  <lead.icon className="w-4 h-4" />
                 </span>
                 <div className="min-w-0 flex-1">
                   <p className="text-sm font-medium text-text dark:text-white truncate">{lead.label}</p>
@@ -224,7 +225,7 @@ export default function HeroDashboardMockup() {
                 </span>
               </div>
               <p className="mt-1.5 pl-11 text-[0.7rem] text-primary flex items-center gap-1">
-                <span aria-hidden>🤖</span>
+                <IconCpu className="w-3 h-3" />
                 {lead.aiReply}
               </p>
             </div>

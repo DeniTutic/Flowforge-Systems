@@ -2,43 +2,52 @@
 
 import { useState } from "react";
 import SectionEyebrow from "./SectionEyebrow";
+import {
+  IconStar,
+  IconZap,
+  IconDevicePhone,
+  IconSearch,
+  IconShieldCheck,
+  IconSparkles,
+  IconTrendingUp,
+} from "./icons";
 
 const benefits = [
   {
     title: "Fast performance",
     description: "Lightning-fast load times that keep visitors engaged.",
-    emoji: "⚡",
-    color: "bg-amber-500/10 dark:bg-amber-500/15",
+    icon: IconZap,
+    color: "bg-amber-500/10 dark:bg-amber-500/15 text-amber-600 dark:text-amber-400",
   },
   {
     title: "Mobile-first",
     description: "Perfect experience on every device, every time.",
-    emoji: "📱",
-    color: "bg-sky-500/10 dark:bg-sky-500/15",
+    icon: IconDevicePhone,
+    color: "bg-sky-500/10 dark:bg-sky-500/15 text-sky-600 dark:text-sky-400",
   },
   {
     title: "SEO-ready",
     description: "Built to rank and attract organic traffic.",
-    emoji: "🔍",
-    color: "bg-emerald-500/10 dark:bg-emerald-500/15",
+    icon: IconSearch,
+    color: "bg-emerald-500/10 dark:bg-emerald-500/15 text-emerald-600 dark:text-emerald-400",
   },
   {
     title: "Secure & scalable",
     description: "Enterprise-grade security that grows with you.",
-    emoji: "🔒",
-    color: "bg-violet-500/10 dark:bg-violet-500/15",
+    icon: IconShieldCheck,
+    color: "bg-violet-500/10 dark:bg-violet-500/15 text-violet-600 dark:text-violet-400",
   },
   {
     title: "Easy to manage",
     description: "Simple content management you'll actually use.",
-    emoji: "✨",
-    color: "bg-primary/10 dark:bg-primary/15",
+    icon: IconSparkles,
+    color: "bg-primary/10 dark:bg-primary/15 text-primary",
   },
   {
     title: "Built for growth",
     description: "Designed to scale as your business expands.",
-    emoji: "📈",
-    color: "bg-rose-500/10 dark:bg-rose-500/15",
+    icon: IconTrendingUp,
+    color: "bg-rose-500/10 dark:bg-rose-500/15 text-rose-600 dark:text-rose-400",
   },
 ];
 
@@ -49,7 +58,7 @@ export default function Benefits() {
     <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-800/50 overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <SectionEyebrow icon="⭐">Benefits</SectionEyebrow>
+          <SectionEyebrow icon={<IconStar />}>Benefits</SectionEyebrow>
           <h2 className="text-4xl sm:text-5xl font-bold text-text dark:text-white mb-4">
             Why choose us
           </h2>
@@ -71,9 +80,9 @@ export default function Benefits() {
                 }`}
               >
                 <div
-                  className={`inline-flex items-center justify-center w-12 h-12 rounded-xl ${benefit.color} text-2xl mb-3`}
+                  className={`inline-flex items-center justify-center w-12 h-12 rounded-xl ${benefit.color} mb-3`}
                 >
-                  {benefit.emoji}
+                  <benefit.icon className="w-6 h-6" />
                 </div>
                 <h3 className="text-lg font-semibold text-text dark:text-white mb-2">
                   {benefit.title}

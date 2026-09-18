@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import SectionEyebrow from "./SectionEyebrow";
+import { IconTool, IconRocket, IconCpu, IconTarget, IconTrendingUp } from "./icons";
 
 export default function Services() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -11,25 +12,25 @@ export default function Services() {
       title: "Websites that convert visitors into clients",
       description:
         "High-performance sites with clear messaging, fast load times, and built-in analytics.",
-      icon: "🚀",
+      icon: IconRocket,
     },
     {
       title: "AI systems that automate your work",
       description:
         "Custom chatbots, workflows, and internal tools that save your team hours every week.",
-      icon: "🤖",
+      icon: IconCpu,
     },
     {
       title: "Landing pages that print leads",
       description:
         "Launch-ready pages and funnels optimized for ads, campaigns, and email capture.",
-      icon: "🎯",
+      icon: IconTarget,
     },
     {
       title: "Ongoing optimization & support",
       description:
         "We keep testing, improving, and shipping changes so your conversion rate keeps climbing.",
-      icon: "📈",
+      icon: IconTrendingUp,
     },
   ];
 
@@ -46,7 +47,7 @@ export default function Services() {
     <section id="services" className="py-24 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-900">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <SectionEyebrow icon="🛠️">What we do</SectionEyebrow>
+          <SectionEyebrow icon={<IconTool />}>What we do</SectionEyebrow>
           <h2 className="text-4xl sm:text-5xl font-bold text-text dark:text-white mb-4">
             What we build for you
           </h2>
@@ -66,8 +67,8 @@ export default function Services() {
                       : "opacity-0 -translate-x-6 pointer-events-none absolute inset-0"
                   }`}
                 >
-                  <div className="text-5xl mb-5 animate-pulse-slow">
-                    {service.icon}
+                  <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary/10 text-primary mb-5">
+                    <service.icon className="w-7 h-7" />
                   </div>
                   <h3 className="text-2xl sm:text-3xl font-bold text-text dark:text-white mb-4">
                     {service.title}

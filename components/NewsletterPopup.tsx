@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { STORAGE } from "@/lib/siteStorage";
+import { IconMail, IconCheckCircle } from "./icons";
 
 export default function NewsletterPopup() {
   const [hydrated, setHydrated] = useState(false);
@@ -177,8 +178,11 @@ export default function NewsletterPopup() {
           {!isSubmitted ? (
             <>
               <div className="text-center mb-6">
-                <div className="text-5xl mb-4" aria-hidden>
-                  📧
+                <div
+                  className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 text-primary mb-4"
+                  aria-hidden
+                >
+                  <IconMail className="w-8 h-8" />
                 </div>
                 <h3
                   id="newsletter-popup-title"
@@ -243,8 +247,11 @@ export default function NewsletterPopup() {
             </>
           ) : (
             <div className="text-center py-4">
-              <div className="text-6xl mb-4" aria-hidden>
-                ✅
+              <div
+                className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 mb-4"
+                aria-hidden
+              >
+                <IconCheckCircle className="w-9 h-9" />
               </div>
               <h3 className="text-2xl font-bold text-text dark:text-white mb-2">Thank You!</h3>
               <p className="text-text-light dark:text-gray-400">

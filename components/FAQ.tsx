@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import SectionEyebrow from "./SectionEyebrow";
+import { IconHelpCircle } from "./icons";
 
 const faqs = [
   {
@@ -43,7 +44,7 @@ export default function FAQ() {
     <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-800/50">
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-12">
-          <SectionEyebrow icon="❓">FAQ</SectionEyebrow>
+          <SectionEyebrow icon={<IconHelpCircle />}>FAQ</SectionEyebrow>
           <h2 className="text-4xl sm:text-5xl font-bold text-text dark:text-white mb-4">
             Questions, answered
           </h2>

@@ -1,4 +1,5 @@
 import SectionEyebrow from "./SectionEyebrow";
+import { IconCreditCard } from "./icons";
 
 export default function Pricing() {
   const plans = [
@@ -52,7 +53,7 @@ export default function Pricing() {
     <section id="pricing" className="py-24 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-900">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <SectionEyebrow icon="💳">Plans & pricing</SectionEyebrow>
+          <SectionEyebrow icon={<IconCreditCard />}>Plans & pricing</SectionEyebrow>
           <h2 className="text-4xl sm:text-5xl font-bold text-text dark:text-white mb-4">
             Pricing
           </h2>

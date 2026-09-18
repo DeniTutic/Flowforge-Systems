@@ -1,4 +1,5 @@
 import SectionEyebrow from "./SectionEyebrow";
+import { IconChat } from "./icons";
 
 function StarRating({ rating }: { rating: number }) {
   return (
@@ -51,7 +52,7 @@ export default function Testimonials() {
     <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <SectionEyebrow icon="💬">Testimonials</SectionEyebrow>
+          <SectionEyebrow icon={<IconChat />}>Testimonials</SectionEyebrow>
           <h2 className="text-4xl sm:text-5xl font-bold text-text dark:text-white mb-4">
             What clients say
           </h2>

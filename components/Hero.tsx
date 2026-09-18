@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import HeroDashboardMockup from "./HeroDashboardMockup";
+import { IconBriefcase, IconCpu, IconStore, IconCart } from "./icons";
 
 export default function Hero() {
   const heroRef = useRef<HTMLElement>(null);
@@ -86,16 +87,16 @@ export default function Hero() {
                 </span>
                 <div className="flex flex-wrap justify-center lg:justify-start gap-2.5">
                   {[
-                    { label: "SaaS", icon: "💼" },
-                    { label: "AI Startups", icon: "🤖" },
-                    { label: "Local Businesses", icon: "🏪" },
-                    { label: "E-commerce", icon: "🛒" },
+                    { label: "SaaS", icon: IconBriefcase },
+                    { label: "AI Startups", icon: IconCpu },
+                    { label: "Local Businesses", icon: IconStore },
+                    { label: "E-commerce", icon: IconCart },
                   ].map((tag) => (
                     <span
                       key={tag.label}
                       className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-gray-200/80 dark:border-gray-700/80 bg-white/70 dark:bg-gray-900/70 backdrop-blur text-text-light dark:text-gray-300 text-xs font-medium shadow-sm hover:border-primary/40 hover:text-primary dark:hover:text-primary transition-colors"
                     >
-                      <span aria-hidden>{tag.icon}</span>
+                      <tag.icon className="w-3.5 h-3.5" />
                       {tag.label}
                     </span>
                   ))}

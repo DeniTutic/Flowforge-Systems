@@ -1,13 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { IconCompass, IconPalette, IconTool, IconRocket, IconTrendingUp } from "./icons";
 
 const steps = [
-  { icon: "🧭", title: "Strategy", description: "We understand your business and define the growth system." },
-  { icon: "🎨", title: "Design", description: "We design a modern, conversion-focused interface." },
-  { icon: "🛠️", title: "Build", description: "We develop the website and integrate automation systems." },
-  { icon: "🚀", title: "Launch", description: "We ship your system live and monitor it in the wild." },
-  { icon: "📈", title: "Optimize", description: "We keep testing and refining so results keep climbing." },
+  { icon: IconCompass, title: "Strategy", description: "We understand your business and define the growth system." },
+  { icon: IconPalette, title: "Design", description: "We design a modern, conversion-focused interface." },
+  { icon: IconTool, title: "Build", description: "We develop the website and integrate automation systems." },
+  { icon: IconRocket, title: "Launch", description: "We ship your system live and monitor it in the wild." },
+  { icon: IconTrendingUp, title: "Optimize", description: "We keep testing and refining so results keep climbing." },
 ];
 
 // Line spans center-to-center of the first and last node (not edge-to-edge of the row).
@@ -62,13 +63,13 @@ export default function HowWeWorkFlow() {
               <div
                 className={`flex items-center justify-center rounded-full border-2 transition-all duration-700 ease-out ${
                   i === active
-                    ? "w-14 h-14 sm:w-16 sm:h-16 text-2xl border-primary bg-primary text-white shadow-lg shadow-primary/40"
+                    ? "w-14 h-14 sm:w-16 sm:h-16 border-primary bg-primary text-white shadow-lg shadow-primary/40"
                     : i < active
-                      ? "w-11 h-11 sm:w-12 sm:h-12 text-lg border-primary/60 bg-primary/20 text-primary"
-                      : "w-11 h-11 sm:w-12 sm:h-12 text-lg border-primary/30 bg-primary/10 text-primary"
+                      ? "w-11 h-11 sm:w-12 sm:h-12 border-primary/60 bg-primary/20 text-primary"
+                      : "w-11 h-11 sm:w-12 sm:h-12 border-primary/30 bg-primary/10 text-primary"
                 }`}
               >
-                {step.icon}
+                <step.icon className={i === active ? "w-6 h-6 sm:w-7 sm:h-7" : "w-5 h-5"} />
               </div>
             </div>
           ))}
