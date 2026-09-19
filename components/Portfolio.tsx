@@ -1,3 +1,4 @@
+import Image from "next/image";
 import SectionEyebrow from "./SectionEyebrow";
 import { IconFolder } from "./icons";
 
@@ -8,9 +9,7 @@ export default function Portfolio() {
       description: "Full website redesign + SEO overhaul for a 35-year snack brand.",
       result: "1,000+ customers reached",
       category: "Food & Retail",
-      monogram: "Vo",
-      gradient: "from-red-500 to-rose-600",
-      accentText: "text-red-600",
+      screenshot: "/portfolio/vocar.jpg",
       url: "https://vocar-website.vercel.app",
     },
     {
@@ -18,9 +17,7 @@ export default function Portfolio() {
       description: "AI-powered landing page + product design.",
       result: "Thousands of users onboarded",
       category: "AI SaaS",
-      monogram: "Ve",
-      gradient: "from-violet-600 to-purple-700",
-      accentText: "text-violet-600",
+      screenshot: "/portfolio/vela.jpg",
       url: "https://vela-situationship-ai-tranlator.vercel.app",
     },
     {
@@ -28,9 +25,7 @@ export default function Portfolio() {
       description: "AI CV analysis with a prioritized, actionable rewrite plan.",
       result: "Results in under a minute",
       category: "AI Tools",
-      monogram: "CV",
-      gradient: "from-amber-600 to-orange-700",
-      accentText: "text-orange-600",
+      screenshot: "/portfolio/cvlens.jpg",
       url: "https://ai-cv-cc.vercel.app",
     },
   ];
@@ -56,25 +51,19 @@ export default function Portfolio() {
               rel="noopener noreferrer"
               className="block rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:border-primary/40 dark:hover:border-primary/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl group overflow-hidden"
             >
-              {/* Stylized visual header (not a screenshot) — the project details and results below are real */}
-              <div className={`relative h-36 bg-gradient-to-br ${project.gradient} overflow-hidden`}>
-                <div className="absolute -right-6 -bottom-8 w-32 h-32 rounded-full bg-white/10 blur-md" />
-                <div className="absolute -left-4 -top-6 w-20 h-20 rounded-full bg-white/10 blur-md" />
-                <div className="absolute top-3.5 left-4 flex gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-white/40" />
-                  <span className="w-2 h-2 rounded-full bg-white/40" />
-                  <span className="w-2 h-2 rounded-full bg-white/40" />
-                </div>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-16 h-16 rounded-2xl bg-white shadow-lg flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
-                    <span className={`text-xl font-bold tracking-tight ${project.accentText}`}>
-                      {project.monogram}
-                    </span>
-                  </div>
-                </div>
-                <div className="absolute bottom-4 left-4 right-4 space-y-1.5 opacity-70">
-                  <div className="h-1.5 w-2/3 rounded-full bg-white/50" />
-                  <div className="h-1.5 w-1/3 rounded-full bg-white/30" />
+              {/* Real screenshot of the live site */}
+              <div className="relative h-44 overflow-hidden bg-gray-100 dark:bg-gray-900">
+                <Image
+                  src={project.screenshot}
+                  alt={`${project.name} website screenshot`}
+                  fill
+                  sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                  className="object-cover object-top transition-transform duration-300 group-hover:scale-105"
+                />
+                <div className="absolute top-0 inset-x-0 h-7 bg-gradient-to-b from-black/50 to-transparent flex items-center gap-1.5 px-4">
+                  <span className="w-2 h-2 rounded-full bg-white/70" />
+                  <span className="w-2 h-2 rounded-full bg-white/70" />
+                  <span className="w-2 h-2 rounded-full bg-white/70" />
                 </div>
               </div>
 
