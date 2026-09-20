@@ -1,5 +1,9 @@
 import { defineConfig, devices } from "@playwright/test";
 
+// Point at an already-running dev server with PLAYWRIGHT_PORT=<port> (e.g. when 3000 is taken).
+const port = Number(process.env.PLAYWRIGHT_PORT || 3000);
+const baseURL = `http://127.0.0.1:${port}`;
+
 export default defineConfig({
   testDir: "./e2e",
   fullyParallel: true,
@@ -8,13 +12,13 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   reporter: "list",
   use: {
-    baseURL: "http://127.0.0.1:3000",
+    baseURL,
     trace: "on-first-retry",
   },
   projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
   webServer: {
-    command: "npm run dev",
-    url: "http://127.0.0.1:3000",
+    command: `PORT=${port} npm run dev`,
+    url: baseURL,
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
   },

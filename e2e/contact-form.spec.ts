@@ -14,6 +14,9 @@ test("contact form submits with mocked API", async ({ page }) => {
       await route.continue();
       return;
     }
+    const body = route.request().postDataJSON() as Record<string, unknown>;
+    expect(body.projectType).toBe("website");
+    expect(body.budget).toBe("5k-10k");
     await route.fulfill({
       status: 200,
       contentType: "application/json",
@@ -24,6 +27,8 @@ test("contact form submits with mocked API", async ({ page }) => {
   await page.goto("/#contact");
   await page.getByLabel("Name", { exact: true }).fill("E2E User");
   await page.getByLabel("Email", { exact: true }).fill("e2e@example.com");
+  await page.getByLabel("Project type").selectOption("website");
+  await page.getByLabel("Budget range").selectOption("5k-10k");
   await page
     .getByLabel("Message", { exact: true })
     .fill("This is a test message for automated end-to-end testing.");
