@@ -10,6 +10,7 @@ import {
   type EstimateResult,
   type Timeline,
 } from "@/lib/projectEstimate";
+import Reveal from "./Reveal";
 import SectionEyebrow from "./SectionEyebrow";
 import { IconSparkles, IconSliders, IconLayers, IconLink, IconCpu, IconClock } from "./icons";
 
@@ -95,35 +96,33 @@ export default function ProjectEstimator() {
   return (
     <section
       id="estimator"
-      className="py-24 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-800/50 border-y border-gray-200 dark:border-gray-700/80"
+      className="pt-10 pb-24 sm:pb-28 px-4 sm:px-6 lg:px-8 bg-paper dark:bg-ink scroll-mt-20"
     >
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-12">
+        <Reveal className="text-center mb-12">
           <SectionEyebrow icon={<IconSparkles />}>AI-powered estimate</SectionEyebrow>
-          <h2 className="text-4xl sm:text-5xl font-bold text-text dark:text-white mb-4">
-            Smart project estimate
-          </h2>
-          <p className="text-lg text-text-light dark:text-gray-400 max-w-xl mx-auto">
-            Answer a few quick questions for an instant, conservative ballpark in USD—built for US
-            businesses and founders. We confirm scope on a discovery call before any final quote.
+          <h2 className="section-title mb-4">Not sure? Ballpark it.</h2>
+          <p className="section-lead max-w-xl mx-auto">
+            Answer a few quick questions for an instant, conservative range in USD. We confirm
+            scope on a discovery call before any final quote.
           </p>
-        </div>
+        </Reveal>
 
-        <div className="grid lg:grid-cols-5 gap-6 lg:gap-8 items-start">
+        <Reveal delay={80} className="grid lg:grid-cols-5 gap-6 lg:gap-8 items-start">
           {/* Inputs */}
-          <div className="lg:col-span-3 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-6 sm:p-8 shadow-sm space-y-8">
+          <div className="lg:col-span-3 card p-6 sm:p-8 space-y-8">
             <div>
               <label
                 htmlFor="size-depth"
-                className="flex justify-between items-baseline text-sm font-medium text-text dark:text-gray-200 mb-2"
+                className="flex justify-between items-baseline text-sm font-medium text-text dark:text-white mb-2"
               >
                 <span className="flex items-center gap-1.5">
                   <IconSliders className="w-4 h-4" /> Size &amp; depth
                 </span>
-                <span className="text-primary font-bold text-lg tabular-nums">{sizeDepth}/10</span>
+                <span className="text-primary dark:text-primary-light font-semibold text-lg tabular-nums">{sizeDepth}/10</span>
               </label>
-              <p className="text-xs text-text-light dark:text-gray-500 mb-3">
-                1 = simple landing page · 10 = large product or multi-app build (typical US SMB scope)
+              <p className="text-xs text-text-light dark:text-steel-dark mb-3">
+                1 = simple landing page · 10 = large product or multi-app build
               </p>
               <input
                 id="size-depth"
@@ -133,20 +132,20 @@ export default function ProjectEstimator() {
                 step={1}
                 value={sizeDepth}
                 onChange={(e) => setSizeDepth(Number(e.target.value))}
-                className="w-full h-2 rounded-lg appearance-none bg-gray-200 dark:bg-gray-700 accent-primary cursor-pointer"
+                className="w-full h-2 rounded-lg appearance-none bg-ink/10 dark:bg-white/10 accent-primary cursor-pointer"
                 aria-valuemin={1}
                 aria-valuemax={10}
                 aria-valuenow={sizeDepth}
                 aria-label="Size and depth"
               />
-              <div className="flex justify-between text-[0.65rem] text-text-light dark:text-gray-500 mt-1.5 px-0.5">
+              <div className="flex justify-between text-[0.65rem] text-text-light dark:text-steel-dark mt-1.5 px-0.5">
                 <span>Landing page</span>
                 <span>Multi-app build</span>
               </div>
             </div>
 
             <div>
-              <p className="text-sm font-medium text-text dark:text-gray-200 mb-3 flex items-center gap-1.5">
+              <p className="text-sm font-medium text-text dark:text-white mb-3 flex items-center gap-1.5">
                 <IconLayers className="w-4 h-4" /> Complexity
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
@@ -155,20 +154,20 @@ export default function ProjectEstimator() {
                     key={opt.value}
                     type="button"
                     onClick={() => setComplexity(opt.value)}
-                    className={`rounded-xl border px-3 py-3 text-left transition-all ${
+                    className={`rounded-xl border px-3 py-3 min-h-[44px] text-left transition-all ${
                       complexity === opt.value
-                        ? "border-primary bg-primary/10 dark:bg-primary/20 ring-1 ring-primary/30"
-                        : "border-gray-200 dark:border-gray-600 hover:border-primary/40"
+                        ? "border-primary bg-primary/10 dark:bg-primary/15 ring-1 ring-primary/30"
+                        : "border-line dark:border-line-dark hover:border-primary/40"
                     }`}
                   >
                     <span
                       className={`block text-sm font-medium ${
-                        complexity === opt.value ? "text-primary" : "text-text dark:text-gray-200"
+                        complexity === opt.value ? "text-primary dark:text-primary-light" : "text-text dark:text-white"
                       }`}
                     >
                       {opt.label}
                     </span>
-                    <span className="block text-xs text-text-light dark:text-gray-500 mt-0.5">
+                    <span className="block text-xs text-text-light dark:text-steel-dark mt-0.5">
                       {opt.hint}
                     </span>
                   </button>
@@ -177,13 +176,13 @@ export default function ProjectEstimator() {
             </div>
 
             <div>
-              <div className="flex justify-between items-baseline text-sm font-medium text-text dark:text-gray-200 mb-2">
+              <div className="flex justify-between items-baseline text-sm font-medium text-text dark:text-white mb-2">
                 <span className="flex items-center gap-1.5">
                   <IconLink className="w-4 h-4" /> Integrations
                 </span>
-                <span className="text-primary font-bold text-lg tabular-nums">{integrations}</span>
+                <span className="text-primary dark:text-primary-light font-semibold text-lg tabular-nums">{integrations}</span>
               </div>
-              <p className="text-xs text-text-light dark:text-gray-500 mb-3">
+              <p className="text-xs text-text-light dark:text-steel-dark mb-3">
                 CRM, payments, analytics, custom APIs, etc.
               </p>
               <input
@@ -193,7 +192,7 @@ export default function ProjectEstimator() {
                 step={1}
                 value={integrations}
                 onChange={(e) => setIntegrations(Number(e.target.value))}
-                className="w-full h-2 rounded-lg appearance-none bg-gray-200 dark:bg-gray-700 accent-primary cursor-pointer"
+                className="w-full h-2 rounded-lg appearance-none bg-ink/10 dark:bg-white/10 accent-primary cursor-pointer"
                 aria-valuemin={0}
                 aria-valuemax={10}
                 aria-valuenow={integrations}
@@ -202,7 +201,7 @@ export default function ProjectEstimator() {
             </div>
 
             <div>
-              <p className="text-sm font-medium text-text dark:text-gray-200 mb-3 flex items-center gap-1.5">
+              <p className="text-sm font-medium text-text dark:text-white mb-3 flex items-center gap-1.5">
                 <IconCpu className="w-4 h-4" /> AI scope
               </p>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -211,20 +210,20 @@ export default function ProjectEstimator() {
                     key={opt.value}
                     type="button"
                     onClick={() => setAiScope(opt.value)}
-                    className={`rounded-xl border px-3 py-3 text-left transition-all ${
+                    className={`rounded-xl border px-3 py-3 min-h-[44px] text-left transition-all ${
                       aiScope === opt.value
-                        ? "border-primary bg-primary/10 dark:bg-primary/20 ring-1 ring-primary/30"
-                        : "border-gray-200 dark:border-gray-600 hover:border-primary/40"
+                        ? "border-primary bg-primary/10 dark:bg-primary/15 ring-1 ring-primary/30"
+                        : "border-line dark:border-line-dark hover:border-primary/40"
                     }`}
                   >
                     <span
                       className={`block text-sm font-medium ${
-                        aiScope === opt.value ? "text-primary" : "text-text dark:text-gray-200"
+                        aiScope === opt.value ? "text-primary dark:text-primary-light" : "text-text dark:text-white"
                       }`}
                     >
                       {opt.label}
                     </span>
-                    <span className="block text-xs text-text-light dark:text-gray-500 mt-0.5">
+                    <span className="block text-xs text-text-light dark:text-steel-dark mt-0.5">
                       {opt.hint}
                     </span>
                   </button>
@@ -233,7 +232,7 @@ export default function ProjectEstimator() {
             </div>
 
             <div>
-              <p className="text-sm font-medium text-text dark:text-gray-200 mb-3 flex items-center gap-1.5">
+              <p className="text-sm font-medium text-text dark:text-white mb-3 flex items-center gap-1.5">
                 <IconClock className="w-4 h-4" /> Timeline
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
@@ -242,10 +241,10 @@ export default function ProjectEstimator() {
                     key={opt.value}
                     type="button"
                     onClick={() => setTimeline(opt.value)}
-                    className={`rounded-xl border px-3 py-3 text-sm font-medium transition-all ${
+                    className={`rounded-xl border px-3 py-3 min-h-[44px] text-sm font-medium transition-all ${
                       timeline === opt.value
-                        ? "border-primary bg-primary/10 text-primary dark:bg-primary/20 ring-1 ring-primary/30"
-                        : "border-gray-200 dark:border-gray-600 text-text-light dark:text-gray-400 hover:border-primary/40"
+                        ? "border-primary bg-primary/10 text-primary dark:text-primary-light dark:bg-primary/15 ring-1 ring-primary/30"
+                        : "border-line dark:border-line-dark text-text-light dark:text-steel-dark hover:border-primary/40"
                     }`}
                   >
                     {opt.label}
@@ -257,67 +256,64 @@ export default function ProjectEstimator() {
 
           {/* Result */}
           <div className="lg:col-span-2 lg:sticky lg:top-24">
-            <div className="relative rounded-2xl border border-primary/20 bg-gradient-to-b from-primary/[0.06] to-transparent dark:from-primary/10 dark:to-transparent p-1 shadow-lg overflow-hidden">
+            <div className="relative rounded-2xl border border-primary/25 dark:border-primary/30 bg-paper-soft dark:bg-ink-card shadow-xl shadow-primary/5 overflow-hidden">
               <div
-                className={`pointer-events-none absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent transition-opacity duration-300 ${
+                className={`pointer-events-none absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-transparent via-primary-bright to-transparent transition-opacity duration-300 ${
                   isAnalyzing ? "opacity-100 animate-pulse" : "opacity-0"
                 }`}
                 aria-hidden
               />
-              <div className="rounded-xl bg-white dark:bg-gray-900 px-6 py-7 sm:px-7 sm:py-8">
-                <div className="flex items-center justify-center gap-2 mb-3">
-                  <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-primary/10 dark:bg-primary/15 text-primary text-[0.68rem] font-semibold uppercase tracking-wide">
+              <div className="px-6 py-7 sm:px-7 sm:py-8">
+                <div className="flex items-center justify-center gap-2 mb-4">
+                  <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-primary/10 dark:bg-primary/15 text-primary dark:text-primary-light text-[0.68rem] font-semibold uppercase tracking-wide">
                     ≈ {tier} package
                   </span>
                 </div>
 
-                <p className="text-xs font-medium text-text-light dark:text-gray-500 uppercase tracking-wide text-center mb-1">
+                <p className="text-xs font-medium text-text-light dark:text-steel-dark uppercase tracking-wide text-center mb-1">
                   {isAnalyzing ? "Analyzing your project…" : "Indicative range (USD)"}
                 </p>
-                <p className="text-4xl sm:text-5xl font-extrabold text-center tabular-nums bg-gradient-to-br from-text via-primary to-primary-dark dark:from-white dark:via-primary dark:to-primary bg-clip-text text-transparent leading-tight">
+                <p className="text-4xl sm:text-[2.75rem] font-semibold tracking-display text-center tabular-nums text-text dark:text-white leading-tight">
                   {formatUsd(display.low, display.high)}
                 </p>
                 {display.aiPowered && (
-                  <p className="text-center text-xs text-primary mt-2 font-medium flex items-center justify-center gap-1">
-                    <IconSparkles className="w-3.5 h-3.5" /> AI-assisted explanation · prices set by our US rate model
+                  <p className="text-center text-xs text-primary dark:text-primary-light mt-2 font-medium flex items-center justify-center gap-1">
+                    <IconSparkles className="w-3.5 h-3.5" /> AI-assisted explanation · prices from our rate model
                   </p>
                 )}
 
                 <div
-                  className="mt-5 p-4 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700/80 text-sm text-text-light dark:text-gray-300 leading-relaxed"
+                  className="mt-5 p-4 rounded-xl bg-paper dark:bg-ink-soft border border-line dark:border-line-dark text-sm text-text-light dark:text-steel-dark leading-relaxed"
                   aria-live="polite"
                 >
-                  <p className="text-xs font-semibold uppercase tracking-wide text-primary mb-2">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-primary dark:text-primary-light mb-2">
                     How we calculated this
                   </p>
                   <p>{renderSummary(display.summary)}</p>
-                  <ul className="mt-3 space-y-1.5 text-xs text-text-light dark:text-gray-400">
+                  <ul className="mt-3 space-y-1.5 text-xs">
                     {display.factors.map((f) => (
                       <li key={f} className="flex gap-2">
-                        <span className="text-primary shrink-0" aria-hidden>
-                          ✓
-                        </span>
+                        <svg className="w-3.5 h-3.5 shrink-0 mt-0.5 text-primary dark:text-primary-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 12.5l4.5 4.5L19 7.5" />
+                        </svg>
                         <span>{f}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                <p className="mt-4 text-xs text-text-light dark:text-gray-500 text-center">
-                  Final pricing depends on project scope, features, timeline, and integrations.
+                <p className="mt-4 text-xs text-text-light dark:text-steel-dark text-center">
+                  Final pricing depends on scope, features, timeline, and integrations.
                 </p>
-                <div className="mt-6 text-center">
-                  <a
-                    href="#contact"
-                    className="inline-flex w-full items-center justify-center bg-primary text-white px-8 py-3.5 rounded-xl font-semibold hover:bg-primary-dark transition-all hover:scale-[1.02] shadow-md hover:shadow-lg"
-                  >
-                    Request a quote
+                <div className="mt-6">
+                  <a href="#contact" className="btn-primary w-full">
+                    Get an exact quote
                   </a>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

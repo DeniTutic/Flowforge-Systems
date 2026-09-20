@@ -16,7 +16,7 @@ A premium, modern agency website built with Next.js, TypeScript, and Tailwind CS
 - **Framework**: Next.js 14 (App Router)
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
-- **Font**: Inter (Google Fonts)
+- **Font**: Geist Sans (self-hosted via `next/font`)
 - **Node.js**: v18+ recommended
 
 ## 📦 Getting Started
@@ -65,37 +65,42 @@ npm run start
 ├── components/
 │   ├── Navbar.tsx          # Navigation bar
 │   ├── Hero.tsx            # Hero section
-│   ├── Problem.tsx         # Problem section
-│   ├── Solution.tsx        # Solution section
+│   ├── Portfolio.tsx       # Selected work (#work)
+│   ├── Solution.tsx        # Problem → solution + process stepper (#process)
+│   ├── Problem.tsx         # Compact problem strip (used inside Solution)
 │   ├── Services.tsx        # Services grid
-│   ├── Benefits.tsx        # Benefits grid
-│   ├── Portfolio.tsx       # Portfolio projects
-│   ├── SocialProof.tsx     # Social proof stats
 │   ├── Testimonials.tsx    # Client testimonials
 │   ├── Pricing.tsx         # Pricing tiers
-│   ├── FinalCTA.tsx        # Final call-to-action
-│   ├── Contact.tsx         # Contact form
+│   ├── ProjectEstimator.tsx# AI-assisted ballpark estimate
+│   ├── FAQ.tsx             # Accordion
+│   ├── FinalCTA.tsx        # Closing CTA band
+│   ├── Contact.tsx         # Contact form + "what happens next"
+│   ├── Reveal.tsx          # Scroll-in wrapper
 │   └── Footer.tsx          # Footer
 └── ...
 ```
 
 ## 🎨 Design System
 
-### Colors
-- **Primary**: `#6366f1` (Indigo)
-- **Text**: `#0f172a` (Slate)
-- **Background**: White/Light Gray
+Tokens live in `tailwind.config.ts`; global rules and the `.btn-*` / `.card` / `.section-*` classes in `app/globals.css`.
+
+### Colors ("forge" palette — one accent)
+- **Ember (primary)**: `#C2410C` — buttons, links, icons. Passes WCAG AA on paper/white.
+- **Ember bright**: `#EA580C` — glows, gradients, hover surfaces only (not body text).
+- **Ink**: `#0B0F14` — text on light, canvas on dark.
+- **Paper**: `#F7F6F3` — light canvas; cards are `#FFFFFF`.
+- **Steel**: `#6B7280` / `#9AA3B2` — secondary text (light / dark).
+- Emerald and rose are used only with semantic meaning (success / error / problem).
 
 ### Typography
-- **Font**: Inter
-- **Headings**: Bold, large sizes
-- **Body**: Regular weight, clear hierarchy
+- **Font**: Geist Sans, self-hosted through `next/font` (no FOUT)
+- **Display**: semibold, `tracking-display` (-0.03em)
+- **Section titles**: `.section-title`; leads: `.section-lead`
 
-### Components
-- Rounded cards (`rounded-2xl`)
-- Soft shadows
-- Subtle hover effects
-- Smooth transitions
+### Motion
+- Enter: `<Reveal/>` — fade + 12px rise, once per block, honours `prefers-reduced-motion`
+- Hover: 1px lift + shadow; no scale transforms
+- Dark mode is applied before paint by an inline script in `app/layout.tsx`
 
 ## 📝 Customization
 
@@ -125,8 +130,8 @@ This project is private and proprietary.
 
 ## 💡 Notes
 
-- The contact form currently logs to console - integrate with your backend/email service
-- Portfolio projects use placeholder data - replace with real projects
-- Social links in footer are placeholders - update with your actual links
+- Contact and newsletter forms write to MongoDB (see `.env.example`); `/admin` lists submissions behind Basic Auth
+- Favicon, Apple icon and the Open Graph image are generated at build time from `app/icon.tsx`, `app/apple-icon.tsx`, `app/opengraph-image.tsx`
+- The optional "How we work" video section renders only when `NEXT_PUBLIC_HOW_WE_WORK_VIDEO` or `NEXT_PUBLIC_LOOM_EMBED_URL` is set
 
 Built with ❤️ for Flowforge Systems

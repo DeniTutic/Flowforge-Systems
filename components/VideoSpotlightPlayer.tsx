@@ -60,20 +60,8 @@ export default function VideoSpotlightPlayer({ src }: Props) {
     return () => observer.disconnect();
   }, [error, src]);
 
-  if (error) {
-    return (
-      <div className="rounded-2xl border-2 border-dashed border-amber-300 dark:border-amber-600 bg-amber-50 dark:bg-amber-950/30 aspect-video flex flex-col items-center justify-center gap-3 px-6 text-center">
-        <p className="text-sm text-text dark:text-gray-200 font-medium">Video could not load</p>
-        <p className="text-xs text-text-light dark:text-gray-400 max-w-md">{error}</p>
-        <p className="text-xs text-text-light dark:text-gray-500">
-          Expected file: <code className="bg-white/80 dark:bg-gray-900 px-1 rounded">public{src}</code>
-        </p>
-        <a href="#contact" className="text-primary font-semibold text-sm hover:underline">
-          Book a call instead
-        </a>
-      </div>
-    );
-  }
+  // If the clip fails to load, show nothing rather than a broken frame or setup notes.
+  if (error) return null;
 
   return (
     <button
@@ -81,7 +69,7 @@ export default function VideoSpotlightPlayer({ src }: Props) {
       ref={containerRef}
       onClick={() => setMuted((m) => !m)}
       aria-label={muted ? "Unmute video" : "Mute video"}
-      className="group relative block w-full p-0 appearance-none text-left rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700 shadow-xl aspect-video bg-black cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900 [&_video::-webkit-media-controls]:hidden"
+      className="group relative block w-full p-0 appearance-none text-left rounded-2xl overflow-hidden border border-line dark:border-line-dark shadow-xl aspect-video bg-black cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:focus-visible:ring-offset-ink [&_video::-webkit-media-controls]:hidden"
     >
       <video
         ref={videoRef}
@@ -89,15 +77,11 @@ export default function VideoSpotlightPlayer({ src }: Props) {
         playsInline
         loop
         muted={muted}
-        preload="auto"
+        preload="metadata"
         disablePictureInPicture
         disableRemotePlayback
         title="Flowforge — how we work (video)"
-        onError={() => {
-          setError(
-            "The file may be empty (0 bytes), corrupted, or not a supported format. Re-export from Artlist as MP4 (H.264) and replace public/videos/video.mp4, then hard-refresh."
-          );
-        }}
+        onError={() => setError("unavailable")}
       >
         <source src={src} type="video/mp4" />
       </video>

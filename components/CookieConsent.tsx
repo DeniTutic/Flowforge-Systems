@@ -16,6 +16,9 @@ function readStoredConsent(): CookieConsentRecord | null {
   }
 }
 
+/** Fired so other interrupts (newsletter) know the banner is gone. */
+export const COOKIE_CONSENT_EVENT = "flowforge:cookie-consent";
+
 export default function CookieConsent() {
   const [hydrated, setHydrated] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -25,7 +28,7 @@ export default function CookieConsent() {
     const existing = readStoredConsent();
     setHydrated(true);
     if (existing) return;
-    const timer = setTimeout(() => setIsVisible(true), 2000);
+    const timer = setTimeout(() => setIsVisible(true), 1000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -36,66 +39,44 @@ export default function CookieConsent() {
     } catch {
       /* ignore quota / private mode */
     }
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsVisible(false);
+      window.dispatchEvent(new Event(COOKIE_CONSENT_EVENT));
+    }, 300);
   }, []);
-
-  const handleAccept = () => {
-    persist("accepted");
-    setIsClosing(true);
-    setTimeout(() => setIsVisible(false), 300);
-  };
-
-  const handleDecline = () => {
-    persist("declined");
-    setIsClosing(true);
-    setTimeout(() => setIsVisible(false), 300);
-  };
 
   if (!hydrated || !isVisible) return null;
 
   return (
     <div
       role="region"
-      aria-label="Cookie consent notification"
-      aria-live="polite"
-      className={`fixed bottom-0 left-0 right-0 z-[150] bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 shadow-lg transition-transform duration-300 ${
-        isClosing ? "translate-y-full" : "translate-y-0"
+      aria-label="Cookie consent"
+      className={`fixed bottom-4 left-4 right-4 sm:right-auto sm:max-w-sm z-40 card p-4 sm:p-5 shadow-2xl shadow-ink/10 dark:shadow-black/40 transition-all duration-300 motion-safe:animate-popup-in ${
+        isClosing ? "opacity-0 translate-y-3" : "opacity-100 translate-y-0"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex-1">
-            <p className="text-sm text-text dark:text-gray-300">
-              We use essential cookies to run this site and optional analytics to understand traffic. By
-              clicking Accept, you agree to our use of cookies as described in our{" "}
-              <a href="/privacy" className="text-primary hover:underline">
-                Privacy Policy
-              </a>
-              . See also our{" "}
-              <a href="/terms" className="text-primary hover:underline">
-                Terms of Service
-              </a>
-              .
-            </p>
-          </div>
-          <div className="flex gap-3 shrink-0">
-            <button
-              type="button"
-              onClick={handleDecline}
-              aria-label="Decline optional cookies"
-              className="px-4 py-2 text-sm font-medium text-text dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
-            >
-              Decline
-            </button>
-            <button
-              type="button"
-              onClick={handleAccept}
-              aria-label="Accept cookies"
-              className="px-4 py-2 text-sm font-medium bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors"
-            >
-              Accept
-            </button>
-          </div>
-        </div>
+      <p className="text-sm text-text dark:text-steel-dark leading-relaxed">
+        We use essential cookies to run this site and optional analytics to understand traffic.{" "}
+        <a href="/privacy" className="text-primary dark:text-primary-light font-medium hover:underline">
+          Privacy Policy
+        </a>
+      </p>
+      <div className="flex gap-2 mt-4">
+        <button
+          type="button"
+          onClick={() => persist("declined")}
+          className="flex-1 min-h-[44px] px-4 rounded-full text-sm font-semibold border border-line dark:border-line-dark text-text dark:text-white hover:bg-ink/5 dark:hover:bg-white/10 transition-colors"
+        >
+          Decline
+        </button>
+        <button
+          type="button"
+          onClick={() => persist("accepted")}
+          className="flex-1 min-h-[44px] px-4 rounded-full text-sm font-semibold bg-primary text-white hover:bg-primary-dark transition-colors"
+        >
+          Accept
+        </button>
       </div>
     </div>
   );

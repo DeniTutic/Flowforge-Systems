@@ -1,4 +1,5 @@
 import { COLLECTIONS, getDb } from "@/lib/mongodb";
+import { BUDGETS, PROJECT_TYPES, labelFor } from "@/lib/contactOptions";
 
 type Subscriber = {
   email: string;
@@ -10,6 +11,9 @@ type ContactMessage = {
   name: string;
   email: string;
   message: string;
+  company?: string;
+  projectType?: string;
+  budget?: string;
   status?: string;
   createdAt?: Date;
 };
@@ -117,7 +121,22 @@ export default async function AdminPage() {
                           </div>
                           <div className="text-sm text-text-light dark:text-gray-400 break-all">
                             {m.email}
+                            {m.company ? ` · ${m.company}` : ""}
                           </div>
+                          {(m.projectType || m.budget) && (
+                            <div className="flex flex-wrap gap-1.5 mt-2">
+                              {m.projectType && (
+                                <span className="px-2 py-0.5 rounded-full text-xs bg-primary/10 text-primary">
+                                  {labelFor(PROJECT_TYPES, m.projectType) ?? m.projectType}
+                                </span>
+                              )}
+                              {m.budget && (
+                                <span className="px-2 py-0.5 rounded-full text-xs bg-primary/10 text-primary">
+                                  {labelFor(BUDGETS, m.budget) ?? m.budget}
+                                </span>
+                              )}
+                            </div>
+                          )}
                         </div>
                         <div className="flex items-center gap-3 text-xs text-text-light dark:text-gray-400">
                           <span className="px-2 py-1 rounded-full border border-gray-200 dark:border-gray-700">

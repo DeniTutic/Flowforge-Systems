@@ -1,97 +1,67 @@
+import Logo from "./Logo";
+
+const navigate = [
+  { href: "/#work", label: "Work" },
+  { href: "/#process", label: "Process" },
+  { href: "/#services", label: "Services" },
+  { href: "/#pricing", label: "Pricing" },
+  { href: "/#estimator", label: "Estimator" },
+  { href: "/#contact", label: "Contact" },
+];
+
 export default function Footer() {
   return (
-    <footer className="bg-text dark:bg-gray-950 text-white py-16 px-4 sm:px-6 lg:px-8">
+    <footer className="bg-ink text-white border-t border-white/10 py-14 sm:py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <div className="grid md:grid-cols-4 gap-8 mb-12">
+        <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr] mb-12">
           <div>
-            <h3 className="text-2xl font-bold mb-4">Flowforge Systems</h3>
-            <p className="text-gray-400">
-              Web &amp; AI systems that drive growth.
+            <a href="/" className="inline-block rounded-full" aria-label="Flowforge Systems — home">
+              <Logo textClassName="text-lg text-white [&_span]:text-white/60" />
+            </a>
+            <p className="text-white/60 mt-4 max-w-xs text-pretty">
+              Websites and AI systems that turn traffic into clients.
             </p>
           </div>
           <div>
-            <h4 className="font-semibold mb-4">Services</h4>
-            <ul className="space-y-2 text-gray-400">
-              <li>
-                <a href="#services" className="hover:text-white transition-colors">
-                  Websites
-                </a>
-              </li>
-              <li>
-                <a href="#services" className="hover:text-white transition-colors">
-                  Web Applications
-                </a>
-              </li>
-              <li>
-                <a href="#services" className="hover:text-white transition-colors">
-                  E-commerce
-                </a>
-              </li>
-              <li>
-                <a href="#services" className="hover:text-white transition-colors">
-                  Automation
-                </a>
-              </li>
+            <h4 className="text-xs font-semibold uppercase tracking-[0.16em] text-white/50 mb-4">Navigate</h4>
+            <ul className="space-y-2.5 text-white/75">
+              {navigate.map((l) => (
+                <li key={l.href}>
+                  <a href={l.href} className="hover:text-white transition-colors">
+                    {l.label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
           <div>
-            <h4 className="font-semibold mb-4">Company</h4>
-            <ul className="space-y-2 text-gray-400">
+            <h4 className="text-xs font-semibold uppercase tracking-[0.16em] text-white/50 mb-4">Contact</h4>
+            <ul className="space-y-2.5 text-white/75">
               <li>
-                <a href="#portfolio" className="hover:text-white transition-colors">
-                  Portfolio
+                <a href="mailto:hello@flowforge.systems" className="hover:text-white transition-colors break-all">
+                  hello@flowforge.systems
                 </a>
               </li>
-              <li>
-                <a href="#pricing" className="hover:text-white transition-colors">
-                  Pricing
-                </a>
-              </li>
-              <li>
-                <a href="#estimator" className="hover:text-white transition-colors">
-                  Estimator
-                </a>
-              </li>
-              <li>
-                <a href="#contact" className="hover:text-white transition-colors">
-                  Contact
-                </a>
-              </li>
+              <li className="text-white/50 text-sm">We reply within 24 hours.</li>
             </ul>
           </div>
           <div>
-            <h4 className="font-semibold mb-4">Legal</h4>
-            <ul className="space-y-2 text-gray-400">
+            <h4 className="text-xs font-semibold uppercase tracking-[0.16em] text-white/50 mb-4">Legal</h4>
+            <ul className="space-y-2.5 text-white/75">
               <li>
-                <a href="/privacy" className="hover:text-white transition-colors">
-                  Privacy Policy
-                </a>
+                <a href="/privacy" className="hover:text-white transition-colors">Privacy Policy</a>
               </li>
               <li>
-                <a href="/terms" className="hover:text-white transition-colors">
-                  Terms of Service
-                </a>
-              </li>
-              <li>
-                <a href="mailto:hello@flowforge.systems" className="hover:text-white transition-colors">
-                  Email
-                </a>
+                <a href="/terms" className="hover:text-white transition-colors">Terms of Service</a>
               </li>
             </ul>
           </div>
         </div>
-        <div className="border-t border-gray-700 pt-8 text-center text-gray-400 text-sm space-y-2">
+        <div className="border-t border-white/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-white/50 text-sm">
           <p>&copy; {new Date().getFullYear()} Flowforge Systems. All rights reserved.</p>
-          <p>
-            <a href="/privacy" className="hover:text-white transition-colors">
-              Privacy
-            </a>
-            <span className="mx-2 opacity-50" aria-hidden>
-              ·
-            </span>
-            <a href="/terms" className="hover:text-white transition-colors">
-              Terms
-            </a>
+          <p className="inline-flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-primary-bright" aria-hidden />
+            Built with our own system.
           </p>
         </div>
       </div>

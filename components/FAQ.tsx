@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Reveal from "./Reveal";
 import SectionEyebrow from "./SectionEyebrow";
 import { IconHelpCircle } from "./icons";
 
@@ -41,39 +42,39 @@ export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-800/50">
+    <section id="faq" className="py-24 sm:py-28 px-4 sm:px-6 lg:px-8 bg-paper-soft dark:bg-ink-soft border-y border-line dark:border-line-dark scroll-mt-20">
       <div className="max-w-3xl mx-auto">
-        <div className="text-center mb-12">
+        <Reveal className="text-center mb-12">
           <SectionEyebrow icon={<IconHelpCircle />}>FAQ</SectionEyebrow>
-          <h2 className="text-4xl sm:text-5xl font-bold text-text dark:text-white mb-4">
-            Questions, answered
-          </h2>
-          <p className="text-lg text-text-light dark:text-gray-400 max-w-xl mx-auto">
+          <h2 className="section-title mb-4">Questions, answered</h2>
+          <p className="section-lead max-w-xl mx-auto">
             The things people usually ask before booking a call.
           </p>
-        </div>
+        </Reveal>
 
-        <div className="space-y-3">
+        <Reveal delay={80} className="space-y-3">
           {faqs.map((faq, index) => {
             const isOpen = openIndex === index;
+            const panelId = `faq-panel-${index}`;
+            const buttonId = `faq-button-${index}`;
             return (
               <div
                 key={faq.question}
-                className={`rounded-2xl border bg-white dark:bg-gray-900 transition-colors ${
-                  isOpen
-                    ? "border-primary/30 shadow-sm"
-                    : "border-gray-200 dark:border-gray-700"
+                className={`rounded-2xl border bg-paper dark:bg-ink-card transition-colors ${
+                  isOpen ? "border-primary/40 shadow-sm" : "border-line dark:border-line-dark"
                 }`}
               >
                 <button
                   type="button"
+                  id={buttonId}
                   onClick={() => setOpenIndex(isOpen ? null : index)}
                   aria-expanded={isOpen}
-                  className="w-full flex items-center justify-between gap-4 px-5 sm:px-6 py-4 sm:py-5 text-left"
+                  aria-controls={panelId}
+                  className="w-full flex items-center justify-between gap-4 px-5 sm:px-6 py-4 sm:py-5 text-left min-h-[44px] rounded-2xl"
                 >
                   <span className="font-semibold text-text dark:text-white">{faq.question}</span>
                   <span
-                    className={`shrink-0 flex items-center justify-center w-7 h-7 rounded-full bg-primary/10 text-primary transition-transform duration-300 ${
+                    className={`shrink-0 flex items-center justify-center w-7 h-7 rounded-full bg-primary/10 text-primary dark:text-primary-light transition-transform duration-300 ${
                       isOpen ? "rotate-45" : ""
                     }`}
                     aria-hidden
@@ -89,12 +90,15 @@ export default function FAQ() {
                   </span>
                 </button>
                 <div
-                  className={`grid transition-all duration-300 ease-out ${
+                  id={panelId}
+                  role="region"
+                  aria-labelledby={buttonId}
+                  className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${
                     isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
                   }`}
                 >
                   <div className="overflow-hidden">
-                    <p className="px-5 sm:px-6 pb-4 sm:pb-5 text-text-light dark:text-gray-400 leading-relaxed">
+                    <p className="px-5 sm:px-6 pb-4 sm:pb-5 text-text-light dark:text-steel-dark leading-relaxed">
                       {faq.answer}
                     </p>
                   </div>
@@ -102,11 +106,11 @@ export default function FAQ() {
               </div>
             );
           })}
-        </div>
+        </Reveal>
 
-        <p className="mt-10 text-center text-text-light dark:text-gray-400">
+        <p className="mt-10 text-center text-text-light dark:text-steel-dark">
           Still have questions?{" "}
-          <a href="#contact" className="text-primary font-semibold hover:underline">
+          <a href="#contact" className="text-primary dark:text-primary-light font-semibold hover:underline">
             Get in touch
           </a>
         </p>

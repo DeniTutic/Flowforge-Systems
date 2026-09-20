@@ -4,11 +4,13 @@ import { getMongoUserMessage } from "@/lib/mongoErrors";
 import { getClientIp } from "@/lib/clientIp";
 import { rateLimit } from "@/lib/rateLimit";
 import { isHoneypotClean, validateFormTiming } from "@/lib/formAbuse";
+import { BUDGET_VALUES, PROJECT_TYPE_VALUES } from "@/lib/contactOptions";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MAX_NAME = 200;
 const MAX_EMAIL = 320;
 const MAX_MESSAGE = 10000;
+const MAX_COMPANY = 200;
 
 const WINDOW_MS = 15 * 60 * 1000;
 const MAX_PER_WINDOW = 8;
@@ -46,10 +48,15 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: timing.message }, { status: 400 });
     }
 
-    const { name, email, message } = rec;
+    const { name, email, message, company, projectType, budget } = rec;
     const nameStr = typeof name === "string" ? name.trim() : "";
     const emailStr = typeof email === "string" ? email.trim().toLowerCase() : "";
     const messageStr = typeof message === "string" ? message.trim() : "";
+    const companyStr = typeof company === "string" ? company.trim().slice(0, MAX_COMPANY) : "";
+    // Optional qualifiers — only stored when they match the whitelist.
+    const projectTypeStr =
+      typeof projectType === "string" && PROJECT_TYPE_VALUES.has(projectType) ? projectType : undefined;
+    const budgetStr = typeof budget === "string" && BUDGET_VALUES.has(budget) ? budget : undefined;
 
     if (nameStr.length < 2 || nameStr.length > MAX_NAME) {
       return NextResponse.json({ error: "Invalid name" }, { status: 400 });
@@ -66,6 +73,9 @@ export async function POST(request: Request) {
       name: nameStr,
       email: emailStr,
       message: messageStr,
+      ...(companyStr ? { company: companyStr } : {}),
+      ...(projectTypeStr ? { projectType: projectTypeStr } : {}),
+      ...(budgetStr ? { budget: budgetStr } : {}),
       status: "new",
       createdAt: new Date(),
     });

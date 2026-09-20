@@ -1,8 +1,12 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { STORAGE } from "@/lib/siteStorage";
+import { COOKIE_CONSENT_EVENT } from "./CookieConsent";
 import { IconMail, IconCheckCircle } from "./icons";
+
+/** Never interrupt a first impression: earliest the dialog may appear, in ms. */
+const MIN_TIME_ON_PAGE_MS = 25_000;
 
 export default function NewsletterPopup() {
   const [hydrated, setHydrated] = useState(false);
@@ -15,6 +19,9 @@ export default function NewsletterPopup() {
   const [submitError, setSubmitError] = useState("");
   const [honeypot, setHoneypot] = useState("");
   const formStartedAtRef = useRef<number | null>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const previouslyFocused = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     try {
@@ -34,9 +41,20 @@ export default function NewsletterPopup() {
       /* ignore */
     }
 
+    const loadedAt = Date.now();
     let shown = false;
+    let pending = false;
+
+    const cookieBannerVisible = () => Boolean(document.querySelector('[aria-label="Cookie consent"]'));
+
     const show = () => {
       if (shown) return;
+      if (Date.now() - loadedAt < MIN_TIME_ON_PAGE_MS) return;
+      // Only one interrupt at a time: wait for the cookie card to be answered.
+      if (cookieBannerVisible()) {
+        pending = true;
+        return;
+      }
       shown = true;
       setIsVisible(true);
       if (formStartedAtRef.current === null) {
@@ -44,21 +62,40 @@ export default function NewsletterPopup() {
       }
     };
 
-    const timer = setTimeout(show, 4000);
-    const onScroll = () => {
-      const denom = document.documentElement.scrollHeight - window.innerHeight;
-      const scrolled = denom > 0 ? window.scrollY / denom : 0;
-      if (scrolled >= 0.35) show();
+    // Desktop: exit intent (pointer leaves through the top edge).
+    const onMouseOut = (e: MouseEvent) => {
+      if (e.relatedTarget === null && e.clientY <= 0 && window.matchMedia("(pointer: fine)").matches) {
+        show();
+      }
     };
-    window.addEventListener("scroll", onScroll, { passive: true });
+
+    // Everyone: reached the FAQ (they've read pricing — genuinely interested).
+    const faq = document.getElementById("faq");
+    const observer = faq
+      ? new IntersectionObserver(
+          (entries) => {
+            if (entries.some((en) => en.isIntersecting)) show();
+          },
+          { threshold: 0.3 }
+        )
+      : null;
+    observer?.observe(faq as Element);
+
+    const onConsent = () => {
+      if (pending) show();
+    };
+
+    document.addEventListener("mouseout", onMouseOut);
+    window.addEventListener(COOKIE_CONSENT_EVENT, onConsent);
 
     return () => {
-      clearTimeout(timer);
-      window.removeEventListener("scroll", onScroll);
+      document.removeEventListener("mouseout", onMouseOut);
+      window.removeEventListener(COOKIE_CONSENT_EVENT, onConsent);
+      observer?.disconnect();
     };
   }, [hydrated, optedIn]);
 
-  const handleDismiss = (permanentOptIn: boolean) => {
+  const handleDismiss = useCallback((permanentOptIn: boolean) => {
     setIsClosing(true);
     setTimeout(() => {
       setIsVisible(false);
@@ -75,11 +112,51 @@ export default function NewsletterPopup() {
         }
       }
     }, 300);
-  };
+  }, []);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     handleDismiss(false);
-  };
+  }, [handleDismiss]);
+
+  // Focus management + Escape + tab trap while open.
+  useEffect(() => {
+    if (!isVisible) return;
+    previouslyFocused.current = document.activeElement as HTMLElement | null;
+    const t = window.setTimeout(() => emailRef.current?.focus(), 50);
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        handleClose();
+        return;
+      }
+      if (e.key !== "Tab" || !dialogRef.current) return;
+      const focusables = dialogRef.current.querySelectorAll<HTMLElement>(
+        'button:not([disabled]), [href], input:not([disabled]):not([tabindex="-1"]), [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener("keydown", onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.clearTimeout(t);
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+      previouslyFocused.current?.focus?.();
+    };
+  }, [isVisible, handleClose]);
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -132,7 +209,7 @@ export default function NewsletterPopup() {
   return (
     <>
       <div
-        className={`fixed inset-0 bg-black/50 backdrop-blur-sm z-[100] transition-opacity duration-300 ${
+        className={`fixed inset-0 bg-ink/60 backdrop-blur-sm z-[100] transition-opacity duration-300 ${
           isClosing ? "opacity-0" : "opacity-100"
         }`}
         onClick={handleClose}
@@ -145,9 +222,8 @@ export default function NewsletterPopup() {
         }`}
       >
         <div
-          className={`bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full p-8 relative ${
-            !isClosing ? "animate-popup-in" : ""
-          }`}
+          ref={dialogRef}
+          className={`card max-w-md w-full p-8 relative shadow-2xl ${!isClosing ? "motion-safe:animate-popup-in" : ""}`}
           onClick={(e) => e.stopPropagation()}
           role="dialog"
           aria-modal="true"
@@ -156,7 +232,7 @@ export default function NewsletterPopup() {
           <button
             type="button"
             onClick={handleClose}
-            className="absolute top-4 right-4 text-text-light dark:text-gray-400 hover:text-text dark:hover:text-white transition-colors"
+            className="absolute top-3 right-3 inline-flex items-center justify-center w-11 h-11 rounded-full text-text-light dark:text-steel-dark hover:text-text dark:hover:text-white hover:bg-ink/5 dark:hover:bg-white/10 transition-colors"
             aria-label="Close newsletter dialog"
           >
             <svg
@@ -179,19 +255,19 @@ export default function NewsletterPopup() {
             <>
               <div className="text-center mb-6">
                 <div
-                  className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 text-primary mb-4"
+                  className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 text-primary dark:text-primary-light mb-4"
                   aria-hidden
                 >
                   <IconMail className="w-8 h-8" />
                 </div>
                 <h3
                   id="newsletter-popup-title"
-                  className="text-2xl font-bold text-text dark:text-white mb-2"
+                  className="text-2xl font-semibold tracking-heading text-text dark:text-white mb-2"
                 >
-                  Stay Updated
+                  Growth notes, occasionally
                 </h3>
-                <p className="text-text-light dark:text-gray-400">
-                  Subscribe for growth tips, product updates, and occasional offers from Flowforge.
+                <p className="text-text-light dark:text-steel-dark text-pretty">
+                  Practical tips on websites and AI that bring in clients. A few emails a year, never spam.
                 </p>
               </div>
 
@@ -214,6 +290,7 @@ export default function NewsletterPopup() {
                   </label>
                   <input
                     id="newsletter-email"
+                    ref={emailRef}
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -221,24 +298,24 @@ export default function NewsletterPopup() {
                     required
                     disabled={isSubmitting}
                     autoComplete="email"
-                    className="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-text dark:text-white focus:border-primary focus:ring-2 focus:ring-primary/20 dark:focus:ring-primary/30 outline-none transition-all disabled:opacity-60"
+                    className="w-full px-4 py-3 min-h-[48px] rounded-xl border border-line dark:border-line-dark bg-paper dark:bg-ink text-text dark:text-white placeholder:text-text-light/70 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all disabled:opacity-60"
                   />
                 </div>
-                <div aria-live="polite" className="min-h-[1.25rem]">
+                <div aria-live="polite">
                   {submitError ? (
-                    <p className="text-sm text-red-600 dark:text-red-400 text-center">{submitError}</p>
+                    <p className="text-sm text-rose-600 dark:text-rose-400 text-center" role="alert">{submitError}</p>
                   ) : null}
                 </div>
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-dark transition-colors shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
                 >
-                  {isSubmitting ? "Subscribing…" : "Subscribe Now"}
+                  {isSubmitting ? "Subscribing…" : "Subscribe"}
                 </button>
-                <p className="text-xs text-text-light dark:text-gray-500 text-center">
-                  We respect your privacy. Unsubscribe any time. See our{" "}
-                  <a href="/privacy" className="text-primary hover:underline">
+                <p className="text-xs text-text-light dark:text-steel-dark text-center">
+                  Unsubscribe any time. See our{" "}
+                  <a href="/privacy" className="text-primary dark:text-primary-light hover:underline">
                     Privacy Policy
                   </a>
                   .
@@ -253,8 +330,8 @@ export default function NewsletterPopup() {
               >
                 <IconCheckCircle className="w-9 h-9" />
               </div>
-              <h3 className="text-2xl font-bold text-text dark:text-white mb-2">Thank You!</h3>
-              <p className="text-text-light dark:text-gray-400">
+              <h3 className="text-2xl font-semibold tracking-heading text-text dark:text-white mb-2">You&apos;re in.</h3>
+              <p className="text-text-light dark:text-steel-dark">
                 You&apos;re subscribed. We&apos;ll only send useful updates—no spam.
               </p>
             </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useReducedMotion } from "@/lib/useReducedMotion";
 import { IconBriefcase, IconStore, IconCart, IconCpu } from "./icons";
 
 const leads = [
@@ -12,26 +13,18 @@ const leads = [
 
 const channels = [
   { label: "Website", pct: 46, color: "bg-primary" },
-  { label: "Referral", pct: 27, color: "bg-emerald-500" },
-  { label: "Paid ads", pct: 18, color: "bg-sky-500" },
-  { label: "Social", pct: 9, color: "bg-amber-500" },
+  { label: "Referral", pct: 27, color: "bg-primary/60" },
+  { label: "Paid ads", pct: 18, color: "bg-primary/35" },
+  { label: "Social", pct: 9, color: "bg-primary/20" },
 ];
 
 const chartMonths = ["Feb", "Mar", "Apr", "May", "Jun", "Jul"];
 
 export default function HeroDashboardMockup() {
-  const [reducedMotion, setReducedMotion] = useState(false);
+  const reducedMotion = useReducedMotion();
   const [mounted, setMounted] = useState(false);
   const [count, setCount] = useState(214);
   const [leadIndex, setLeadIndex] = useState(0);
-
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const apply = () => setReducedMotion(mq.matches);
-    apply();
-    mq.addEventListener("change", apply);
-    return () => mq.removeEventListener("change", apply);
-  }, []);
 
   useEffect(() => {
     const id = requestAnimationFrame(() => setMounted(true));
@@ -56,14 +49,14 @@ export default function HeroDashboardMockup() {
   const barsVisible = reducedMotion || mounted;
 
   return (
-    <div className="relative rounded-2xl border border-gray-200 dark:border-gray-700 shadow-2xl overflow-hidden bg-white dark:bg-gray-900">
+    <div className="relative rounded-2xl border border-line dark:border-line-dark shadow-2xl shadow-ink/10 dark:shadow-black/40 overflow-hidden bg-paper-soft dark:bg-ink-card">
       {/* Browser chrome */}
-      <div className="flex items-center gap-2 px-4 py-3 border-b border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/70">
-        <span className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
-        <span className="w-2.5 h-2.5 rounded-full bg-amber-400/80" />
-        <span className="w-2.5 h-2.5 rounded-full bg-emerald-400/80" />
-        <div className="ml-2 flex-1 h-6 rounded-full bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-700 flex items-center px-3">
-          <span className="text-[0.7rem] text-text-light dark:text-gray-500 truncate">
+      <div className="flex items-center gap-2 px-4 py-3 border-b border-line dark:border-line-dark bg-paper dark:bg-ink-soft">
+        <span className="w-2.5 h-2.5 rounded-full bg-ink/15 dark:bg-white/20" />
+        <span className="w-2.5 h-2.5 rounded-full bg-ink/15 dark:bg-white/20" />
+        <span className="w-2.5 h-2.5 rounded-full bg-ink/15 dark:bg-white/20" />
+        <div className="ml-2 flex-1 h-6 rounded-full bg-paper-soft dark:bg-ink border border-line dark:border-line-dark flex items-center px-3">
+          <span className="text-[0.7rem] text-text-light dark:text-steel-dark truncate">
             flowforge.systems/dashboard
           </span>
         </div>
@@ -82,7 +75,7 @@ export default function HeroDashboardMockup() {
               Live
             </span>
           </div>
-          <span className="text-[0.7rem] text-text-light dark:text-gray-500 border border-gray-200 dark:border-gray-700 rounded-full px-2.5 py-1">
+          <span className="text-[0.7rem] text-text-light dark:text-steel-dark border border-line dark:border-line-dark rounded-full px-2.5 py-1">
             Last 30 days
           </span>
         </div>
@@ -90,7 +83,7 @@ export default function HeroDashboardMockup() {
         {/* Stat + secondary KPIs */}
         <div className="flex items-end justify-between gap-4">
           <div>
-            <p className="text-[0.7rem] font-medium uppercase tracking-wide text-text-light dark:text-gray-500 mb-1">
+            <p className="text-[0.7rem] font-medium uppercase tracking-wide text-text-light dark:text-steel-dark mb-1">
               Leads this month
             </p>
             <p className="text-3xl sm:text-4xl font-bold text-text dark:text-white tabular-nums">
@@ -105,13 +98,13 @@ export default function HeroDashboardMockup() {
           </div>
           <div className="flex flex-col gap-3 shrink-0 text-right">
             <div>
-              <p className="text-[0.65rem] uppercase tracking-wide text-text-light dark:text-gray-500">
+              <p className="text-[0.65rem] uppercase tracking-wide text-text-light dark:text-steel-dark">
                 Conversion
               </p>
               <p className="text-sm font-semibold text-text dark:text-white">24.6%</p>
             </div>
             <div>
-              <p className="text-[0.65rem] uppercase tracking-wide text-text-light dark:text-gray-500">
+              <p className="text-[0.65rem] uppercase tracking-wide text-text-light dark:text-steel-dark">
                 Avg. response
               </p>
               <p className="text-sm font-semibold text-text dark:text-white">1.8 min</p>
@@ -122,11 +115,11 @@ export default function HeroDashboardMockup() {
         {/* Growth chart */}
         <div>
           <div className="h-24 sm:h-28 -mx-1">
-            <svg viewBox="0 0 280 100" className="w-full h-full overflow-visible" preserveAspectRatio="none">
+            <svg viewBox="0 0 280 100" className="w-full h-full overflow-visible text-primary" preserveAspectRatio="none">
               <defs>
                 <linearGradient id="heroChartFill" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#6366f1" stopOpacity="0.25" />
-                  <stop offset="100%" stopColor="#6366f1" stopOpacity="0" />
+                  <stop offset="0%" stopColor="currentColor" stopOpacity="0.22" />
+                  <stop offset="100%" stopColor="currentColor" stopOpacity="0" />
                 </linearGradient>
               </defs>
               {[20, 40, 60, 80].map((y) => (
@@ -138,7 +131,7 @@ export default function HeroDashboardMockup() {
                   y2={y}
                   stroke="currentColor"
                   strokeWidth="1"
-                  className="text-gray-100 dark:text-gray-800"
+                  className="text-ink/[0.06] dark:text-white/[0.06]"
                 />
               ))}
               <path
@@ -148,7 +141,7 @@ export default function HeroDashboardMockup() {
               <path
                 d="M0,82 L56,74 L112,68 L168,52 L224,40 L280,12"
                 fill="none"
-                stroke="#6366f1"
+                stroke="currentColor"
                 strokeWidth="2.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -156,15 +149,15 @@ export default function HeroDashboardMockup() {
                 strokeDasharray={100}
                 className={reducedMotion ? "" : "motion-safe:animate-draw-line"}
               />
-              <circle cx="280" cy="12" r="4" fill="#6366f1" />
+              <circle cx="280" cy="12" r="4" fill="currentColor" />
               {!reducedMotion && (
-                <circle cx="280" cy="12" r="4" fill="#6366f1" className="motion-safe:animate-ping" />
+                <circle cx="280" cy="12" r="4" fill="currentColor" className="motion-safe:animate-ping" />
               )}
             </svg>
           </div>
           <div className="flex justify-between mt-1 px-0.5">
             {chartMonths.map((m) => (
-              <span key={m} className="text-[0.6rem] text-text-light dark:text-gray-500">
+              <span key={m} className="text-[0.6rem] text-text-light dark:text-steel-dark">
                 {m}
               </span>
             ))}
@@ -173,22 +166,22 @@ export default function HeroDashboardMockup() {
 
         {/* Lead source breakdown */}
         <div className="space-y-2">
-          <p className="text-[0.65rem] font-medium uppercase tracking-wide text-text-light dark:text-gray-500">
+          <p className="text-[0.65rem] font-medium uppercase tracking-wide text-text-light dark:text-steel-dark">
             Lead sources
           </p>
           <div className="space-y-1.5">
             {channels.map((channel) => (
               <div key={channel.label} className="flex items-center gap-2.5">
-                <span className="w-14 shrink-0 text-[0.7rem] text-text-light dark:text-gray-400">
+                <span className="w-14 shrink-0 text-[0.7rem] text-text-light dark:text-steel-dark">
                   {channel.label}
                 </span>
-                <div className="flex-1 h-1.5 rounded-full bg-gray-100 dark:bg-gray-800 overflow-hidden">
+                <div className="flex-1 h-1.5 rounded-full bg-ink/[0.06] dark:bg-white/10 overflow-hidden">
                   <div
                     className={`h-full rounded-full ${channel.color} transition-all duration-1000 ease-out`}
                     style={{ width: barsVisible ? `${channel.pct}%` : "0%" }}
                   />
                 </div>
-                <span className="w-8 shrink-0 text-right text-[0.7rem] tabular-nums text-text-light dark:text-gray-400">
+                <span className="w-8 shrink-0 text-right text-[0.7rem] tabular-nums text-text-light dark:text-steel-dark">
                   {channel.pct}%
                 </span>
               </div>
@@ -201,7 +194,7 @@ export default function HeroDashboardMockup() {
           {visibleLeads.map((lead, i) => (
             <div
               key={`${lead.label}-${leadIndex}-${i}`}
-              className={`rounded-xl border border-gray-100 dark:border-gray-700/80 bg-gray-50 dark:bg-gray-800/60 px-3 py-2.5 ${
+              className={`rounded-xl border border-line dark:border-line-dark bg-paper dark:bg-ink-soft px-3 py-2.5 ${
                 i === 0 ? "motion-safe:animate-fade-in-up" : ""
               }`}
               style={{ opacity: i === 0 ? undefined : 0.6 }}
@@ -212,13 +205,13 @@ export default function HeroDashboardMockup() {
                 </span>
                 <div className="min-w-0 flex-1">
                   <p className="text-sm font-medium text-text dark:text-white truncate">{lead.label}</p>
-                  <p className="text-xs text-text-light dark:text-gray-500 truncate">{lead.detail}</p>
+                  <p className="text-xs text-text-light dark:text-steel-dark truncate">{lead.detail}</p>
                 </div>
                 <span
                   className={`ml-auto text-[0.65rem] font-semibold uppercase tracking-wide shrink-0 ${
                     i === 0
                       ? "text-emerald-600 dark:text-emerald-400"
-                      : "text-text-light dark:text-gray-500 normal-case font-medium"
+                      : "text-text-light dark:text-steel-dark normal-case font-medium"
                   }`}
                 >
                   {i === 0 ? "New" : lead.time}
