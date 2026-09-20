@@ -10,18 +10,50 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Ember: single brand accent. `DEFAULT` passes WCAG AA on paper/white (5.2:1),
+        // `bright` is for glows, gradients and hover surfaces only — never body text.
         primary: {
-          DEFAULT: "#6366f1",
-          dark: "#4f46e5",
-          light: "#818cf8",
+          DEFAULT: "#C2410C",
+          dark: "#9A3412",
+          bright: "#EA580C",
+          light: "#FB923C",
         },
+        ink: {
+          DEFAULT: "#0B0F14",
+          soft: "#151B23",
+          card: "#1A212B",
+        },
+        paper: {
+          DEFAULT: "#F7F6F3",
+          soft: "#FFFFFF",
+          muted: "#EFEDE8",
+        },
+        steel: {
+          DEFAULT: "#6B7280",
+          dark: "#9AA3B2",
+        },
+        // Legacy aliases still used across components
         text: {
-          DEFAULT: "#0f172a",
-          light: "#64748b",
+          DEFAULT: "#0B0F14",
+          light: "#6B7280",
         },
       },
+      borderColor: {
+        line: "rgb(11 15 20 / 0.08)",
+        "line-dark": "rgb(255 255 255 / 0.10)",
+      },
       fontFamily: {
-        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+        sans: ["var(--font-geist-sans)", "system-ui", "-apple-system", "sans-serif"],
+      },
+      fontSize: {
+        body: ["1.0625rem", { lineHeight: "1.65" }],
+      },
+      letterSpacing: {
+        display: "-0.03em",
+        heading: "-0.02em",
+      },
+      transitionTimingFunction: {
+        out: "cubic-bezier(0.22, 1, 0.36, 1)",
       },
       keyframes: {
         "underline-in": {

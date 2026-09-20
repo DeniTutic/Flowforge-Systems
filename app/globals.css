@@ -2,10 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-
 :root {
-  --font-inter: 'Inter', system-ui, sans-serif;
+  --ember: #c2410c;
+  --ember-bright: #ea580c;
+  --ink: #0b0f14;
+  --paper: #f7f6f3;
+  color-scheme: light;
+}
+
+.dark {
+  color-scheme: dark;
 }
 
 * {
@@ -16,11 +22,12 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
 }
 
-/* Accessibility: Focus visible for keyboard navigation */
+/* Accessibility: focus rings in brand ember, never default blue */
 :focus-visible {
-  outline: 2px solid #3b82f6;
+  outline: 2px solid var(--ember);
   outline-offset: 2px;
 }
 
@@ -29,35 +36,85 @@ a:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
-  outline: 2px solid #3b82f6;
+  outline: 2px solid var(--ember);
   outline-offset: 2px;
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
 body {
-  font-family: var(--font-inter);
-  color: #0f172a;
-  background: #ffffff;
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 .dark body {
-  color: #f1f5f9;
-  background: #0f172a;
+  color: #edeae4;
+  background: var(--ink);
+}
+
+::selection {
+  background: rgb(234 88 12 / 0.25);
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-primary px-7 py-3.5 font-semibold text-white shadow-lg shadow-primary/20 transition-all duration-200 hover:bg-primary-dark motion-safe:hover:-translate-y-0.5 hover:shadow-xl hover:shadow-primary/25;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-line bg-paper-soft/70 px-7 py-3.5 font-semibold text-text backdrop-blur transition-all duration-200 hover:border-primary/40 hover:text-primary motion-safe:hover:-translate-y-0.5 dark:border-line-dark dark:bg-white/5 dark:text-white dark:hover:border-primary/50 dark:hover:text-primary-light;
+  }
+  .card {
+    @apply rounded-2xl border border-line bg-paper-soft shadow-sm transition-all duration-200 dark:border-line-dark dark:bg-ink-card;
+  }
+  .card-hover {
+    @apply hover:border-primary/30 hover:shadow-lg motion-safe:hover:-translate-y-px dark:hover:border-primary/40;
+  }
+  .section-title {
+    @apply text-4xl font-semibold tracking-heading text-text sm:text-5xl dark:text-white;
+  }
+  .section-lead {
+    @apply text-lg text-text-light sm:text-xl dark:text-steel-dark;
+  }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+  .text-pretty {
+    text-wrap: pretty;
+  }
 }
 
-/* Smooth animations */
+/* ---------- Motion system ---------- */
+
+/* Enter: fade + 12px rise, once. Applied by <Reveal/>.
+   Only hidden when JS is running (html.js is set by the inline script in layout.tsx),
+   so content is never gated on hydration for no-JS visitors or crawlers. */
+.js .reveal:not(.is-visible) {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.reveal {
+  transition:
+    opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
@@ -66,7 +123,13 @@ body {
 }
 
 .animate-fade-in-up {
-  animation: fadeInUp 0.6s ease-out forwards;
+  animation: fadeInUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Hero entrance: pure CSS so the above-the-fold content never waits for hydration. */
+.hero-in {
+  animation: fadeInUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--in-delay, 0ms);
 }
 
 /* Hero dashboard mockup chart line draw-in */
@@ -83,11 +146,11 @@ body {
   animation: drawLine 1.6s ease-out forwards;
 }
 
-/* Newsletter popup entrance */
+/* Dialog entrance */
 @keyframes popupSlideIn {
   from {
     opacity: 0;
-    transform: scale(0.9) translateY(20px);
+    transform: scale(0.96) translateY(12px);
   }
   to {
     opacity: 1;
@@ -96,31 +159,17 @@ body {
 }
 
 .animate-popup-in {
-  animation: popupSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation: popupSlideIn 0.35s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
-/* Smooth transitions for interactive elements */
-.transition-smooth {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+/* Portfolio screenshot pan on hover */
+.pan-on-hover {
+  object-position: top;
+  transition: object-position 1.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Benefits floating animation */
-@keyframes benefit-float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-
-.benefit-float {
-  animation: benefit-float 4s ease-in-out infinite;
-}
-
-.benefit-float.benefit-paused {
-  animation-play-state: paused;
-}
-
-.benefit-float.benefit-hovered {
-  animation-play-state: paused;
-  transform: scale(1.02);
+.group:hover .pan-on-hover {
+  object-position: bottom;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -128,16 +177,33 @@ body {
     scroll-behavior: auto;
   }
 
-  .animate-fade-in-up,
-  .animate-popup-in {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
+  .reveal,
+  .hero-in {
     opacity: 1 !important;
     transform: none !important;
+    transition: none !important;
+    animation: none !important;
   }
 
-  .benefit-float {
+  .animate-fade-in-up,
+  .animate-popup-in,
+  .animate-draw-line,
+  .animate-ping,
+  .animate-bounce,
+  .animate-pulse,
+  .animate-spin {
     animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+
+  .pan-on-hover {
+    transition: none !important;
+  }
+
+  * {
+    transition-duration: 0.01ms !important;
   }
 }
 
