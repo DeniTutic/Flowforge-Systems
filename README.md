@@ -17,12 +17,12 @@ A premium, modern agency website built with Next.js, TypeScript, and Tailwind CS
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
 - **Font**: Geist Sans (self-hosted via `next/font`)
-- **Node.js**: v18+ recommended
+- **Node.js**: v24.x (matches the Vercel runtime; set in `engines`)
 
 ## 📦 Getting Started
 
 ### Prerequisites
-- Node.js 18.17 or later
+- Node.js 24.x (the version Vercel builds with)
 - npm or yarn package manager
 
 ### Installation
