@@ -20,23 +20,51 @@ type ContactMessage = {
 
 export const dynamic = "force-dynamic";
 
-export default async function AdminPage() {
-  const db = await getDb();
+/** Turns a driver failure into something the operator can act on. */
+function describeDbError(error: unknown): string {
+  const message = error instanceof Error ? error.message : String(error);
+  if (message.includes("MONGODB_URI")) {
+    return "MONGODB_URI is not set for this environment.";
+  }
+  if (/ENOTFOUND|querySrv/i.test(message)) {
+    return "The database host in MONGODB_URI does not resolve. The cluster may have been renamed, paused or deleted — check it in Atlas.";
+  }
+  if (/bad auth|authentication failed/i.test(message)) {
+    return "The database rejected the credentials in MONGODB_URI.";
+  }
+  if (/timed out|ETIMEDOUT|server selection/i.test(message)) {
+    return "Could not reach the database before the timeout. Check the Atlas Network Access allowlist.";
+  }
+  return "Could not reach the database.";
+}
 
-  const [subscribers, messages] = await Promise.all([
-    db
-      .collection<Subscriber>(COLLECTIONS.newsletterSubscribers)
-      .find({}, { projection: { _id: 0 } })
-      .sort({ subscribedAt: -1 })
-      .limit(100)
-      .toArray(),
-    db
-      .collection<ContactMessage>(COLLECTIONS.contactMessages)
-      .find({}, { projection: { _id: 0 } })
-      .sort({ createdAt: -1 })
-      .limit(100)
-      .toArray(),
-  ]);
+export default async function AdminPage() {
+  let subscribers: Subscriber[] = [];
+  let messages: ContactMessage[] = [];
+  let dbError: string | null = null;
+  let dbName = process.env.MONGODB_DB || "flowforge";
+
+  try {
+    const db = await getDb();
+    dbName = db.databaseName;
+    [subscribers, messages] = await Promise.all([
+      db
+        .collection<Subscriber>(COLLECTIONS.newsletterSubscribers)
+        .find({}, { projection: { _id: 0 } })
+        .sort({ subscribedAt: -1 })
+        .limit(100)
+        .toArray(),
+      db
+        .collection<ContactMessage>(COLLECTIONS.contactMessages)
+        .find({}, { projection: { _id: 0 } })
+        .sort({ createdAt: -1 })
+        .limit(100)
+        .toArray(),
+    ]);
+  } catch (e) {
+    console.error("[admin]", e);
+    dbError = describeDbError(e);
+  }
 
   return (
     <main className="min-h-screen bg-white dark:bg-gray-900 transition-colors">
@@ -52,10 +80,24 @@ export default async function AdminPage() {
           </div>
           <div className="text-sm text-text-light dark:text-gray-400">
             <div>
-              DB: <span className="font-medium text-text dark:text-white">{db.databaseName}</span>
+              DB: <span className="font-medium text-text dark:text-white">{dbName}</span>
             </div>
           </div>
         </div>
+
+        {dbError && (
+          <div
+            role="alert"
+            className="mb-8 rounded-2xl border border-rose-200 dark:border-rose-900 bg-rose-50 dark:bg-rose-950/30 px-5 py-4"
+          >
+            <p className="font-semibold text-rose-800 dark:text-rose-300">Database unavailable</p>
+            <p className="mt-1 text-sm text-rose-800/90 dark:text-rose-300/90">{dbError}</p>
+            <p className="mt-2 text-xs text-rose-800/70 dark:text-rose-300/70">
+              Submissions sent while the database is down are not stored. The exact driver error is
+              in the server logs.
+            </p>
+          </div>
+        )}
 
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
           <section className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">

@@ -20,7 +20,12 @@ function getClientPromise(): Promise<MongoClient> {
       serverSelectionTimeoutMS: 10000,
       connectTimeoutMS: 10000,
     });
-    globalForMongo._mongoClientPromise = client.connect();
+    // A rejected promise must not stay cached: a warm lambda would keep replaying
+    // the first failure long after the database is reachable again.
+    globalForMongo._mongoClientPromise = client.connect().catch((err) => {
+      globalForMongo._mongoClientPromise = undefined;
+      throw err;
+    });
   }
   return globalForMongo._mongoClientPromise;
 }
