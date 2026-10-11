@@ -144,7 +144,7 @@ export default function Navbar() {
                     tabIndex={mobileMenuOpen ? 0 : -1}
                     className={`flex items-center min-h-[44px] px-4 rounded-xl text-base font-medium transition-colors ${
                       active
-                        ? "text-primary bg-primary/10 dark:bg-primary/15"
+                        ? "text-primary-dark bg-primary/10 dark:text-primary-light dark:bg-primary/15"
                         : "text-text dark:text-steel-dark hover:bg-ink/5 dark:hover:bg-white/5"
                     }`}
                   >

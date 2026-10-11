@@ -29,13 +29,13 @@ const config: Config = {
           muted: "#EFEDE8",
         },
         steel: {
-          DEFAULT: "#6B7280",
+          DEFAULT: "#5F6673",
           dark: "#9AA3B2",
         },
         // Legacy aliases still used across components
         text: {
           DEFAULT: "#0B0F14",
-          light: "#6B7280",
+          light: "#5F6673",
         },
       },
       borderColor: {

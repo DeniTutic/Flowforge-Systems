@@ -23,7 +23,7 @@ const steps = [
 ];
 
 const inputBase =
-  "w-full px-4 py-3 min-h-[48px] rounded-xl border outline-none transition-all bg-paper-soft dark:bg-ink text-text dark:text-white placeholder:text-text-light/70 dark:placeholder:text-steel-dark/70";
+  "w-full px-4 py-3 min-h-[48px] rounded-xl border outline-none transition-all bg-paper-soft dark:bg-ink text-text dark:text-white placeholder:text-text-light dark:placeholder:text-steel-dark";
 const inputOk =
   "border-line dark:border-line-dark focus:border-primary focus:ring-2 focus:ring-primary/20";
 const inputErr =
@@ -451,7 +451,7 @@ export default function Contact() {
               <ol className="space-y-6">
                 {steps.map((s) => (
                   <li key={s.n} className="flex gap-4">
-                    <span className="inline-flex shrink-0 items-center justify-center w-9 h-9 rounded-full bg-primary/10 text-primary dark:text-primary-light font-semibold text-sm">
+                    <span className="inline-flex shrink-0 items-center justify-center w-9 h-9 rounded-full bg-primary/10 text-primary-dark dark:text-primary-light font-semibold text-sm">
                       {s.n}
                     </span>
                     <div>

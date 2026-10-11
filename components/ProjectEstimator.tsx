@@ -162,7 +162,7 @@ export default function ProjectEstimator() {
                   >
                     <span
                       className={`block text-sm font-medium ${
-                        complexity === opt.value ? "text-primary dark:text-primary-light" : "text-text dark:text-white"
+                        complexity === opt.value ? "text-primary-dark dark:text-primary-light" : "text-text dark:text-white"
                       }`}
                     >
                       {opt.label}
@@ -218,7 +218,7 @@ export default function ProjectEstimator() {
                   >
                     <span
                       className={`block text-sm font-medium ${
-                        aiScope === opt.value ? "text-primary dark:text-primary-light" : "text-text dark:text-white"
+                        aiScope === opt.value ? "text-primary-dark dark:text-primary-light" : "text-text dark:text-white"
                       }`}
                     >
                       {opt.label}
@@ -243,7 +243,7 @@ export default function ProjectEstimator() {
                     onClick={() => setTimeline(opt.value)}
                     className={`rounded-xl border px-3 py-3 min-h-[44px] text-sm font-medium transition-all ${
                       timeline === opt.value
-                        ? "border-primary bg-primary/10 text-primary dark:text-primary-light dark:bg-primary/15 ring-1 ring-primary/30"
+                        ? "border-primary bg-primary/10 text-primary-dark dark:text-primary-light dark:bg-primary/15 ring-1 ring-primary/30"
                         : "border-line dark:border-line-dark text-text-light dark:text-steel-dark hover:border-primary/40"
                     }`}
                   >
@@ -265,7 +265,7 @@ export default function ProjectEstimator() {
               />
               <div className="px-6 py-7 sm:px-7 sm:py-8">
                 <div className="flex items-center justify-center gap-2 mb-4">
-                  <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-primary/10 dark:bg-primary/15 text-primary dark:text-primary-light text-[0.68rem] font-semibold uppercase tracking-wide">
+                  <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-primary/10 dark:bg-primary/15 text-primary-dark dark:text-primary-light text-[0.68rem] font-semibold uppercase tracking-wide">
                     ≈ {tier} package
                   </span>
                 </div>

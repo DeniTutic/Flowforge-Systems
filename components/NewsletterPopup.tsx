@@ -298,7 +298,7 @@ export default function NewsletterPopup() {
                     required
                     disabled={isSubmitting}
                     autoComplete="email"
-                    className="w-full px-4 py-3 min-h-[48px] rounded-xl border border-line dark:border-line-dark bg-paper dark:bg-ink text-text dark:text-white placeholder:text-text-light/70 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all disabled:opacity-60"
+                    className="w-full px-4 py-3 min-h-[48px] rounded-xl border border-line dark:border-line-dark bg-paper dark:bg-ink text-text dark:text-white placeholder:text-text-light focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all disabled:opacity-60"
                   />
                 </div>
                 <div aria-live="polite">

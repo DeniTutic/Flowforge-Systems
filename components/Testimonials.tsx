@@ -78,7 +78,7 @@ export default function Testimonials() {
                   {t.quote}
                 </blockquote>
                 <figcaption className="flex items-center gap-3">
-                  <span className="inline-flex items-center justify-center w-11 h-11 rounded-full bg-primary/10 text-primary dark:text-primary-light font-semibold text-sm shrink-0" aria-hidden>
+                  <span className="inline-flex items-center justify-center w-11 h-11 rounded-full bg-primary/10 text-primary-dark dark:text-primary-light font-semibold text-sm shrink-0" aria-hidden>
                     {initials(t.author)}
                   </span>
                   <div className="min-w-0">
