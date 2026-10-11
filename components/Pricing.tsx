@@ -1,13 +1,14 @@
 import Reveal from "./Reveal";
 import SectionEyebrow from "./SectionEyebrow";
 import { IconCreditCard } from "./icons";
+import { GROWTH_FROM, STARTER_FROM, usd } from "@/lib/projectEstimate";
 
 const plans = [
   {
     name: "Starter",
     description: "Simple website",
     target: "For small businesses",
-    price: "From $2,999",
+    price: `From ${usd(STARTER_FROM)}`,
     features: ["Custom design", "Mobile responsive", "Basic SEO setup", "Content management", "3 months support"],
     cta: "Start with Starter",
     popular: false,
@@ -16,7 +17,7 @@ const plans = [
     name: "Growth",
     description: "Custom design + SEO",
     target: "For scaling businesses",
-    price: "From $7,999",
+    price: `From ${usd(GROWTH_FROM)}`,
     features: [
       "Everything in Starter",
       "Advanced SEO optimization",

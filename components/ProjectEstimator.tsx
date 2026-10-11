@@ -91,7 +91,7 @@ export default function ProjectEstimator() {
   }, [runEstimate]);
 
   const display = result ?? computeProjectEstimate(input);
-  const tier = estimateTier(display.high);
+  const tier = estimateTier(display.low, display.high);
 
   return (
     <section

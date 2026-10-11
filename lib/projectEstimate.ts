@@ -20,11 +20,32 @@ export type EstimateResult = {
 
 export type PricingTier = "Starter" | "Growth" | "Scale";
 
-/** Rough package mapping used to badge the estimate — keep in sync with Pricing.tsx tiers. */
-export function estimateTier(high: number): PricingTier {
-  if (high <= 4500) return "Starter";
-  if (high <= 10000) return "Growth";
-  return "Scale";
+/**
+ * Package starting prices. Single source of truth: Pricing.tsx renders these same numbers,
+ * and the estimator never shows a range that starts below the package it names.
+ */
+export const STARTER_FROM = 2999;
+export const GROWTH_FROM = 7999;
+
+/**
+ * Scale is quoted per project, so it has no price. This is only the midpoint at which the
+ * estimator starts calling a scope "Scale" instead of "Growth".
+ */
+const SCALE_FROM_MIDPOINT = 15000;
+
+/** Nearest package for an estimate, judged by the middle of the range. */
+export function estimateTier(low: number, high: number): PricingTier {
+  const mid = (low + high) / 2;
+  if (mid >= SCALE_FROM_MIDPOINT) return "Scale";
+  if (mid >= GROWTH_FROM) return "Growth";
+  return "Starter";
+}
+
+/** Raise a range so it starts at or above the package it falls into. */
+function applyPriceFloor(low: number, high: number): [number, number] {
+  const floor = estimateTier(low, high) === "Starter" ? STARTER_FROM : GROWTH_FROM;
+  const floored = Math.max(low, floor);
+  return [floored, Math.max(high, floored + 700)];
 }
 
 /** Realistic US indie/small-agency ballparks (USD), aligned with Flowforge pricing tiers. */
@@ -97,9 +118,15 @@ export function computeProjectEstimate(raw: EstimateInput): EstimateResult {
   baseHigh = Math.round(baseHigh / 100) * 100;
   if (baseHigh <= baseLow) baseHigh = baseLow + 700;
 
-  /* Soft ceiling guard so sliders never produce absurd enterprise numbers */
+  /* Soft ceiling guard so sliders never produce absurd enterprise numbers. The low end may
+     only be pulled UP to keep the range at most $12k wide — never down to a fixed floor. */
   baseHigh = Math.min(baseHigh, 45000);
-  baseLow = Math.min(baseLow, Math.max(1500, baseHigh - 12000));
+  baseLow = Math.max(baseLow, baseHigh - 12000);
+
+  /* Never quote below the package this lands in. Applied twice: the first pass can lift the
+     range into the next package, whose own floor then has to hold. */
+  [baseLow, baseHigh] = applyPriceFloor(baseLow, baseHigh);
+  [baseLow, baseHigh] = applyPriceFloor(baseLow, baseHigh);
 
   const complexityLabel =
     raw.complexity === "focused"
@@ -125,15 +152,17 @@ export function computeProjectEstimate(raw: EstimateInput): EstimateResult {
     `${timelineLabel.charAt(0).toUpperCase() + timelineLabel.slice(1)} — rush work may require focused resourcing.`,
   ];
 
-  const summary = `For a US-based project like yours, we estimate **${formatUsd(baseLow, baseHigh)}**. At **${sizeDepth}/10** size with **${complexityLabel}**, **${integrations}** integration${integrations === 1 ? "" : "s"}, **${ai.label.toLowerCase()}**, and a **${timelineLabel}**, this is a realistic ballpark for a boutique studio—not an enterprise quote. We confirm scope and final pricing after a discovery call.`;
+  const summary = `For a US-based project like yours, we estimate **${formatUsd(baseLow, baseHigh)}**. At **${sizeDepth}/10** size with **${complexityLabel}**, **${integrations}** integration${integrations === 1 ? "" : "s"}, **${ai.label.charAt(0).toLowerCase() + ai.label.slice(1)}**, and a **${timelineLabel}**, this is a realistic ballpark for a boutique studio—not an enterprise quote. We confirm scope and final pricing after a discovery call.`;
 
   return { low: baseLow, high: baseHigh, summary, factors, aiPowered: false };
 }
 
+export function usd(n: number): string {
+  return n.toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
+}
+
 export function formatUsd(low: number, high: number): string {
-  const fmt = (n: number) =>
-    n.toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
-  return `${fmt(low)} – ${fmt(high)}`;
+  return `${usd(low)} – ${usd(high)}`;
 }
 
 export function describeInput(input: EstimateInput) {

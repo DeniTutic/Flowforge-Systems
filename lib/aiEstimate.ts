@@ -14,7 +14,7 @@ export async function generateAiEstimateNarrative(
 
   const described = describeInput(input);
   const range = formatUsd(numbers.low, numbers.high);
-  const tier = estimateTier(numbers.high);
+  const tier = estimateTier(numbers.low, numbers.high);
 
   const system = `You write project estimate explanations for Flowforge Systems, a boutique US web & AI studio serving American small businesses, startups, and growing companies. Flowforge sells three packages: Starter (simple websites), Growth (custom design + SEO), and Scale (web apps + automation).
 
