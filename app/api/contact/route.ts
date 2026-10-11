@@ -5,6 +5,7 @@ import { getClientIp } from "@/lib/clientIp";
 import { rateLimit } from "@/lib/rateLimit";
 import { isHoneypotClean, validateFormTiming } from "@/lib/formAbuse";
 import { BUDGET_VALUES, PROJECT_TYPE_VALUES } from "@/lib/contactOptions";
+import { notifyNewLead } from "@/lib/leadEmail";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MAX_NAME = 200;
@@ -78,6 +79,16 @@ export async function POST(request: Request) {
       ...(budgetStr ? { budget: budgetStr } : {}),
       status: "new",
       createdAt: new Date(),
+    });
+
+    // The lead is safe in the database; the email is a courtesy and never fails the request.
+    await notifyNewLead({
+      name: nameStr,
+      email: emailStr,
+      company: companyStr || undefined,
+      projectType: projectTypeStr,
+      budget: budgetStr,
+      message: messageStr,
     });
 
     return NextResponse.json({ ok: true });
