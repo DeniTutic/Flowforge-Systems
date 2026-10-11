@@ -1,5 +1,6 @@
 import { COLLECTIONS, getDb } from "@/lib/mongodb";
 import { BUDGETS, PROJECT_TYPES, labelFor } from "@/lib/contactOptions";
+import RowActions from "./RowActions";
 
 type Subscriber = {
   email: string;
@@ -17,6 +18,9 @@ type ContactMessage = {
   status?: string;
   createdAt?: Date;
 };
+
+/** Documents as the page uses them: `_id` becomes a plain string the buttons can send back. */
+type Row<T> = T & { id: string };
 
 export const dynamic = "force-dynamic";
 
@@ -39,28 +43,30 @@ function describeDbError(error: unknown): string {
 }
 
 export default async function AdminPage() {
-  let subscribers: Subscriber[] = [];
-  let messages: ContactMessage[] = [];
+  let subscribers: Row<Subscriber>[] = [];
+  let messages: Row<ContactMessage>[] = [];
   let dbError: string | null = null;
   let dbName = process.env.MONGODB_DB || "flowforge";
 
   try {
     const db = await getDb();
     dbName = db.databaseName;
-    [subscribers, messages] = await Promise.all([
+    const [subscriberDocs, messageDocs] = await Promise.all([
       db
         .collection<Subscriber>(COLLECTIONS.newsletterSubscribers)
-        .find({}, { projection: { _id: 0 } })
+        .find({})
         .sort({ subscribedAt: -1 })
         .limit(100)
         .toArray(),
       db
         .collection<ContactMessage>(COLLECTIONS.contactMessages)
-        .find({}, { projection: { _id: 0 } })
+        .find({})
         .sort({ createdAt: -1 })
         .limit(100)
         .toArray(),
     ]);
+    subscribers = subscriberDocs.map(({ _id, ...rest }) => ({ ...rest, id: _id.toString() }));
+    messages = messageDocs.map(({ _id, ...rest }) => ({ ...rest, id: _id.toString() }));
   } catch (e) {
     console.error("[admin]", e);
     dbError = describeDbError(e);
@@ -114,21 +120,23 @@ export default async function AdminPage() {
                 <p className="text-text-light dark:text-gray-400">No subscribers yet.</p>
               ) : (
                 <ul className="space-y-3">
-                  {subscribers.map((s, i) => (
+                  {subscribers.map((s) => (
                     <li
-                      key={`${s.email}-${i}`}
-                      className="flex items-start justify-between gap-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/50 dark:bg-gray-900/30 px-4 py-3"
+                      key={s.id}
+                      className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white/50 dark:bg-gray-900/30 px-4 py-3"
                     >
-                      <div className="min-w-0">
-                        <div className="font-medium text-text dark:text-white break-all">
-                          {s.email}
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="min-w-0">
+                          <div className="font-medium text-text dark:text-white break-all">
+                            {s.email}
+                          </div>
+                          <div className="text-xs text-text-light dark:text-gray-400 mt-1">
+                            {s.source ? `source: ${s.source}` : "source: unknown"}
+                          </div>
                         </div>
-                        <div className="text-xs text-text-light dark:text-gray-400 mt-1">
-                          {s.source ? `source: ${s.source}` : "source: unknown"}
+                        <div className="text-xs text-text-light dark:text-gray-400 shrink-0">
+                          {s.subscribedAt ? new Date(s.subscribedAt).toLocaleString() : ""}
                         </div>
-                      </div>
-                      <div className="text-xs text-text-light dark:text-gray-400 shrink-0">
-                        {s.subscribedAt ? new Date(s.subscribedAt).toLocaleString() : ""}
                       </div>
                     </li>
                   ))}
@@ -151,10 +159,12 @@ export default async function AdminPage() {
                 <p className="text-text-light dark:text-gray-400">No messages yet.</p>
               ) : (
                 <ul className="space-y-4">
-                  {messages.map((m, i) => (
+                  {messages.map((m) => (
                     <li
-                      key={`${m.email}-${i}`}
-                      className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white/50 dark:bg-gray-900/30 px-4 py-3"
+                      key={m.id}
+                      className={`rounded-xl border border-gray-200 dark:border-gray-700 bg-white/50 dark:bg-gray-900/30 px-4 py-3 transition-opacity ${
+                        m.status === "done" ? "opacity-60" : ""
+                      }`}
                     >
                       <div className="flex flex-wrap items-center justify-between gap-3">
                         <div className="min-w-0">
@@ -192,6 +202,13 @@ export default async function AdminPage() {
                       <p className="mt-3 text-sm text-text dark:text-gray-200 whitespace-pre-wrap">
                         {m.message}
                       </p>
+                      <div className="mt-4">
+                        <RowActions
+                          id={m.id}
+                          done={m.status === "done"}
+                          who={m.name}
+                        />
+                      </div>
                     </li>
                   ))}
                 </ul>
