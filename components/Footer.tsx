@@ -1,4 +1,5 @@
 import Logo from "./Logo";
+import { HIREHAND_URL } from "@/lib/sisterBrands";
 
 const navigate = [
   { href: "/#work", label: "Work" },
@@ -20,6 +21,13 @@ export default function Footer() {
             </a>
             <p className="text-white/60 mt-4 max-w-xs text-pretty">
               Websites and AI systems that turn traffic into clients.
+            </p>
+            <p className="text-white/60 mt-3 max-w-xs text-sm text-pretty">
+              Also from us:{" "}
+              <a href={HIREHAND_URL} className="text-white/85 font-medium hover:text-white hover:underline transition-colors">
+                Hirehand
+              </a>
+              , the AI employee for cafés, restaurants and salons.
             </p>
           </div>
           <div>

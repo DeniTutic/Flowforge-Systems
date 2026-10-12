@@ -1,6 +1,7 @@
 import Reveal from "./Reveal";
 import SectionEyebrow from "./SectionEyebrow";
 import { IconTool, IconRocket, IconCpu, IconTarget, IconTrendingUp } from "./icons";
+import { HIREHAND_URL } from "@/lib/sisterBrands";
 
 const services = [
   {
@@ -12,6 +13,7 @@ const services = [
     title: "AI systems that automate your work",
     description: "Custom chatbots, workflows, and internal tools that save your team hours every week.",
     icon: IconCpu,
+    link: { href: HIREHAND_URL, label: "Run a café, restaurant or salon? Meet Hirehand, our ready-made AI employee" },
   },
   {
     title: "Landing pages that print leads",
@@ -47,6 +49,14 @@ export default function Services() {
                   {service.title}
                 </h3>
                 <p className="text-text-light dark:text-steel-dark leading-relaxed text-pretty">{service.description}</p>
+                {service.link && (
+                  <a
+                    href={service.link.href}
+                    className="inline-block mt-4 text-primary dark:text-primary-light font-medium hover:underline text-pretty"
+                  >
+                    {service.link.label} <span aria-hidden>→</span>
+                  </a>
+                )}
               </article>
             </Reveal>
           ))}
