@@ -132,6 +132,7 @@ This project is private and proprietary.
 
 - Contact and newsletter forms write to MongoDB (see `.env.example`); `/admin` lists submissions behind Basic Auth
 - New contact enquiries are also emailed to `LEAD_NOTIFY_EMAIL` through Resend when `RESEND_API_KEY` is set; the email is best-effort and never blocks the form (see `lib/leadEmail.ts`)
+- Enquiries are also copied to the shared sales sheet (brand `flowforge`, next to Hirehand's demo requests) when `LEAD_FORWARD_URL` and `LEAD_FORWARD_SECRET` are set; the receiver emails the owner with Reply-To the visitor. Best-effort, server-only (see `lib/salesSheet.ts`)
 - Favicon, Apple icon and the Open Graph image are generated at build time from `app/icon.tsx`, `app/apple-icon.tsx`, `app/opengraph-image.tsx`
 - The optional "How we work" video section renders only when `NEXT_PUBLIC_HOW_WE_WORK_VIDEO` or `NEXT_PUBLIC_LOOM_EMBED_URL` is set
 

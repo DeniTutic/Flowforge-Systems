@@ -6,6 +6,7 @@ import { rateLimit } from "@/lib/rateLimit";
 import { isHoneypotClean, validateFormTiming } from "@/lib/formAbuse";
 import { BUDGET_VALUES, PROJECT_TYPE_VALUES } from "@/lib/contactOptions";
 import { notifyNewLead } from "@/lib/leadEmail";
+import { forwardToSalesSheet } from "@/lib/salesSheet";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MAX_NAME = 200;
@@ -81,15 +82,17 @@ export async function POST(request: Request) {
       createdAt: new Date(),
     });
 
-    // The lead is safe in the database; the email is a courtesy and never fails the request.
-    await notifyNewLead({
+    // The lead is safe in the database; the email and the sales-sheet copy are courtesies that
+    // never fail the request. They run side by side so the visitor waits for the slower one only.
+    const lead = {
       name: nameStr,
       email: emailStr,
       company: companyStr || undefined,
       projectType: projectTypeStr,
       budget: budgetStr,
       message: messageStr,
-    });
+    };
+    await Promise.all([notifyNewLead(lead), forwardToSalesSheet(lead)]);
 
     return NextResponse.json({ ok: true });
   } catch (e) {
