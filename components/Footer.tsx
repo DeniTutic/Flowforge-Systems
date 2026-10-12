@@ -1,5 +1,6 @@
 import Logo from "./Logo";
 import { HIREHAND_URL } from "@/lib/sisterBrands";
+import { CONTACT_EMAIL } from "@/lib/site";
 
 const navigate = [
   { href: "/#work", label: "Work" },
@@ -46,9 +47,15 @@ export default function Footer() {
             <h4 className="text-xs font-semibold uppercase tracking-[0.16em] text-white/50 mb-4">Contact</h4>
             <ul className="space-y-2.5 text-white/75">
               <li>
-                <a href="mailto:hello@flowforge.systems" className="hover:text-white transition-colors break-all">
-                  hello@flowforge.systems
-                </a>
+                {CONTACT_EMAIL ? (
+                  <a href={`mailto:${CONTACT_EMAIL}`} className="hover:text-white transition-colors break-all">
+                    {CONTACT_EMAIL}
+                  </a>
+                ) : (
+                  <a href="/#contact" className="hover:text-white transition-colors">
+                    Send us a message
+                  </a>
+                )}
               </li>
               <li className="text-white/50 text-sm">We reply within 24 hours.</li>
             </ul>

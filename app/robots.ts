@@ -1,6 +1,8 @@
 import type { MetadataRoute } from "next";
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://flowforge.systems";
+import { SITE_URL } from "@/lib/site";
+
+const baseUrl = SITE_URL;
 
 export default function robots(): MetadataRoute.Robots {
   return {

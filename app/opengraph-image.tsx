@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { SITE_HOST } from "@/lib/site";
 
 export const alt = "Flowforge Systems — Websites & AI systems that drive growth";
 export const size = { width: 1200, height: 630 };
@@ -63,7 +64,7 @@ export default function OpenGraphImage() {
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 14, fontSize: 24, color: "#9AA3B2" }}>
           <div style={{ width: 12, height: 12, borderRadius: 9999, background: "#EA580C" }} />
-          flowforge.systems
+          {SITE_HOST}
         </div>
       </div>
     ),

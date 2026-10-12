@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { SITE_HOST } from "@/lib/site";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 import { IconBriefcase, IconStore, IconCart, IconCpu } from "./icons";
 
@@ -57,7 +58,7 @@ export default function HeroDashboardMockup() {
         <span className="w-2.5 h-2.5 rounded-full bg-ink/15 dark:bg-white/20" />
         <div className="ml-2 flex-1 h-6 rounded-full bg-paper-soft dark:bg-ink border border-line dark:border-line-dark flex items-center px-3">
           <span className="text-[0.7rem] text-text-light dark:text-steel-dark truncate">
-            flowforge.systems/dashboard
+            {SITE_HOST}/dashboard
           </span>
         </div>
       </div>

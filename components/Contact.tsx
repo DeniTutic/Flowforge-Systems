@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { CONTACT_EMAIL } from "@/lib/site";
 import Reveal from "./Reveal";
 import { BUDGETS, PROJECT_TYPES } from "@/lib/contactOptions";
 
@@ -463,15 +464,17 @@ export default function Contact() {
                   </li>
                 ))}
               </ol>
-              <div className="mt-8 pt-6 border-t border-line dark:border-line-dark text-sm text-text-light dark:text-steel-dark">
-                Prefer email?{" "}
-                <a
-                  href="mailto:hello@flowforge.systems"
-                  className="text-primary dark:text-primary-light font-medium hover:underline"
-                >
-                  hello@flowforge.systems
-                </a>
-              </div>
+              {CONTACT_EMAIL && (
+                <div className="mt-8 pt-6 border-t border-line dark:border-line-dark text-sm text-text-light dark:text-steel-dark">
+                  Prefer email?{" "}
+                  <a
+                    href={`mailto:${CONTACT_EMAIL}`}
+                    className="text-primary dark:text-primary-light font-medium hover:underline"
+                  >
+                    {CONTACT_EMAIL}
+                  </a>
+                </div>
+              )}
             </div>
           </Reveal>
         </div>

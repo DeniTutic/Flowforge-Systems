@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
+import { CONTACT_EMAIL } from "@/lib/site";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
@@ -28,9 +29,15 @@ export default function PrivacyPage() {
               Flowforge Systems (&quot;we&quot;, &quot;us&quot;) operates this website. This policy
               explains how we handle personal data when you use our site, contact us, or subscribe to
               updates. For questions:{" "}
-              <a href="mailto:hello@flowforge.systems" className="text-primary dark:text-primary-light hover:underline">
-                hello@flowforge.systems
-              </a>
+              {CONTACT_EMAIL ? (
+                <a href={`mailto:${CONTACT_EMAIL}`} className="text-primary dark:text-primary-light hover:underline">
+                  {CONTACT_EMAIL}
+                </a>
+              ) : (
+                <Link href="/#contact" className="text-primary dark:text-primary-light hover:underline">
+                  the contact form on our website
+                </Link>
+              )}
               .
             </p>
           </section>

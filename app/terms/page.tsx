@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
+import { CONTACT_EMAIL } from "@/lib/site";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
@@ -89,9 +90,15 @@ export default function TermsPage() {
           <section className="space-y-3">
             <h2 className="text-xl font-semibold tracking-heading text-text dark:text-white">10. Contact</h2>
             <p>
-              <a href="mailto:hello@flowforge.systems" className="text-primary dark:text-primary-light hover:underline">
-                hello@flowforge.systems
-              </a>
+              {CONTACT_EMAIL ? (
+                <a href={`mailto:${CONTACT_EMAIL}`} className="text-primary dark:text-primary-light hover:underline">
+                  {CONTACT_EMAIL}
+                </a>
+              ) : (
+                <Link href="/#contact" className="text-primary dark:text-primary-light hover:underline">
+                  Use the contact form on our website.
+                </Link>
+              )}
             </p>
           </section>
         </div>

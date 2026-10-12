@@ -3,7 +3,9 @@ import { GeistSans } from "geist/font/sans";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://flowforge.systems";
+import { CONTACT_EMAIL, SITE_URL } from "@/lib/site";
+
+const baseUrl = SITE_URL;
 
 const title = "Flowforge Systems - Websites & AI systems that drive growth";
 const description =
@@ -58,11 +60,9 @@ export default function RootLayout({
       "Web & AI agency that designs and builds modern websites and automations that drive growth",
     url: baseUrl,
     logo: `${baseUrl}/icon`,
-    contactPoint: {
-      "@type": "ContactPoint",
-      contactType: "Sales",
-      email: "hello@flowforge.systems",
-    },
+    ...(CONTACT_EMAIL
+      ? { contactPoint: { "@type": "ContactPoint", contactType: "Sales", email: CONTACT_EMAIL } }
+      : {}),
   };
 
   return (

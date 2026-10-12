@@ -1,4 +1,5 @@
 import { BUDGETS, PROJECT_TYPES, labelFor } from "./contactOptions";
+import { SITE_URL } from "./site";
 
 export type Lead = {
   name: string;
@@ -25,7 +26,7 @@ function oneLine(text: string, max: number): string {
 }
 
 function buildText(lead: Lead): string {
-  const base = process.env.NEXT_PUBLIC_BASE_URL || "https://flowforge.systems";
+  const base = SITE_URL;
   const lines = [
     "New enquiry from the Flowforge website.",
     "",
