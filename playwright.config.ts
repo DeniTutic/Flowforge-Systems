@@ -1,7 +1,8 @@
 import { defineConfig, devices } from "@playwright/test";
 
-// Point at an already-running dev server with PLAYWRIGHT_PORT=<port> (e.g. when 3000 is taken).
-const port = Number(process.env.PLAYWRIGHT_PORT || 3000);
+// Point at an already-running dev server with PLAYWRIGHT_PORT=<port>.
+// Never 3000–3005: another local project owns those, and reuseExistingServer would test it instead.
+const port = Number(process.env.PLAYWRIGHT_PORT || 3010);
 const baseURL = `http://127.0.0.1:${port}`;
 
 export default defineConfig({
