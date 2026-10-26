@@ -96,6 +96,9 @@ export default function Portfolio() {
             </Reveal>
           ))}
         </div>
+        <Reveal as="p" className="section-lead text-center mt-12">
+          …and many more.
+        </Reveal>
       </div>
     </section>
   );
