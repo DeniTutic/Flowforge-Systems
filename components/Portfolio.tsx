@@ -2,15 +2,16 @@ import Image from "next/image";
 import Reveal from "./Reveal";
 import SectionEyebrow from "./SectionEyebrow";
 import { IconFolder } from "./icons";
+import { HIREHAND_URL } from "@/lib/sisterBrands";
 
 const projects = [
   {
-    name: "Voćar",
-    description: "Full website redesign + SEO overhaul for a 35-year snack brand.",
-    result: "1,000+ customers reached",
-    category: "Food & Retail",
-    screenshot: "/portfolio/vocar.jpg",
-    url: "https://vocar-website.vercel.app",
+    name: "Hirehand",
+    description: "AI phone assistant that books, cancels and sends reminders.",
+    result: "Answers calls 24/7",
+    category: "AI Automation",
+    screenshot: "/portfolio/hirehand.jpg",
+    url: HIREHAND_URL,
   },
   {
     name: "Vela",
@@ -21,12 +22,12 @@ const projects = [
     url: "https://vela-situationship-ai-tranlator.vercel.app",
   },
   {
-    name: "CVlens",
-    description: "AI CV analysis with a prioritized, actionable rewrite plan.",
-    result: "Results in under a minute",
-    category: "AI Tools",
-    screenshot: "/portfolio/cvlens.jpg",
-    url: "https://ai-cv-cc.vercel.app",
+    name: "Voćar",
+    description: "Full website redesign + SEO overhaul for a 35-year snack brand.",
+    result: "1,000+ customers reached",
+    category: "Food & Retail",
+    screenshot: "/portfolio/vocar.jpg",
+    url: "https://vocar-website.vercel.app",
   },
 ];
 
